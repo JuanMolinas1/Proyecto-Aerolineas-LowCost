@@ -61,8 +61,10 @@ create table Empleado (
     dni_empleado      char (8),
     sueldo            decimal (10, 2),
     departamento_id   int,
+    aeropuerto_id     int,
     usuario_id        int,
     foreign key (departamento_id) references Departamento (IDDepartamento),
+    foreign key (aeropuerto_id)   references Aeropuerto   (IDAeropuerto),
     foreign key (usuario_id)      references Usuario      (IDUsuario)
 );
 
