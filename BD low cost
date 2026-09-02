@@ -25,17 +25,6 @@ create table Departamento (
 );
 
 
-create table Pasajero (
-    IDPasajero        int auto_increment primary key,
-    nombre_pasajero   varchar (30),
-    apellido_pasajero varchar (30),
-    dni_pasajero      char (8),
-    telefono          char (10),
-    email             varchar (40),
-    fecha_nacimiento  datetime
-);
-
-
 create table Servicio (
     IDServicio      int auto_increment primary key,
     nombre_servicio varchar (20),
@@ -52,12 +41,16 @@ create table Usuario(
 );
 
 
-create table Asiento (
-    IDAsiento  varchar (50) primary key,
-    numero     int,
-    avion_id   varchar (30),
-    disponible boolean,
-    foreign key (avion_id) references Avion (IDAvion)
+create table Pasajero (
+    IDPasajero        int auto_increment primary key,
+    nombre_pasajero   varchar (30),
+    apellido_pasajero varchar (30),
+    dni_pasajero      char (8),
+    telefono          char (10),
+    email             varchar (40),
+    fecha_nacimiento  datetime,
+    usuario_id        int,
+    foreign key (usuario_id) references Usuario (IDUsuario)
 );
 
 
@@ -68,7 +61,18 @@ create table Empleado (
     dni_empleado      char (8),
     sueldo            decimal (10, 2),
     departamento_id   int,
-    foreign key (departamento_id) references Departamento (IDDepartamento)
+    usuario_id        int,
+    foreign key (departamento_id) references Departamento (IDDepartamento),
+    foreign key (usuario_id)      references Usuario      (IDUsuario)
+);
+
+
+create table Asiento (
+    IDAsiento  varchar (50) primary key,
+    numero     int,
+    avion_id   varchar (30),
+    disponible boolean,
+    foreign key (avion_id) references Avion (IDAvion)
 );
 
 
@@ -127,4 +131,3 @@ create table CheckIn (
     foreign key (vuelo_id) references Vuelo (IDVuelo),
     foreign key (pago_id)  references Pago  (IDPago)
 );
-
