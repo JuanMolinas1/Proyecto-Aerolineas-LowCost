@@ -14,7 +14,7 @@ Bienvenido al repositorio del proyecto Aerolíneas LowCost. Este es un trabajo i
 
 ---
 
-## Materias Involucradas y Aportes
+## Materias Involucradas
 
 En esta sección se detalla el trabajo realizado para cada asignatura y el docente a cargo de la evaluación:
 
