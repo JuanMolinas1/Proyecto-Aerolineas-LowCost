@@ -6,7 +6,7 @@ Bienvenido al repositorio del proyecto Aerolíneas LowCost. Este es un trabajo i
 
 ## Integrantes del Equipo
 
-* **Juan Molinas**
+* **Juan Molinas (👑)**
 * **Joaquín Ferramola**
 * **Gonzalo Delgado**
 * **Jeremías Benitez**
