@@ -46,11 +46,3 @@ El objetivo de este proyecto es el desarrollo del Producto Mínimo Viable (MVP) 
 * Automatizar la creación y programación cronológica de vuelos desde el entorno de administración del sistema.
 * Construir una arquitectura full-stack conectando una base de datos relacional con lógica en Java y una interfaz web en HTML y JavaScript, garantizando la persistencia y sincronización inmediata de los datos en ambos entornos.
 * Aplicar los conocimientos teóricos de las distintas materias en un entorno práctico y unificado.
-
----
-
-## Tecnologías y Herramientas Utilizadas
-
-* **Programación y Datos:** [Por ejemplo: Python, SQL, Excel]
-* **Diseño y Documentación:** [Por ejemplo: Word, Canva, Lucidchart]
-* **Gestión de Versiones:** Git y GitHub
