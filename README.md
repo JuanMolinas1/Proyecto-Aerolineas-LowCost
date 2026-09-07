@@ -6,11 +6,11 @@ Bienvenido al repositorio del proyecto Aerolíneas LowCost. Este es un trabajo i
 
 ## Integrantes del Equipo
 
-* **[Juan Molinas]**
-* **[Joaquín Ferramola]**
-* **[Gonzalo Delgado]**
-* **[Jeremías Benitez]**
-* **[Joshua Chodos]**
+* **Juan Molinas**
+* **Joaquín Ferramola**
+* **Gonzalo Delgado**
+* **Jeremías Benitez**
+* **Joshua Chodos**
 
 ---
 
@@ -18,15 +18,20 @@ Bienvenido al repositorio del proyecto Aerolíneas LowCost. Este es un trabajo i
 
 En esta sección se detalla el trabajo realizado para cada asignatura y el docente a cargo de la evaluación:
 
-### [Programación Orientada a Objetos (POO)] (Prof. [Nahuel Acosta])
+### Programación Orientada a Objetos (POO) (Prof. Nahuel Acosta)
 * **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de las vistas del empleado, con el fin de poder hacer toda la administración de la aerolínea. Más información en [link].
 
-### [Redes] (Prof. [Nahuel Acosta])
+### Redes (Prof. Nahuel Acosta)
 * **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de toda la topología y distribución de los dispositivos según las areas y su importancia. Más información en [link].
 
-### [Nombre de la Materia 3] (Prof. [Nombre del Profesor])
-* **Descripcion del trabajo:** Explicación breve de la actividad (por ejemplo: redacción del plan de negocios, marco legal).
-* **Archivos clave:** Enlaces correspondientes.
+### Base de Datos II (Prof. Gabriel Abello)
+* **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de crear la base de datos de este sistema de aerolíneas con sus conexiones a JAVA y a HTML. Más información en [link].
+
+### Proyecto Informático II (Prof. Gabriel Abello)
+* **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de la página web, utilizando HTML, CSS y JS. Con vistas para cliente y para empleado. Más información en [link].
+
+### Análisis de Sistemas (Prof. Gabriel Abello)
+* **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de toda la organización del proyecto, como asignar tareas y la ruta crítica. Más información en [link].
 
 ---
 
