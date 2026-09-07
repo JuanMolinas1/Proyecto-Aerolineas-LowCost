@@ -1,6 +1,8 @@
-# Proyecto-Aerolineas-LowCost
+# Main - Proyecto Chorifly
 
-Bienvenido al repositorio del proyecto Aerolíneas LowCost. Este es un trabajo interárea donde se integran conocimientos de múltiples asignaturas para diseñar, analizar y desarrollar un modelo de negocio enfocado en el sector aeronáutico de bajo costo.
+### Temática: Aerolíneas Low-Cost
+
+Bienvenido al repositorio del proyecto Aerolíneas LowCost. Este es un trabajo interáreal donde se integran conocimientos de múltiples asignaturas para diseñar, analizar y desarrollar una aplicación enfocada al modelo de aerolíneas de bajo presupuesto.
 
 ---
 
