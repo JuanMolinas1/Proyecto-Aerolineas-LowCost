@@ -46,3 +46,9 @@ El objetivo de este proyecto es el desarrollo del Producto Mínimo Viable (MVP) 
 * Automatizar la creación y programación cronológica de vuelos desde el entorno de administración del sistema.
 * Construir una arquitectura full-stack conectando una base de datos relacional con lógica en Java y una interfaz web en HTML y JavaScript, garantizando la persistencia y sincronización inmediata de los datos en ambos entornos.
 * Aplicar los conocimientos teóricos de las distintas materias en un entorno práctico y unificado.
+
+---
+
+## Registro de Avance en el Proyecto
+
+Para registrar los avances individuales y grupales del proyecto, se creo una branch con el nombre [Carpetas de Campo](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/Carpetas-de-Campo), esta branch contiene varios archivos con links directos a documentos de google que contienen toda la información individual y grupal. Más información en 
