@@ -37,12 +37,15 @@ En esta sección se detalla el trabajo realizado para cada asignatura y el docen
 
 ## Descripcion General del Proyecto
 
-[Escribe aquí un párrafo introductorio sobre el propósito del proyecto. Por ejemplo: "El objetivo de este proyecto es simular el funcionamiento operativo, comercial y tecnológico de una aerolínea de bajo costo, optimizando los recursos para ofrecer las tarifas más bajas del mercado."]
+El objetivo de este proyecto es el desarrollo del Producto Mínimo Viable (MVP) para la aerolínea low-cost Chorifly. Se trata de una plataforma integral que centraliza la gestión operativa y comercial de la aerolínea mediante un sistema unificado de cuentas con accesos segmentados para pasajeros, empleados y administradores. El sistema permite automatizar la compra de pasajes con cálculo dinámico de equipaje, gestionar la asignación de asientos de forma manual o automática, y administrar la programación de vuelos en tiempo real mediante una arquitectura de software conectada y sincronizada de extremo a extremo.
 
 ### Objetivos Principales
-* Desarrollar un modelo sostenible y eficiente de aerolínea low-cost.
+* Desarrollar un sistema de autenticación centralizado que adapte la interfaz y los permisos según el rol de usuario (Pasajero, Empleado y Administrador).
+* Implementar un módulo comercial para pasajeros que incluya un buscador de vuelos con calendario, cotización automatizada de equipaje por peso y selección de servicios adicionales.
+* Optimizar la gestión operativa del personal mediante paneles para el registro manual de pasajeros y un algoritmo de asignación de asientos.
+* Automatizar la creación y programación cronológica de vuelos desde el entorno de administración del sistema.
+* Construir una arquitectura full-stack conectando una base de datos relacional con lógica en Java y una interfaz web en HTML y JavaScript, garantizando la persistencia y sincronización inmediata de los datos en ambos entornos.
 * Aplicar los conocimientos teóricos de las distintas materias en un entorno práctico y unificado.
-* [Agregar otro objetivo si es necesario].
 
 ---
 
@@ -51,8 +54,3 @@ En esta sección se detalla el trabajo realizado para cada asignatura y el docen
 * **Programación y Datos:** [Por ejemplo: Python, SQL, Excel]
 * **Diseño y Documentación:** [Por ejemplo: Word, Canva, Lucidchart]
 * **Gestión de Versiones:** Git y GitHub
-
----
-
-## Estado del Proyecto
-* [Escribir el estado actual: En desarrollo, En revisión, o Finalizado]
