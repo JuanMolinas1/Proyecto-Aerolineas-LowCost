@@ -51,4 +51,4 @@ El objetivo de este proyecto es el desarrollo del Producto Mínimo Viable (MVP) 
 
 ## Registro de Avance en el Proyecto
 
-Para registrar los avances individuales y grupales del proyecto, se creo una branch con el nombre [Carpetas de Campo](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/Carpetas-de-Campo), esta branch contiene varios archivos con links directos a documentos de google que contienen toda la información individual y grupal. Más información en 
+Para registrar los avances individuales y grupales del proyecto, se creo una branch para adjuntar todo el progreso los participantes mediante links de documentos de google. Más información en [Carpetas de Campo](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/Carpetas-de-Campo)
