@@ -11,4 +11,4 @@ Este espacio contiene el desarrollo específico correspondiente a la asignatatur
 
 ---
 
-Regresar al [Main]([https://github.com](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/main))
+Regresar al [Main](https://github.com](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/main)
