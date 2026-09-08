@@ -1,6 +1,6 @@
 # [Nombre de la Materia] - Proyecto Chorifly
 
-Este espacio contiene el desarrollo específico correspondiente a la asignatura [Nombre de la Materia].
+Este espacio contiene el desarrollo específico correspondiente a la asignatura JAVA - POO.
 
 ## Contenido de la Rama
 * **Lógica desarrollada:** Explicación técnica de lo que hay en esta rama (ej. Clases de Java, scripts SQL, topologías de Cisco Packet Tracer, etc.).
@@ -11,4 +11,4 @@ Este espacio contiene el desarrollo específico correspondiente a la asignatura 
 2. Instrucción 2 (ej. Abrir el archivo .pkt o compilar el archivo Java).
 
 ---
-Regresar al [README Principal de la rama main](https://github.com)
+Regresar al [Main]([https://github.com](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/main))
