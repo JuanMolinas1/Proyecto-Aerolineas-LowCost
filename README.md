@@ -1,14 +1,14 @@
-# [Nombre de la Materia] - Proyecto Chorifly
+# Programación Orientada a Objetos (POO) - Proyecto Chorifly
 
-Este espacio contiene el desarrollo específico correspondiente a la asignatura JAVA - POO.
+Este espacio contiene el desarrollo específico correspondiente a la asignatatura Programación Orientada a Objetos (POO).
 
 ## Contenido de la Rama
-* **Lógica desarrollada:** Explicación técnica de lo que hay en esta rama (ej. Clases de Java, scripts SQL, topologías de Cisco Packet Tracer, etc.).
-* **Estructura de archivos:** Breve lista de las carpetas principales en esta rama.
-
-## Cómo ejecutar o visualizar este módulo
-1. Instrucción 1 (ej. Clonar la rama).
-2. Instrucción 2 (ej. Abrir el archivo .pkt o compilar el archivo Java).
+* **Estructura de archivos:** En esta rama se encontraran los archivos:
+  - `CRUD`: Esta carpeta contiene distintos archivos .java que serian las clases principales sin los JFrame, para poder analizar su funcionamiento.
+  - `Programa.zip`: Contiene el programa descargable listo para importar y usar.
+  - `UML.jpg`: Contiene el JPG con la vista del UML usado para hacer la aplicación
+  - `UML.drawio`: Contiene el archivo editable de ese UML
 
 ---
+
 Regresar al [Main]([https://github.com](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/main))
