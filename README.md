@@ -24,7 +24,7 @@ En esta sección se detalla el trabajo realizado para cada asignatura y el docen
 * **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de las vistas del empleado, con el fin de poder hacer toda la administración de la aerolínea. Más información en [JAVA - POO](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/JAVA-POO).
 
 ### Redes (Prof. Nahuel Acosta)
-* **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de toda la topología y distribución de los dispositivos según las areas y su importancia. Más información en [Redes - Cisco Packet Tracer](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/JAVA-POO).
+* **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de toda la topología y distribución de los dispositivos según las areas y su importancia. Más información en [Redes - Cisco Packet Tracer](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/Redes-Cisco-Packet-Tracer).
 
 ### Base de Datos II (Prof. Gabriel Abello)
 * **Descripcion del trabajo:** Con esta materia nos encargamos principalmente de crear la base de datos de este sistema de aerolíneas con sus conexiones a JAVA y a HTML. Más información en [SQL - Base de Datos](https://github.com/JuanMolinas1/Proyecto-Aerolineas-LowCost/tree/SQL-Base-de-Datos).
