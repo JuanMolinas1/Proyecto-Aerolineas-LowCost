@@ -4,8 +4,9 @@ Este espacio contiene el desarrollo específico correspondiente a la asignatatur
 
 ## Contenido de la Rama
 * **Estructura de archivos:** En esta rama se encontraran los archivos:
-  - `DER Chorifly.png`: Este archivo contiene el DER de forma visible pero no editable.
-  - `der bd.drawio`: Este archivo contiene el DER como archivo para descargar y editar.
+  - `Chorifly DER.jpg`: Este archivo contiene el DER de forma visible pero no editable.
+  - `Chorifly BD.sql`: Este archivo contiene la Base de Datos en formato `.sql`.
+  - `Base Exportada.sql`: Este archivo contiene la Base de Datos ya exportada para importar en Admin.
 
 ---
 
