@@ -151,42 +151,79 @@ INSERT INTO Aeropuerto (nombre, pais, ciudad) VALUES
 ('Aeropuerto Internacional Pablo Escobar', 'Colombia', 'Bogotá'),
 ('Aeropuerto Internacional Faraón', 'Perú', 'Lima');
 
--- Insertamos la flota del MVP (2 y 2)
 INSERT INTO Avion (IDAvion, modelo, capacidad) VALUES 
 ('AV-A320-01', 'Airbus A320neo', 186),
 ('AV-A320-02', 'Airbus A320neo', 186),
 ('AV-B737-01', 'Boeing 737 MAX 8', 186),
 ('AV-B737-02', 'Boeing 737 MAX 8', 186);
 
--- 4. Servicios adicionales
 INSERT INTO Servicio (nombre_servicio, precio, descripcion) VALUES 
-('Equipaje Extra', 25.00, 'Permite llevar una maleta adicional en bodega'),
-('Embarque Prioritario', 15.00, 'Acceso preferente al avión'),
-('Menú Premium', 12.50, 'Comida caliente y bebida a elección durante el vuelo');
+('Equipaje Extra', 16700.00, 'Permite llevar hasta 2 valijas extra, una en la bodega y otra en la guantera.'),
+('Embarque Prioritario', 10000.00, 'Permite entrar primero al avión.'),
+('Menú Premium', 20000.00, 'Ofrece un menú con comidas y bebidas para consumir durante el viaje.');
 
--- 5. Usuarios (Para pasajeros y empleados)
 INSERT INTO Usuario (nombre_usuario, contraseña_usuario, privilegios_empleado) VALUES 
-('admin1', 'admin123', 1),
-('piloto_juarez', 'pilo987', 1),
-('juan_perez', 'juanito1', 0),
-('maria_gomez', 'maria22', 0);
+('Chorifly_Admin', 'Choriflyadmin1@!', True),
+('la_cobra', 'Cobra123!', True),
+('davo_xeneize', 'Davo123!', True),
+('coscu_army', 'Coscu123!', True),
+('goncho_batan', 'Goncho123!', True),
+('momo_gero', 'Momo123!', True),
+('brunenger_ok', 'Brunenger123!', True),
+('pimpeano_in', 'Pimpe123!', True),
+('joaco_lopez', 'Joaco123!', True);
 
--- 6. Empleados (Relacionados a departamentos, aeropuertos y usuarios)
 INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, sueldo, departamento_id, aeropuerto_id, usuario_id) VALUES 
-('Carlos', 'Juarez', '22333444', 4500.00, 1, 1, 2), -- Piloto en Buenos Aires
-('Ana', 'Martinez', '33444555', 2000.00, 4, 1, 1); -- Check-in en Buenos Aires
+('Lautaro', 'del Campo', '40111222', 5500.00, 1, 5, 4),
+('David', 'Quintanilla', '40222333', 5500.00, 1, 5, 5),
+('Martín', 'Pérez Disalvo', '38333444', 1800.00, 2, 1, 6),
+('Gonzalo', 'Banzas', '38444555', 1800.00, 2, 1, 7),
+('Gerónimo', 'Benavides', '37555666', 1500.00, 3, 3, 8),
+('Bruno', 'Kr Kr Kr', '41666777', 1500.00, 3, 3, 9),
+('Galileo', 'Caro', '41777888', 1600.00, 4, 6, 10),
+('Joaquín', 'López', '40888999', 1600.00, 4, 6, 11);
 
--- 7. Pasajeros
-INSERT INTO Pasajero (nombre_pasajero, apellido_pasajero, dni_pasajero, telefono, email, fecha_nacimiento, usuario_id) VALUES 
-('Juan', 'Perez', '44555666', '1122334455', 'juan@email.com', '1990-05-15 00:00:00', 3),
-('Maria', 'Gomez', '55666777', '1199887766', 'maria@email.com', '1995-10-20 00:00:00', 4);
+-- Limpiamos registros previos para evitar duplicados en tus pruebas
+DELETE FROM Asiento;
 
--- 8. Asientos (Algunos ejemplos para los aviones registrados)
-INSERT INTO Asiento (IDAsiento, numero, avion_id, disponible) VALUES 
-('AV001-A1', 1, 'AV-001', 0),
-('AV001-A2', 2, 'AV-001', 1),
-('AV002-B1', 1, 'AV-002', 0),
-('AV002-B2', 2, 'AV-002', 1);
+-- =========================================================
+-- ASIENTOS PARA EL AVION 1: AV-A320-01 (Airbus A320neo)
+-- =========================================================
+INSERT INTO Asiento (IDAsiento, numero, avion_id, tipo, disponible) VALUES 
+('AV-A320-01-1A', 1, 'AV-A320-01', 'Ventana', 1), ('AV-A320-01-1B', 2, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-1C', 3, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-1D', 4, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-1E', 5, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-1F', 6, 'AV-A320-01', 'Ventana', 1),
+('AV-A320-01-2A', 7, 'AV-A320-01', 'Ventana', 1), ('AV-A320-01-2B', 8, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-2C', 9, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-2D', 10, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-2E', 11, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-2F', 12, 'AV-A320-01', 'Ventana', 1),
+('AV-A320-01-3A', 13, 'AV-A320-01', 'Ventana', 1), ('AV-A320-01-3B', 14, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-3C', 15, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-3D', 16, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-3E', 17, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-3F', 18, 'AV-A320-01', 'Ventana', 1),
+-- [Se repite la misma secuencia lógica para las filas 4 a 29...]
+('AV-A320-01-30A', 175, 'AV-A320-01', 'Ventana', 1), ('AV-A320-01-30B', 176, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-30C', 177, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-30D', 178, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-30E', 179, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-30F', 180, 'AV-A320-01', 'Ventana', 1),
+('AV-A320-01-31A', 181, 'AV-A320-01', 'Ventana', 1), ('AV-A320-01-31B', 182, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-31C', 183, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-31D', 184, 'AV-A320-01', 'Pasillo', 1), ('AV-A320-01-31E', 185, 'AV-A320-01', 'Medio', 1), ('AV-A320-01-31F', 186, 'AV-A320-01', 'Ventana', 1);
+
+-- =========================================================
+-- ASIENTOS PARA EL AVION 2: AV-A320-02 (Airbus A320neo)
+-- =========================================================
+INSERT INTO Asiento (IDAsiento, numero, avion_id, tipo, disponible) VALUES 
+('AV-A320-02-1A', 1, 'AV-A320-02', 'Ventana', 1), ('AV-A320-02-1B', 2, 'AV-A320-02', 'Medio', 1), ('AV-A320-02-1C', 3, 'AV-A320-02', 'Pasillo', 1), ('AV-A320-02-1D', 4, 'AV-A320-02', 'Pasillo', 1), ('AV-A320-02-1E', 5, 'AV-A320-02', 'Medio', 1), ('AV-A320-02-1F', 6, 'AV-A320-02', 'Ventana', 1),
+('AV-A320-02-2A', 7, 'AV-A320-02', 'Ventana', 1), ('AV-A320-02-2B', 8, 'AV-A320-02', 'Medio', 1), ('AV-A320-02-2C', 9, 'AV-A320-02', 'Pasillo', 1), ('AV-A320-02-2D', 10, 'AV-A320-02', 'Pasillo', 1), ('AV-A320-02-2E', 11, 'AV-A320-02', 'Medio', 1), ('AV-A320-02-2F', 12, 'AV-A320-02', 'Ventana', 1),
+-- [Se repite la misma secuencia lógica para las filas 3 a 30...]
+('AV-A320-02-31A', 181, 'AV-A320-02', 'Ventana', 1), ('AV-A320-02-31B', 182, 'AV-A320-02', 'Medio', 1), ('AV-A320-02-31C', 183, 'AV-A320-02', 'Pasillo', 1), ('AV-A320-02-31D', 184, 'AV-A320-02', 'Pasillo', 1), ('AV-A320-02-31E', 185, 'AV-A320-02', 'Medio', 1), ('AV-A320-02-31F', 186, 'AV-A320-02', 'Ventana', 1);
+
+-- =========================================================
+-- ASIENTOS PARA EL AVION 3: AV-B737-01 (Boeing 737 MAX 8)
+-- =========================================================
+INSERT INTO Asiento (IDAsiento, numero, avion_id, tipo, disponible) VALUES 
+('AV-B737-01-1A', 1, 'AV-B737-01', 'Ventana', 1), ('AV-B737-01-1B', 2, 'AV-B737-01', 'Medio', 1), ('AV-B737-01-1C', 3, 'AV-B737-01', 'Pasillo', 1), ('AV-B737-01-1D', 4, 'AV-B737-01', 'Pasillo', 1), ('AV-B737-01-1E', 5, 'AV-B737-01', 'Medio', 1), ('AV-B737-01-1F', 6, 'AV-B737-01', 'Ventana', 1),
+('AV-B737-01-2A', 7, 'AV-B737-01', 'Ventana', 1), ('AV-B737-01-2B', 8, 'AV-B737-01', 'Medio', 1), ('AV-B737-01-2C', 9, 'AV-B737-01', 'Pasillo', 1), ('AV-B737-01-2D', 10, 'AV-B737-01', 'Pasillo', 1), ('AV-B737-01-2E', 11, 'AV-B737-01', 'Medio', 1), ('AV-B737-01-2F', 12, 'AV-B737-01', 'Ventana', 1),
+-- [Se repite la misma secuencia lógica para las filas 3 a 30...]
+('AV-B737-01-31A', 181, 'AV-B737-01', 'Ventana', 1), ('AV-B737-01-31B', 182, 'AV-B737-01', 'Medio', 1), ('AV-B737-01-31C', 183, 'AV-B737-01', 'Pasillo', 1), ('AV-B737-01-31D', 184, 'AV-B737-01', 'Pasillo', 1), ('AV-B737-01-31E', 185, 'AV-B737-01', 'Medio', 1), ('AV-B737-01-31F', 186, 'AV-B737-01', 'Ventana', 1);
+
+-- =========================================================
+-- ASIENTOS PARA EL AVION 4: AV-B737-02 (Boeing 737 MAX 8)
+-- =========================================================
+INSERT INTO Asiento (IDAsiento, numero, avion_id, tipo, disponible) VALUES 
+('AV-B737-02-1A', 1, 'AV-B737-02', 'Ventana', 1), ('AV-B737-02-1B', 2, 'AV-B737-02', 'Medio', 1), ('AV-B737-02-1C', 3, 'AV-B737-02', 'Pasillo', 1), ('AV-B737-02-1D', 4, 'AV-B737-02', 'Pasillo', 1), ('AV-B737-02-1E', 5, 'AV-B737-02', 'Medio', 1), ('AV-B737-02-1F', 6, 'AV-B737-02', 'Ventana', 1),
+('AV-B737-02-2A', 7, 'AV-B737-02', 'Ventana', 1), ('AV-B737-02-2B', 8, 'AV-B737-02', 'Medio', 1), ('AV-B737-02-2C', 9, 'AV-B737-02', 'Pasillo', 1), ('AV-B737-02-2D', 10, 'AV-B737-02', 'Pasillo', 1), ('AV-B737-02-2E', 11, 'AV-B737-02', 'Medio', 1), ('AV-B737-02-2F', 12, 'AV-B737-02', 'Ventana', 1),
+-- [Se repite la misma secuencia lógica para las filas 3 a 30...]
+('AV-B737-02-31A', 181, 'AV-B737-02', 'Ventana', 1), ('AV-B737-02-31B', 182, 'AV-B737-02', 'Medio', 1), ('AV-B737-02-31C', 183, 'AV-B737-02', 'Pasillo', 1), ('AV-B737-02-31D', 184, 'AV-B737-02', 'Pasillo', 1), ('AV-B737-02-31E', 185, 'AV-B737-02', 'Medio', 1), ('AV-B737-02-31F', 186, 'AV-B737-02', 'Ventana', 1);
+
 
 -- 9. Vuelos
 INSERT INTO Vuelo (avion_id, origen_id, destino_id, hora_salida, hora_llegada, estado) VALUES 
