@@ -746,6 +746,7 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-B737-01-31D', '31D', 'AV-B737-01', 'Pasillo', 1),
 ('AV-B737-01-31E', '31E', 'AV-B737-01', 'Medio', 1),
 ('AV-B737-01-31F', '31F', 'AV-B737-01', 'Ventana', 1);
+
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-B737-02-1A', '1A', 'AV-B737-02', 'Ventana', 1),
 ('AV-B737-02-1B', '1B', 'AV-B737-02', 'Medio', 1),
@@ -933,29 +934,3 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-B737-02-31D', '31D', 'AV-B737-02', 'Pasillo', 1),
 ('AV-B737-02-31E', '31E', 'AV-B737-02', 'Medio', 1),
 ('AV-B737-02-31F', '31F', 'AV-B737-02', 'Ventana', 1);
-
--- 9. Vuelos
-INSERT INTO Vuelo (avion_id, origen_id, destino_id, hora_salida, hora_llegada, estado) VALUES 
-('AV-001', 1, 2, '2026-10-20 08:00:00', '2026-10-20 10:15:00', 'A Tiempo'),
-('AV-002', 2, 3, '2026-10-21 14:00:00', '2026-10-21 19:30:00', 'Volando');
-
--- 10. Boletos
-INSERT INTO Boleto (pasajero_id, vuelo_id, asiento_id, fecha, precio_base) VALUES 
-(1, 1, 'AV001-A1', '2026-09-15 10:00:00', 150.00),
-(2, 2, 'AV002-B1', '2026-09-15 10:30:00', 220.00);
-
--- 11. Relación Boleto y Servicios contratados
-INSERT INTO Boleto_Servicio (boleto_id, servicio_id) VALUES 
-(1, 1), -- Juan Perez contrató Equipaje Extra
-(1, 2), -- Juan Perez contrató Embarque Prioritario
-(2, 3); -- Maria Gomez contrató Menú Premium
-
--- 12. Pagos (Cálculos basados en el precio base y los servicios de arriba)
-INSERT INTO Pago (pasajero_id, boleto_id, costo_servicios, costo_total) VALUES 
-(1, 1, 40.00, 190.00), -- 150 base + 25 equipaje + 15 embarque
-(2, 2, 12.50, 232.50); -- 220 base + 12.50 menú
-
--- 13. Check-In
-INSERT INTO CheckIn (vuelo_id, pago_id, puerta_embarque) VALUES 
-(1, 1, 'A03'),
-(2, 2, 'B11');
