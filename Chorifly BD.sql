@@ -141,7 +141,6 @@ create table CheckIn (
 INSERT INTO Departamento (nombre, tipo) VALUES 
 ('Pilot', 'Aéreo'),
 ('Seguridad', 'Terrestre'),
-('Encargado del equipaje', 'Terrestre'),
 ('Check-in', 'Terrestre');
 
 INSERT INTO Aeropuerto (nombre, pais, ciudad) VALUES 
@@ -181,10 +180,10 @@ INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, sueldo, 
 ('David', 'Quintanilla', '40222333', 5500.00, 1, 5, 5),
 ('Martín', 'Pérez Disalvo', '38333444', 1800.00, 2, 1, 6),
 ('Gonzalo', 'Banzas', '38444555', 1800.00, 2, 1, 7),
-('Gerónimo', 'Benavides', '37555666', 1500.00, 3, 3, 8),
+('Gerónimo', 'Benavides', '37555666', 1500.00, 1, 3, 8),
 ('Bruno', 'Kr Kr Kr', '41666777', 1500.00, 3, 3, 9),
-('Galileo', 'Caro', '41777888', 1600.00, 4, 6, 10),
-('Joaquín', 'López', '40888999', 1600.00, 4, 6, 11);
+('Galileo', 'Caro', '41777888', 1600.00, 3, 6, 10),
+('Joaquín', 'López', '40888999', 1600.00, 3, 6, 11);
 
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-A320-01-1A', '1A', 'AV-A320-01', 'Ventana', 1),
