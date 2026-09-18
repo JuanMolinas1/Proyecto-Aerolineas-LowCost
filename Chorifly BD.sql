@@ -35,22 +35,25 @@ create table Servicio (
 
 create table Usuario(
     IDUsuario            int auto_increment primary key,
-    nombre_usuario       varchar (30),
-    email                varchar (40),
-    contraseña_usuario   varchar (15),
+    nombre_usuario       varchar (30) not null,
+    email                varchar (40) not null,
+    contraseña_usuario   varchar (15) not null,
     privilegios_empleado boolean
 );
 
 
 create table Pasajero (
-    IDPasajero        int auto_increment primary key,
-    nombre_pasajero   varchar (30),
-    apellido_pasajero varchar (30),
-    dni_pasajero      char (8),
-    telefono          char (10),
+    id_pasajero       int auto_increment primary key,
+    nombre_pasajero   varchar(50),
+    apellido_pasajero varchar(50),
+    dni_pasajero      varchar(15),
+    telefono          varchar(20),
     fecha_nacimiento  date,
+    nro_pasaporte     varchar(20),
+    pais_emision      char(3),
+    vencimiento_pasaporte date,
     usuario_id        int,
-    foreign key (usuario_id) references Usuario (IDUsuario)
+    foreign key (usuario_id) references usuario (id_usuario)
 );
 
 
