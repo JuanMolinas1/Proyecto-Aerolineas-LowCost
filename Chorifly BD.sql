@@ -48,7 +48,7 @@ create table Pasajero (
     apellido_pasajero varchar (30),
     dni_pasajero      char (8),
     telefono          char (10),
-    fecha_nacimiento  datetime,
+    fecha_nacimiento  date,
     usuario_id        int,
     foreign key (usuario_id) references Usuario (IDUsuario)
 );
