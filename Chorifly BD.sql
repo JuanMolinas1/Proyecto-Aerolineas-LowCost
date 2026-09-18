@@ -36,6 +36,7 @@ create table Servicio (
 create table Usuario(
     IDUsuario            int auto_increment primary key,
     nombre_usuario       varchar (30),
+    email                varchar (40),
     contraseña_usuario   varchar (15),
     privilegios_empleado boolean
 );
@@ -47,7 +48,6 @@ create table Pasajero (
     apellido_pasajero varchar (30),
     dni_pasajero      char (8),
     telefono          char (10),
-    email             varchar (40),
     fecha_nacimiento  datetime,
     usuario_id        int,
     foreign key (usuario_id) references Usuario (IDUsuario)
@@ -162,16 +162,16 @@ INSERT INTO Servicio (nombre_servicio, precio, descripcion) VALUES
 ('Embarque Prioritario', 10000.00, 'Permite entrar primero al avión.'),
 ('Menú Premium', 20000.00, 'Ofrece un menú con comidas y bebidas para consumir durante el viaje.');
 
-INSERT INTO Usuario (nombre_usuario, contraseña_usuario, privilegios_empleado) VALUES 
-('Chorifly_Admin', 'Choriflyadmin1@!', True),
-('la_cobra', 'Cobra123!', True),
-('davo_xeneize', 'Davo123!', True),
-('coscu_army', 'Coscu123!', True),
-('goncho_batan', 'Goncho123!', True),
-('momo_gero', 'Momo123!', True),
-('brunenger_ok', 'Brunenger123!', True),
-('pimpeano_in', 'Pimpe123!', True),
-('joaco_lopez', 'Joaco123!', True);
+INSERT INTO Usuario (nombre_usuario, email, contraseña_usuario, privilegios_empleado) VALUES 
+('Chorifly_Admin', 'admin@chorifly.com', 'Choriflyadmin1@!', True),
+('la_cobra', 'lacobra@gmail.com', 'Cobra123!', True),
+('davo_xeneize', 'davoxeneize@gmail.com', 'Davo123!', True),
+('coscu_army', 'coscuarmy@gmail.com', 'Coscu123!', True),
+('goncho_batan', 'gonchobatan@gmail.com', 'Goncho123!', True),
+('momo_gero', 'momogero@gmail.com', 'Momo123!', True),
+('brunenger_ok', 'brunengerok@gmail.com', 'Brunenger123!', True),
+('pimpeano_in', 'pimpeanoin@gmail.com', 'Pimpe123!', True),
+('joaco_lopez', 'joacolopez@gmail.com', 'Joaco123!', True);
 
 INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, sueldo, departamento_id, aeropuerto_id, usuario_id) VALUES 
 ('Lautaro', 'del Campo', '40111222', 5500.00, 1, 5, 4),
