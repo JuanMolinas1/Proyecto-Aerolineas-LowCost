@@ -124,6 +124,7 @@ create table Pago (
     boleto_id       int,
     costo_servicios decimal (10, 2),
     costo_total     decimal (10, 2),
+    estado          enum("Pagado", "Pendiente", "Cancelado", "Robado", "Fiado", "Reducido", "Detenido", "Devuelto"),
     foreign key (pasajero_id) references Pasajero (IDPasajero),
     foreign key (boleto_id)   references Boleto   (IDBoleto)
 );
@@ -131,11 +132,15 @@ create table Pago (
 
 create table CheckIn (
     IDCheckin       int auto_increment primary key,
+    pasajero_id     int,
+    boleto_id       int,
     vuelo_id        int,
     pago_id         int,
     puerta_embarque char (3),
-    foreign key (vuelo_id) references Vuelo (IDVuelo),
-    foreign key (pago_id)  references Pago  (IDPago)
+    foreign key (pasajero_id) references Pasajero (IDPasajero),
+    foreign key (boleto_id)   references Boleto   (IDBoleto),
+    foreign key (vuelo_id)    references Vuelo    (IDVuelo),
+    foreign key (pago_id)     references Pago     (IDPago)
 );
 
 INSERT INTO Departamento (nombre, tipo) VALUES 
@@ -162,7 +167,8 @@ INSERT INTO Avion (IDAvion, modelo, capacidad) VALUES
 INSERT INTO Servicio (nombre_servicio, precio, descripcion) VALUES 
 ('Equipaje Extra', 16700.00, 'Permite llevar hasta 2 valijas extra, una en la bodega y otra en la guantera.'),
 ('Embarque Prioritario', 10000.00, 'Permite entrar primero al avión.'),
-('Menú Premium', 20000.00, 'Ofrece un menú con comidas y bebidas para consumir durante el viaje.');
+('Menú Premium', 20000.00, 'Ofrece un menú con comidas y bebidas para consumir durante el viaje.'),
+('Selección de Asiento', 15000, 'Permite elegir tu asiento y que no te sea seleccionado de forma aleatoria');
 
 INSERT INTO Usuario (nombre_usuario, email, contraseña_usuario, privilegios_empleado) VALUES 
 ('Chorifly_Admin', 'admin@chorifly.com', 'Choriflyadmin1@!', True),
