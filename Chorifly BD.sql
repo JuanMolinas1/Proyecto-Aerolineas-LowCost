@@ -37,13 +37,13 @@ create table Usuario(
     IDUsuario            int auto_increment primary key,
     nombre_usuario       varchar (30) not null,
     email                varchar (40) not null,
-    contraseña_usuario   varchar (15) not null,
+    contraseña_usuario   varchar (30) not null,
     privilegios_empleado boolean
 );
 
 
 create table Pasajero (
-    id_pasajero       int auto_increment primary key,
+    IDPasajero       int auto_increment primary key,
     nombre_pasajero   varchar(50),
     apellido_pasajero varchar(50),
     dni_pasajero      varchar(15),
@@ -53,7 +53,7 @@ create table Pasajero (
     pais_emision      char(3),
     vencimiento_pasaporte date,
     usuario_id        int,
-    foreign key (usuario_id) references usuario (id_usuario)
+    foreign key (usuario_id) references Usuario (IDUsuario)
 );
 
 
@@ -174,22 +174,18 @@ INSERT INTO Usuario (nombre_usuario, email, contraseña_usuario, privilegios_emp
 ('Chorifly_Admin', 'admin@chorifly.com', 'Choriflyadmin1@!', True),
 ('la_cobra', 'lacobra@gmail.com', 'Cobra123!', True),
 ('davo_xeneize', 'davoxeneize@gmail.com', 'Davo123!', True),
-('coscu_army', 'coscuarmy@gmail.com', 'Coscu123!', True),
 ('goncho_batan', 'gonchobatan@gmail.com', 'Goncho123!', True),
 ('momo_gero', 'momogero@gmail.com', 'Momo123!', True),
 ('brunenger_ok', 'brunengerok@gmail.com', 'Brunenger123!', True),
-('pimpeano_in', 'pimpeanoin@gmail.com', 'Pimpe123!', True),
-('joaco_lopez', 'joacolopez@gmail.com', 'Joaco123!', True);
+('pimpeano_in', 'pimpeanoin@gmail.com', 'Pimpe123!', True);
 
 INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, sueldo, departamento_id, aeropuerto_id, usuario_id) VALUES 
-('Lautaro', 'del Campo', '40111222', 5500.00, 1, 5, 4),
-('David', 'Quintanilla', '40222333', 5500.00, 1, 5, 5),
-('Martín', 'Pérez Disalvo', '38333444', 1800.00, 2, 1, 6),
-('Gonzalo', 'Banzas', '38444555', 1800.00, 2, 1, 7),
-('Gerónimo', 'Benavides', '37555666', 1500.00, 1, 3, 8),
-('Bruno', 'Kr Kr Kr', '41666777', 1500.00, 3, 3, 9),
-('Galileo', 'Caro', '41777888', 1600.00, 3, 6, 10),
-('Joaquín', 'López', '40888999', 1600.00, 3, 6, 11);
+('Lautaro', 'del Campo', '40555444', 3500.00, 2, 5, 2),
+('David', 'Quintanilla', '40222333', 4000.00, 1, 5, 3),
+('Gonzalo', 'Banzas', '38444555', 1800.00, 2, 1, 4),
+('Gerónimo', 'Benavides', '37555666', 1500.00, 1, 3, 5),
+('Bruno', 'Kr Kr Kr', '41666777', 1500.00, 3, 3, 6),
+('Lautaro', 'Pimpeano', '40111222', 5500.00, 1, 5, 7);
 
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-A320-01-1A', '1A', 'AV-A320-01', 'Ventana', 1),
