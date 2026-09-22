@@ -144,7 +144,7 @@ create table CheckIn (
 );
 
 INSERT INTO Departamento (nombre, tipo) VALUES 
-('Pilot', 'Aéreo'),
+('Piloto', 'Aéreo'),
 ('Seguridad', 'Terrestre'),
 ('Check-in', 'Terrestre');
 
