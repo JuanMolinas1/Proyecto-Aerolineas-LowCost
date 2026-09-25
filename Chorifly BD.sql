@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS Chorifly;
 CREATE DATABASE Chorifly;
 USE Chorifly;
 
@@ -70,7 +69,7 @@ CREATE TABLE Asiento (
     avion_id VARCHAR(30),
     tipo ENUM("Ventana", "Medio", "Pasillo") NOT NULL,
     disponible BOOLEAN,
-    FOREIGN KEY (avion_id) REFERENCES Avion (IDAvion),
+    FOREIGN KEY (avion_id) REFERENCES Avion (IDAvion)
 );
 
 CREATE TABLE Vuelo (
@@ -95,7 +94,7 @@ CREATE TABLE Boleto (
     precio_base DECIMAL(10, 2),
     FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero),
     FOREIGN KEY (vuelo_id) REFERENCES Vuelo (IDVuelo),
-    FOREIGN KEY (asiento_id) REFERENCES Asiento (IDAsiento),
+    FOREIGN KEY (asiento_id) REFERENCES Asiento (IDAsiento)
 );
 
 CREATE TABLE Boleto_Servicio (
@@ -146,10 +145,10 @@ INSERT INTO Aeropuerto (nombre, pais, ciudad) VALUES
 ('Aeropuerto Internacional Faraón', 'Perú', 'Lima');
 
 INSERT INTO Avion (IDAvion, modelo, capacidad) VALUES 
-('AV-A320-01', 'Airbus A320neo', 186),
-('AV-A320-02', 'Airbus A320neo', 186),
-('AV-B737-01', 'Boeing 737 MAX 8', 186),
-('AV-B737-02', 'Boeing 737 MAX 8', 186);
+('AV-A320-01', 'Airbus A320neo', 180),
+('AV-A320-02', 'Airbus A320neo', 180),
+('AV-B737-01', 'Boeing 737 MAX 8', 180),
+('AV-B737-02', 'Boeing 737 MAX 8', 180);
 
 INSERT INTO Servicio (nombre_servicio, precio, descripcion) VALUES 
 ('Equipaje Extra', 16700.00, 'Permite llevar hasta 2 valijas extra, una en la bodega y otra en la guantera.'),
@@ -354,13 +353,7 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-A320-01-30C', '30C', 'AV-A320-01', 'Pasillo', 1),
 ('AV-A320-01-30D', '30D', 'AV-A320-01', 'Pasillo', 1),
 ('AV-A320-01-30E', '30E', 'AV-A320-01', 'Medio', 1),
-('AV-A320-01-30F', '30F', 'AV-A320-01', 'Ventana', 1),
-('AV-A320-01-31A', '31A', 'AV-A320-01', 'Ventana', 1),
-('AV-A320-01-31B', '31B', 'AV-A320-01', 'Medio', 1),
-('AV-A320-01-31C', '31C', 'AV-A320-01', 'Pasillo', 1),
-('AV-A320-01-31D', '31D', 'AV-A320-01', 'Pasillo', 1),
-('AV-A320-01-31E', '31E', 'AV-A320-01', 'Medio', 1),
-('AV-A320-01-31F', '31F', 'AV-A320-01', 'Ventana', 1);
+('AV-A320-01-30F', '30F', 'AV-A320-01', 'Ventana', 1);
 
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-A320-02-1A', '1A', 'AV-A320-02', 'Ventana', 1),
@@ -542,13 +535,7 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-A320-02-30C', '30C', 'AV-A320-02', 'Pasillo', 1),
 ('AV-A320-02-30D', '30D', 'AV-A320-02', 'Pasillo', 1),
 ('AV-A320-02-30E', '30E', 'AV-A320-02', 'Medio', 1),
-('AV-A320-02-30F', '30F', 'AV-A320-02', 'Ventana', 1),
-('AV-A320-02-31A', '31A', 'AV-A320-02', 'Ventana', 1),
-('AV-A320-02-31B', '31B', 'AV-A320-02', 'Medio', 1),
-('AV-A320-02-31C', '31C', 'AV-A320-02', 'Pasillo', 1),
-('AV-A320-02-31D', '31D', 'AV-A320-02', 'Pasillo', 1),
-('AV-A320-02-31E', '31E', 'AV-A320-02', 'Medio', 1),
-('AV-A320-02-31F', '31F', 'AV-A320-02', 'Ventana', 1);
+('AV-A320-02-30F', '30F', 'AV-A320-02', 'Ventana', 1);
 
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-B737-01-1A', '1A', 'AV-B737-01', 'Ventana', 1),
@@ -730,13 +717,7 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-B737-01-30C', '30C', 'AV-B737-01', 'Pasillo', 1),
 ('AV-B737-01-30D', '30D', 'AV-B737-01', 'Pasillo', 1),
 ('AV-B737-01-30E', '30E', 'AV-B737-01', 'Medio', 1),
-('AV-B737-01-30F', '30F', 'AV-B737-01', 'Ventana', 1),
-('AV-B737-01-31A', '31A', 'AV-B737-01', 'Ventana', 1),
-('AV-B737-01-31B', '31B', 'AV-B737-01', 'Medio', 1),
-('AV-B737-01-31C', '31C', 'AV-B737-01', 'Pasillo', 1),
-('AV-B737-01-31D', '31D', 'AV-B737-01', 'Pasillo', 1),
-('AV-B737-01-31E', '31E', 'AV-B737-01', 'Medio', 1),
-('AV-B737-01-31F', '31F', 'AV-B737-01', 'Ventana', 1);
+('AV-B737-01-30F', '30F', 'AV-B737-01', 'Ventana', 1);
 
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-B737-02-1A', '1A', 'AV-B737-02', 'Ventana', 1),
@@ -918,10 +899,4 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-B737-02-30C', '30C', 'AV-B737-02', 'Pasillo', 1),
 ('AV-B737-02-30D', '30D', 'AV-B737-02', 'Pasillo', 1),
 ('AV-B737-02-30E', '30E', 'AV-B737-02', 'Medio', 1),
-('AV-B737-02-30F', '30F', 'AV-B737-02', 'Ventana', 1),
-('AV-B737-02-31A', '31A', 'AV-B737-02', 'Ventana', 1),
-('AV-B737-02-31B', '31B', 'AV-B737-02', 'Medio', 1),
-('AV-B737-02-31C', '31C', 'AV-B737-02', 'Pasillo', 1),
-('AV-B737-02-31D', '31D', 'AV-B737-02', 'Pasillo', 1),
-('AV-B737-02-31E', '31E', 'AV-B737-02', 'Medio', 1),
-('AV-B737-02-31F', '31F', 'AV-B737-02', 'Ventana', 1);
+('AV-B737-02-30F', '30F', 'AV-B737-02', 'Ventana', 1);
