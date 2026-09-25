@@ -1,146 +1,133 @@
-drop database if exists Chorifly;
-create database         Chorifly;
-use                     Chorifly;
+DROP DATABASE IF EXISTS Chorifly;
+CREATE DATABASE Chorifly;
+USE Chorifly;
 
-
-create table Aeropuerto (
-    IDAeropuerto  int auto_increment primary key,
-    nombre        varchar (120),
-    pais          varchar (30),
-    ciudad        varchar (80)
+CREATE TABLE Aeropuerto (
+    IDAeropuerto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(120) UNIQUE,
+    pais VARCHAR(30),
+    ciudad VARCHAR(80)
 );
 
-
-create table Avion (
-    IDAvion   varchar (30) primary key,
-    modelo    varchar (50),
-    capacidad int
+CREATE TABLE Avion (
+    IDAvion VARCHAR(30) PRIMARY KEY,
+    modelo VARCHAR(50),
+    capacidad INT
 );
 
-
-create table Departamento (
-    IDDepartamento int auto_increment primary key,
-    nombre         varchar (100),
-    tipo           enum("Aéreo", "Terrestre") default "Terrestre"
+CREATE TABLE Departamento (
+    IDDepartamento INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) UNIQUE,
+    tipo ENUM("Aéreo", "Terrestre") DEFAULT "Terrestre"
 );
 
-
-create table Servicio (
-    IDServicio      int auto_increment primary key,
-    nombre_servicio varchar (20),
-    precio          decimal (10, 2),
-    descripcion     varchar (120)
+CREATE TABLE Servicio (
+    IDServicio INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_servicio VARCHAR(20) UNIQUE,
+    precio DECIMAL(10, 2),
+    descripcion VARCHAR(120)
 );
 
-
-create table Usuario(
-    IDUsuario            int auto_increment primary key,
-    nombre_usuario       varchar (30) not null,
-    email                varchar (40) not null,
-    contraseña_usuario   varchar (30) not null,
-    privilegios_empleado boolean
+CREATE TABLE Usuario (
+    IDUsuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(30) NOT NULL UNIQUE,
+    email VARCHAR(40) NOT NULL UNIQUE,
+    contraseña_usuario VARCHAR(30) NOT NULL,
+    privilegios_empleado BOOLEAN
 );
 
-
-create table Pasajero (
-    IDPasajero       int auto_increment primary key,
-    nombre_pasajero   varchar(50),
-    apellido_pasajero varchar(50),
-    dni_pasajero      varchar(15),
-    telefono          varchar(20),
-    fecha_nacimiento  date,
-    nro_pasaporte     varchar(20),
-    pais_emision      char(3),
-    vencimiento_pasaporte date,
-    usuario_id        int,
-    foreign key (usuario_id) references Usuario (IDUsuario)
+CREATE TABLE Pasajero (
+    IDPasajero INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_pasajero VARCHAR(50),
+    apellido_pasajero VARCHAR(50),
+    dni_pasajero VARCHAR(15) UNIQUE,
+    telefono VARCHAR(20),
+    fecha_nacimiento DATE,
+    nro_pasaporte VARCHAR(20) UNIQUE,
+    pais_emision CHAR(3),
+    vencimiento_pasaporte DATE,
+    usuario_id INT UNIQUE,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario (IDUsuario)
 );
 
-
-create table Empleado (
-    IDEmpleado        int auto_increment primary key,
-    nombre_empleado   varchar (30),
-    apellido_empleado varchar (30),
-    dni_empleado      char (8),
-    sueldo            decimal (10, 2),
-    departamento_id   int,
-    aeropuerto_id     int,
-    usuario_id        int,
-    foreign key (departamento_id) references Departamento (IDDepartamento),
-    foreign key (aeropuerto_id)   references Aeropuerto   (IDAeropuerto),
-    foreign key (usuario_id)      references Usuario      (IDUsuario)
+CREATE TABLE Empleado (
+    IDEmpleado INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_empleado VARCHAR(30),
+    apellido_empleado VARCHAR(30),
+    dni_empleado CHAR(8) UNIQUE,
+    sueldo DECIMAL(10, 2),
+    departamento_id INT,
+    aeropuerto_id INT,
+    usuario_id INT UNIQUE,
+    FOREIGN KEY (departamento_id) REFERENCES Departamento (IDDepartamento),
+    FOREIGN KEY (aeropuerto_id) REFERENCES Aeropuerto (IDAeropuerto),
+    FOREIGN KEY (usuario_id) REFERENCES Usuario (IDUsuario)
 );
 
-
-create table Asiento (
-    IDAsiento  varchar (50) primary key,
-    codigo     varchar(5),
-    avion_id   varchar (30),
-    tipo enum("Ventana", "Medio", "Pasillo") not null,
-    disponible boolean,
-    foreign key (avion_id) references Avion (IDAvion)
+CREATE TABLE Asiento (
+    IDAsiento VARCHAR(50) PRIMARY KEY,
+    codigo VARCHAR(5),
+    avion_id VARCHAR(30),
+    tipo ENUM("Ventana", "Medio", "Pasillo") NOT NULL,
+    disponible BOOLEAN,
+    FOREIGN KEY (avion_id) REFERENCES Avion (IDAvion),
 );
 
-
-create table Vuelo (
-    IDVuelo      int auto_increment primary key,
-    avion_id     varchar (30),
-    origen_id    int,
-    destino_id   int,
-    fecha_hora_salida  datetime,
-    fecha_hora_llegada datetime,
-    estado       enum("Completado", "Volando", "A Tiempo", "Atrasado", "Cancelado", "Choco", "Exploto", "Perdido"),
-    foreign key (avion_id)   references Avion      (IDAvion),
-    foreign key (origen_id)  references Aeropuerto (IDAeropuerto),
-    foreign key (destino_id) references Aeropuerto (IDAeropuerto)
+CREATE TABLE Vuelo (
+    IDVuelo INT AUTO_INCREMENT PRIMARY KEY,
+    avion_id VARCHAR(30),
+    origen_id INT,
+    destino_id INT,
+    fecha_hora_salida DATETIME,
+    fecha_hora_llegada DATETIME,
+    estado ENUM("Completado", "Volando", "A Tiempo", "Atrasado", "Cancelado", "Choco", "Exploto", "Perdido"),
+    FOREIGN KEY (avion_id) REFERENCES Avion (IDAvion),
+    FOREIGN KEY (origen_id) REFERENCES Aeropuerto (IDAeropuerto),
+    FOREIGN KEY (destino_id) REFERENCES Aeropuerto (IDAeropuerto)
 );
 
-
-create table Boleto (
-    IDBoleto    int auto_increment primary key,
-    pasajero_id int,
-    vuelo_id    int,
-    asiento_id  varchar (50),
-    fecha       datetime,
-    precio_base decimal (10, 2),
-    foreign key (pasajero_id) references Pasajero (IDPasajero),
-    foreign key (vuelo_id)    references Vuelo    (IDVuelo),
-    foreign key (asiento_id)  references Asiento  (IDAsiento)
+CREATE TABLE Boleto (
+    IDBoleto INT AUTO_INCREMENT PRIMARY KEY,
+    pasajero_id INT,
+    vuelo_id INT,
+    asiento_id VARCHAR(50),
+    fecha DATETIME,
+    precio_base DECIMAL(10, 2),
+    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero),
+    FOREIGN KEY (vuelo_id) REFERENCES Vuelo (IDVuelo),
+    FOREIGN KEY (asiento_id) REFERENCES Asiento (IDAsiento),
 );
 
-
-create table Boleto_Servicio (
-    boleto_id   int,
-    servicio_id int,
-    primary key (boleto_id, servicio_id),
-    foreign key (boleto_id)   references Boleto   (IDBoleto),
-    foreign key (servicio_id) references Servicio (IDServicio)
+CREATE TABLE Boleto_Servicio (
+    boleto_id INT,
+    servicio_id INT,
+    PRIMARY KEY (boleto_id, servicio_id),
+    FOREIGN KEY (boleto_id) REFERENCES Boleto (IDBoleto),
+    FOREIGN KEY (servicio_id) REFERENCES Servicio (IDServicio)
 );
 
-
-create table Pago (
-    IDPago          int auto_increment primary key,
-    pasajero_id     int,
-    boleto_id       int,
-    costo_servicios decimal (10, 2),
-    costo_total     decimal (10, 2),
-    estado          enum("Pagado", "Pendiente", "Cancelado", "Robado", "Fiado", "Reducido", "Detenido", "Devuelto"),
-    foreign key (pasajero_id) references Pasajero (IDPasajero),
-    foreign key (boleto_id)   references Boleto   (IDBoleto)
+CREATE TABLE Pago (
+    IDPago INT AUTO_INCREMENT PRIMARY KEY,
+    pasajero_id INT,
+    boleto_id INT UNIQUE,
+    costo_servicios DECIMAL(10, 2),
+    costo_total DECIMAL(10, 2),
+    estado ENUM("Pagado", "Pendiente", "Cancelado", "Robado", "Fiado", "Reducido", "Detenido", "Devuelto"),
+    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero),
+    FOREIGN KEY (boleto_id) REFERENCES Boleto (IDBoleto)
 );
 
-
-create table CheckIn (
-    IDCheckin       int auto_increment primary key,
-    pasajero_id     int,
-    boleto_id       int,
-    vuelo_id        int,
-    pago_id         int,
-    puerta_embarque char (3),
-    foreign key (pasajero_id) references Pasajero (IDPasajero),
-    foreign key (boleto_id)   references Boleto   (IDBoleto),
-    foreign key (vuelo_id)    references Vuelo    (IDVuelo),
-    foreign key (pago_id)     references Pago     (IDPago)
+CREATE TABLE CheckIn (
+    IDCheckin INT AUTO_INCREMENT PRIMARY KEY,
+    pasajero_id INT,
+    boleto_id INT UNIQUE,
+    vuelo_id INT,
+    pago_id INT UNIQUE,
+    puerta_embarque CHAR(3),
+    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero),
+    FOREIGN KEY (boleto_id) REFERENCES Boleto (IDBoleto),
+    FOREIGN KEY (vuelo_id) REFERENCES Vuelo (IDVuelo),
+    FOREIGN KEY (pago_id) REFERENCES Pago (IDPago)
 );
 
 INSERT INTO Departamento (nombre, tipo) VALUES 
