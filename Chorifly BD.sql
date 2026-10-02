@@ -32,7 +32,9 @@ CREATE TABLE Usuario (
     nombre_usuario VARCHAR(30) NOT NULL UNIQUE,
     email VARCHAR(40) NOT NULL UNIQUE,
     contraseña_usuario VARCHAR(30) NOT NULL,
-    privilegios_empleado BOOLEAN NOT NULL
+    privilegios_empleado BOOLEAN NOT NULL,
+    pregunta_seguridad VARCHAR(100) NOT NULL,
+    respuesta_seguridad VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Pasajero (
