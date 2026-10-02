@@ -158,22 +158,20 @@ INSERT INTO Servicio (nombre_servicio, precio, descripcion) VALUES
 ('Menú Premium', 20000.00, 'Ofrece un menú con comidas y bebidas para consumir durante el viaje.'),
 ('Selección de Asiento', 15000, 'Permite elegir tu asiento y que no te sea seleccionado de forma aleatoria');
 
-INSERT INTO Usuario (nombre_usuario, email, contraseña_usuario, privilegios_empleado) VALUES 
-('Chorifly_Admin', 'admin@chorifly.com', 'Choriflyadmin1@!', True),
-('la_cobra', 'lacobra@gmail.com', 'Cobra123!', True),
-('davo_xeneize', 'davoxeneize@gmail.com', 'Davo123!', True),
-('goncho_batan', 'gonchobatan@gmail.com', 'Goncho123!', True),
-('momo_gero', 'momogero@gmail.com', 'Momo123!', True),
-('brunenger_ok', 'brunengerok@gmail.com', 'Brunenger123!', True),
-('pimpeano_in', 'pimpeanoin@gmail.com', 'Pimpe123!', True);
+INSERT INTO Usuario (nombre_usuario, email, contraseña_usuario, privilegios_empleado, pregunta_seguridad, respuesta_seguridad) VALUES 
+('Chorifly_Admin', 'admin@chorifly.com', 'Choriflyadmin1@!', True, 'Nombre de primera empresa laboral', 'Chorifly SRL'),
+('la_cobra', 'lacobra@gmail.com', 'Cobra123!', True, 'Ciudad de nacimiento', 'Buenos Aires'),
+('davo_xeneize', 'davoxeneize@gmail.com', 'Davo123!', True, 'Comida favorita', 'Milanesa'),
+('goncho_batan', 'gonchobatan@gmail.com', 'Goncho123!', True, 'Nombre de mascota actual', 'Roco'),
+('momo_gero', 'momogero@gmail.com', 'Momo123!', True, 'Ciudad de nacimiento', 'La Plata'),
+('brunenger_ok', 'brunengerok@gmail.com', 'Brunenger123!', True, 'Comida favorita', 'Asado');
 
 INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, sueldo, departamento_id, aeropuerto_id, usuario_id) VALUES 
 ('Lautaro', 'del Campo', '40555444', 3500.00, 2, 5, 2),
 ('David', 'Quintanilla', '40222333', 4000.00, 1, 5, 3),
 ('Gonzalo', 'Banzas', '38444555', 1800.00, 2, 1, 4),
 ('Gerónimo', 'Benavides', '37555666', 1500.00, 1, 3, 5),
-('Bruno', 'Kr Kr Kr', '41666777', 1500.00, 3, 3, 6),
-('Lautaro', 'Pimpeano', '40111222', 5500.00, 1, 5, 7);
+('Bruno', 'Kr Kr Kr', '41666777', 1500.00, 3, 3, 6);
 
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-A320-01-1A', '1A', 'AV-A320-01', 'Ventana', 1),
