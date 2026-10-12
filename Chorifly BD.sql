@@ -81,7 +81,7 @@ CREATE TABLE Vuelo (
     destino_id INT NOT NULL,
     fecha_hora_salida DATETIME NOT NULL,
     fecha_hora_llegada DATETIME NOT NULL,
-    estado ENUM("Completado", "Volando", "A Tiempo", "Atrasado", "Cancelado", "Choco", "Exploto", "Perdido") NOT NULL,
+    estado ENUM("Completado", "Volando", "Programado", "A Tiempo", "Atrasado", "Cancelado", "Choco", "Exploto", "Perdido") NOT NULL,
     FOREIGN KEY (avion_id) REFERENCES Avion (IDAvion),
     FOREIGN KEY (origen_id) REFERENCES Aeropuerto (IDAeropuerto),
     FOREIGN KEY (destino_id) REFERENCES Aeropuerto (IDAeropuerto)
