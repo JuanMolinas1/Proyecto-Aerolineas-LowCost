@@ -1,3 +1,4 @@
+DROP DATABASE IF exists Chorifly;
 CREATE DATABASE Chorifly;
 USE Chorifly;
 
@@ -56,6 +57,7 @@ CREATE TABLE Empleado (
     nombre_empleado VARCHAR(30) NOT NULL,
     apellido_empleado VARCHAR(30) NOT NULL,
     dni_empleado CHAR(8) NOT NULL UNIQUE,
+    telefono VARCHAR(20) NOT NULL,
     sueldo DECIMAL(10, 2) NOT NULL,
     departamento_id INT NOT NULL,
     aeropuerto_id INT NOT NULL,
@@ -166,12 +168,13 @@ INSERT INTO Usuario (nombre_usuario, email, contraseña_usuario, privilegios_emp
 ('momo_gero', 'momogero@gmail.com', 'Momo123!', True, 'Ciudad de nacimiento', 'La Plata'),
 ('brunenger_ok', 'brunengerok@gmail.com', 'Brunenger123!', True, 'Comida favorita', 'Asado');
 
-INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, sueldo, departamento_id, aeropuerto_id, usuario_id) VALUES 
-('Lautaro', 'del Campo', '40555444', 3500.00, 2, 5, 2),
-('David', 'Quintanilla', '40222333', 4000.00, 1, 5, 3),
-('Gonzalo', 'Banzas', '38444555', 1800.00, 2, 1, 4),
-('Gerónimo', 'Benavides', '37555666', 1500.00, 1, 3, 5),
-('Bruno', 'Kr Kr Kr', '41666777', 1500.00, 3, 3, 6);
+INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, telefono, sueldo, departamento_id, aeropuerto_id, usuario_id) VALUES
+('CEOJuanMer', 'Jefe', '49112572', '1165929456', 670000.67, 1, 1, 1),
+('Lautaro', 'del Campo', '40555444', '1123456789', 3500.00, 2, 5, 2),
+('David', 'Quintanilla', '40222333', '1134567890', 4000.00, 1, 5, 3),
+('Gonzalo', 'Banzas', '38444555', '1145678901', 1800.00, 2, 1, 4),
+('Gerónimo', 'Benavides', '37555666', '1156789012', 1500.00, 1, 3, 5),
+('Bruno', 'Kr Kr Kr', '41666777', '1167890123', 1500.00, 3, 3, 6);
 
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-A320-01-01A', '01A', 'AV-A320-01', 'Ventana', 1),
@@ -900,3 +903,165 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-B737-02-30D', '30D', 'AV-B737-02', 'Pasillo', 1),
 ('AV-B737-02-30E', '30E', 'AV-B737-02', 'Medio', 1),
 ('AV-B737-02-30F', '30F', 'AV-B737-02', 'Ventana', 1);
+
+-- =========================================
+-- 1. USUARIOS DE CLIENTES
+-- privilegios_empleado = FALSE
+-- =========================================
+
+INSERT INTO Usuario (
+    nombre_usuario, email, contraseña_usuario,
+    privilegios_empleado, pregunta_seguridad, respuesta_seguridad
+) VALUES
+("oppenjuamer","juanmer@gmail.com","32157Juan!", FALSE, "Color Favorito", "Dortmund"),
+
+('mateo_arg', 'mateo.arg@gmail.com', 'Mateo123!',
+ FALSE, 'Comida favorita', 'Milanesa'),
+('sofia_bra', 'sofia.bra@gmail.com', 'Sofia123!',
+ FALSE, 'Ciudad de nacimiento', 'São Paulo'),
+('diego_mex', 'diego.mex@gmail.com', 'Diego123!',
+ FALSE, 'Nombre de mascota', 'Luna'),
+('valentina_chl', 'valentina.chl@gmail.com', 'Vale123!',
+ FALSE, 'Color favorito', 'Azul'),
+('camilo_col', 'camilo.col@gmail.com', 'Camilo123!',
+ FALSE, 'Comida favorita', 'Arepas');
+
+
+-- =========================================
+-- 2. PASAJEROS
+-- usuario_id: 7, 8, 9, 10 y 11
+-- =========================================
+
+INSERT INTO Pasajero (
+    nombre_pasajero, apellido_pasajero, dni_pasajero,
+    telefono, fecha_nacimiento, nro_pasaporte,
+    pais_emision, vencimiento_pasaporte, usuario_id
+) VALUES
+('Mateo', 'González', '45111222', '+5491123456789',
+ '2002-04-12', 'ARG123456', 'ARG', '2030-04-12', 7),
+
+('Sofia', 'Oliveira', 'BRA123456', '+5511987654321',
+ '1998-08-21', 'BR123456', 'BRA', '2031-08-21', 8),
+
+('Diego', 'Hernández', 'MEX123456', '+525512345678',
+ '2000-02-15', 'MX123456', 'MEX', '2030-02-15', 9),
+
+('Valentina', 'Rojas', 'CHL123456', '+56912345678',
+ '2001-11-03', 'CH123456', 'CHL', '2031-11-03', 10),
+
+('Camilo', 'Restrepo', 'COL123456', '+573001234567',
+ '1997-06-27', 'CO123456', 'COL', '2030-06-27', 11);
+
+
+-- =========================================
+-- 3. VUELOS
+-- =========================================
+
+INSERT INTO Vuelo (
+    avion_id, origen_id, destino_id,
+    fecha_hora_salida, fecha_hora_llegada, estado
+) VALUES
+('AV-A320-01', 5, 1, '2026-10-10 08:00:00',
+ '2026-10-10 10:30:00', 'Completado'),
+
+('AV-A320-02', 2, 5, '2026-10-11 12:00:00',
+ '2026-10-11 15:00:00', 'Completado'),
+
+('AV-B737-01', 3, 4, '2026-10-12 09:00:00',
+ '2026-10-12 11:00:00', 'Completado'),
+
+('AV-B737-02', 6, 8, '2026-10-13 14:00:00',
+ '2026-10-13 17:00:00', 'Completado'),
+
+('AV-A320-01', 7, 5, '2026-10-14 16:00:00',
+ '2026-10-14 20:00:00', 'Completado');
+
+
+-- =========================================
+-- 4. BOLETOS
+-- pasajero_id y vuelo_id: 1 al 5
+-- =========================================
+
+INSERT INTO Boleto (
+    pasajero_id, vuelo_id, asiento_id, fecha, precio_base
+) VALUES
+(1, 1, 'AV-A320-01-01A', '2026-10-01 10:00:00', 35000.00),
+(2, 2, 'AV-A320-02-01B', '2026-10-02 11:30:00', 45000.00),
+(3, 3, 'AV-B737-01-01C', '2026-10-03 12:00:00', 50000.00),
+(4, 4, 'AV-B737-02-01D', '2026-10-04 13:00:00', 42000.00),
+(5, 5, 'AV-A320-01-02A', '2026-10-05 14:30:00', 38000.00);
+
+
+-- =========================================
+-- 5. SERVICIOS CONTRATADOS POR BOLETO
+-- =========================================
+
+INSERT INTO Boleto_Servicio (boleto_id, servicio_id) VALUES
+(1, 1), -- Equipaje Extra
+(2, 2), -- Embarque Prioritario
+(3, 3), -- Menú Premium
+(4, 4), -- Selección de Asiento
+(5, 1); -- Equipaje Extra
+
+
+-- =========================================
+-- 6. PAGOS
+-- Los costos incluyen el precio base y el servicio
+-- =========================================
+
+INSERT INTO Pago (
+    pasajero_id, boleto_id, costo_servicios, costo_total, estado
+) VALUES
+(1, 1, 16700.00, 51700.00, 'Pagado'),
+(2, 2, 10000.00, 55000.00, 'Pagado'),
+(3, 3, 20000.00, 70000.00, 'Pagado'),
+(4, 4, 15000.00, 57000.00, 'Pagado'),
+(5, 5, 16700.00, 54700.00, 'Pagado');
+
+
+-- =========================================
+-- 7. CHECK-IN
+-- =========================================
+
+INSERT INTO CheckIn (
+    pasajero_id, boleto_id, vuelo_id,
+    pago_id, puerta_embarque
+) VALUES
+(1, 1, 1, 1, 'A01'),
+(2, 2, 2, 2, 'B02'),
+(3, 3, 3, 3, 'C03'),
+(4, 4, 4, 4, 'D04'),
+(5, 5, 5, 5, 'E05');
+
+
+-- =========================================
+-- 8. MARCAR LOS ASIENTOS COMO OCUPADOS
+-- =========================================
+
+UPDATE Asiento
+SET disponible = FALSE
+WHERE IDAsiento IN (
+    'AV-A320-01-01A',
+    'AV-A320-02-01B',
+    'AV-B737-01-01C',
+    'AV-B737-02-01D',
+    'AV-A320-01-02A'
+);
+
+UPDATE Vuelo
+SET estado = 'Programado',
+    fecha_hora_salida = '2026-10-20 10:00:00',
+    fecha_hora_llegada = '2026-10-20 13:00:00'
+WHERE IDVuelo = 1;
+
+UPDATE Vuelo
+SET estado = 'Programado',
+    fecha_hora_salida = '2026-10-21 14:00:00',
+    fecha_hora_llegada = '2026-10-21 17:00:00'
+WHERE IDVuelo = 2;
+
+UPDATE Vuelo
+SET estado = 'Programado',
+    fecha_hora_salida = '2026-10-22 09:00:00',
+    fecha_hora_llegada = '2026-10-22 12:00:00'
+WHERE IDVuelo = 3;
