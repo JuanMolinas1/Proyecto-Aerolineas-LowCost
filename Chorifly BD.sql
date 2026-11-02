@@ -905,163 +905,645 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-B737-02-30F', '30F', 'AV-B737-02', 'Ventana', 1);
 
 -- =========================================
--- 1. USUARIOS DE CLIENTES
--- privilegios_empleado = FALSE
+-- ANOTACION: PROCEDIMIENTOS DE Aeropuerto
 -- =========================================
+DELIMITER //
 
-INSERT INTO Usuario (
-    nombre_usuario, email, contraseña_usuario,
-    privilegios_empleado, pregunta_seguridad, respuesta_seguridad
-) VALUES
-("oppenjuamer","juanmer@gmail.com","32157Juan!", FALSE, "Color Favorito", "Dortmund"),
+CREATE PROCEDURE Crear_Aeropuerto(
+    IN nombre_aeropuerto_i VARCHAR(120),
+    IN pais_aeropuerto_i VARCHAR(30),
+    IN ciudad_aeropuerto_i VARCHAR(80)
+)
+BEGIN
+    INSERT INTO Aeropuerto(nombre, pais, ciudad) 
+    VALUES(nombre_aeropuerto_i, pais_aeropuerto_i, ciudad_aeropuerto_i);
+END//
 
-('mateo_arg', 'mateo.arg@gmail.com', 'Mateo123!',
- FALSE, 'Comida favorita', 'Milanesa'),
-('sofia_bra', 'sofia.bra@gmail.com', 'Sofia123!',
- FALSE, 'Ciudad de nacimiento', 'São Paulo'),
-('diego_mex', 'diego.mex@gmail.com', 'Diego123!',
- FALSE, 'Nombre de mascota', 'Luna'),
-('valentina_chl', 'valentina.chl@gmail.com', 'Vale123!',
- FALSE, 'Color favorito', 'Azul'),
-('camilo_col', 'camilo.col@gmail.com', 'Camilo123!',
- FALSE, 'Comida favorita', 'Arepas');
+DELIMITER ;
 
+DELIMITER //
 
--- =========================================
--- 2. PASAJEROS
--- usuario_id: 7, 8, 9, 10 y 11
--- =========================================
+CREATE PROCEDURE Editar_Aeropuerto(
+    IN idaeropuerto_aeropuerto_i INT,
+    IN nombre_aeropuerto_i VARCHAR(120),
+    IN pais_aeropuerto_i VARCHAR(30),
+    IN ciudad_aeropuerto_i VARCHAR(80)
+)
+BEGIN
+    UPDATE Aeropuerto
+    SET
+        nombre = COALESCE(nombre_aeropuerto_i, nombre),
+        pais = COALESCE(pais_aeropuerto_i, pais),
+        ciudad = COALESCE(ciudad_aeropuerto_i, ciudad)
+    WHERE IDAeropuerto = idaeropuerto_aeropuerto_i;
+END//
 
-INSERT INTO Pasajero (
-    nombre_pasajero, apellido_pasajero, dni_pasajero,
-    telefono, fecha_nacimiento, nro_pasaporte,
-    pais_emision, vencimiento_pasaporte, usuario_id
-) VALUES
-('Mateo', 'González', '45111222', '+5491123456789',
- '2002-04-12', 'ARG123456', 'ARG', '2030-04-12', 7),
+DELIMITER ;
 
-('Sofia', 'Oliveira', 'BRA123456', '+5511987654321',
- '1998-08-21', 'BR123456', 'BRA', '2031-08-21', 8),
+DELIMITER //
 
-('Diego', 'Hernández', 'MEX123456', '+525512345678',
- '2000-02-15', 'MX123456', 'MEX', '2030-02-15', 9),
+CREATE PROCEDURE Mostrar_Aeropuertos()
+BEGIN
+    SELECT * FROM Aeropuerto;
+END//
 
-('Valentina', 'Rojas', 'CHL123456', '+56912345678',
- '2001-11-03', 'CH123456', 'CHL', '2031-11-03', 10),
+DELIMITER ;
 
-('Camilo', 'Restrepo', 'COL123456', '+573001234567',
- '1997-06-27', 'CO123456', 'COL', '2030-06-27', 11);
+DELIMITER //
 
+CREATE PROCEDURE Buscar_Aeropuerto(
+    IN idaeropuerto_aeropuerto_i INT
+)
+BEGIN
+    SELECT * FROM Aeropuerto
+    WHERE IDAeropuerto = idaeropuerto_aeropuerto_i;
+END //
 
--- =========================================
--- 3. VUELOS
--- =========================================
+DELIMITER ;
 
-INSERT INTO Vuelo (
-    avion_id, origen_id, destino_id,
-    fecha_hora_salida, fecha_hora_llegada, estado
-) VALUES
-('AV-A320-01', 5, 1, '2026-10-10 08:00:00',
- '2026-10-10 10:30:00', 'Completado'),
+DELIMITER //
 
-('AV-A320-02', 2, 5, '2026-10-11 12:00:00',
- '2026-10-11 15:00:00', 'Completado'),
+CREATE PROCEDURE Eliminar_Aeropuerto(
+	IN idaeropuerto_aeropuerto_i INT
+)
+BEGIN
+	DELETE FROM Aeropuerto
+    WHERE IDAeropuerto = idaeropuerto_aeropuerto_i;
+END//
 
-('AV-B737-01', 3, 4, '2026-10-12 09:00:00',
- '2026-10-12 11:00:00', 'Completado'),
+DELIMITER ;
 
-('AV-B737-02', 6, 8, '2026-10-13 14:00:00',
- '2026-10-13 17:00:00', 'Completado'),
+DELIMITER //
 
-('AV-A320-01', 7, 5, '2026-10-14 16:00:00',
- '2026-10-14 20:00:00', 'Completado');
+CREATE PROCEDURE Buscar_Aeropuerto_Por_Pais(
+	IN pais_aeropuerto_i VARCHAR(30) 
+)
+BEGIN
+    SELECT * FROM Aeropuerto
+    WHERE pais = pais_aeropuerto_i;
+END //
 
+DELIMITER ;
 
--- =========================================
--- 4. BOLETOS
--- pasajero_id y vuelo_id: 1 al 5
--- =========================================
+DELIMITER //
 
-INSERT INTO Boleto (
-    pasajero_id, vuelo_id, asiento_id, fecha, precio_base
-) VALUES
-(1, 1, 'AV-A320-01-01A', '2026-10-01 10:00:00', 35000.00),
-(2, 2, 'AV-A320-02-01B', '2026-10-02 11:30:00', 45000.00),
-(3, 3, 'AV-B737-01-01C', '2026-10-03 12:00:00', 50000.00),
-(4, 4, 'AV-B737-02-01D', '2026-10-04 13:00:00', 42000.00),
-(5, 5, 'AV-A320-01-02A', '2026-10-05 14:30:00', 38000.00);
+CREATE PROCEDURE Buscar_Aeropuerto_Por_Nombre(
+	IN nombre_aeropuerto_i VARCHAR(120) 
+)
+BEGIN
+    SELECT * FROM Aeropuerto
+    WHERE nombre = nombre_aeropuerto_i;
+END //
 
+DELIMITER ;
 
--- =========================================
--- 5. SERVICIOS CONTRATADOS POR BOLETO
--- =========================================
+DELIMITER //
 
-INSERT INTO Boleto_Servicio (boleto_id, servicio_id) VALUES
-(1, 1), -- Equipaje Extra
-(2, 2), -- Embarque Prioritario
-(3, 3), -- Menú Premium
-(4, 4), -- Selección de Asiento
-(5, 1); -- Equipaje Extra
+CREATE PROCEDURE Buscar_Aeropuerto_Por_Ciudad(
+	IN ciudad_aeropuerto_i VARCHAR(80) 
+)
+BEGIN
+    SELECT * FROM Aeropuerto
+    WHERE ciudad = ciudad_aeropuerto_i;
+END //
 
+DELIMITER ;
 
--- =========================================
--- 6. PAGOS
--- Los costos incluyen el precio base y el servicio
--- =========================================
+DELIMITER //
 
-INSERT INTO Pago (
-    pasajero_id, boleto_id, costo_servicios, costo_total, estado
-) VALUES
-(1, 1, 16700.00, 51700.00, 'Pagado'),
-(2, 2, 10000.00, 55000.00, 'Pagado'),
-(3, 3, 20000.00, 70000.00, 'Pagado'),
-(4, 4, 15000.00, 57000.00, 'Pagado'),
-(5, 5, 16700.00, 54700.00, 'Pagado');
+CREATE PROCEDURE Mostrar_Nombre_Aeropuertos()
+BEGIN
+    SELECT nombre FROM Aeropuerto;
+END//
 
+DELIMITER ;
 
--- =========================================
--- 7. CHECK-IN
--- =========================================
+DELIMITER //
 
-INSERT INTO CheckIn (
-    pasajero_id, boleto_id, vuelo_id,
-    pago_id, puerta_embarque
-) VALUES
-(1, 1, 1, 1, 'A01'),
-(2, 2, 2, 2, 'B02'),
-(3, 3, 3, 3, 'C03'),
-(4, 4, 4, 4, 'D04'),
-(5, 5, 5, 5, 'E05');
+CREATE PROCEDURE Mostrar_Extras_Aeropuertos()
+BEGIN
+    SELECT IDAeropuerto, nombre FROM Aeropuerto;
+END//
+
+DELIMITER ;
 
 
 -- =========================================
--- 8. MARCAR LOS ASIENTOS COMO OCUPADOS
+-- ANOTACION: PROCEDIMIENTOS DE Avion
 -- =========================================
+DELIMITER //
 
-UPDATE Asiento
-SET disponible = FALSE
-WHERE IDAsiento IN (
-    'AV-A320-01-01A',
-    'AV-A320-02-01B',
-    'AV-B737-01-01C',
-    'AV-B737-02-01D',
-    'AV-A320-01-02A'
-);
+CREATE PROCEDURE Crear_Avion(
+    IN idavion_aereo_i VARCHAR(30),
+    IN modelo_aereo_i VARCHAR(50),
+    IN capacidad_aereo_i INT
+)
+BEGIN
+    INSERT INTO Avion(IDAvion, modelo, capacidad) 
+    VALUES(idavion_aereo_i, modelo_aereo_i, capacidad_aereo_i);
+END//
 
-UPDATE Vuelo
-SET estado = 'Programado',
-    fecha_hora_salida = '2026-10-20 10:00:00',
-    fecha_hora_llegada = '2026-10-20 13:00:00'
-WHERE IDVuelo = 1;
+DELIMITER ;
 
-UPDATE Vuelo
-SET estado = 'Programado',
-    fecha_hora_salida = '2026-10-21 14:00:00',
-    fecha_hora_llegada = '2026-10-21 17:00:00'
-WHERE IDVuelo = 2;
+DELIMITER //
 
-UPDATE Vuelo
-SET estado = 'Programado',
-    fecha_hora_salida = '2026-10-22 09:00:00',
-    fecha_hora_llegada = '2026-10-22 12:00:00'
-WHERE IDVuelo = 3;
+CREATE PROCEDURE Editar_Avion(
+    IN idavion_aereo_i VARCHAR(30),
+    IN modelo_aereo_i VARCHAR(50),
+    IN capacidad_aereo_i INT
+)
+BEGIN
+    UPDATE Avion
+    SET
+        modelo = COALESCE(modelo_aereo_i, modelo),
+        capacidad = COALESCE(capacidad_aereo_i, capacidad)
+    WHERE IDAvion = idavion_aereo_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Avion()
+BEGIN
+    SELECT * FROM Avion;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Avion(
+    IN idavion_aereo_i VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Avion
+    WHERE IDAvion = idavion_aereo_i;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Eliminar_Avion(
+	IN idavion_aereo_i VARCHAR(30)
+)
+BEGIN
+	DELETE FROM Avion
+    WHERE IDAvion = idavion_aereo_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Avion_Por_Modelo(
+    IN modelo_aereo_i VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Avion
+    WHERE modelo = modelo_aereo_i;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_ID_Aviones()
+BEGIN
+    SELECT IDAvion FROM Avion;
+END//
+
+DELIMITER ;
+
+
+-- =========================================
+-- ANOTACION: PROCEDIMIENTOS DE Asiento
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Asiento_Por_Id(
+    IN id_asiento_i VARCHAR(50)
+)
+BEGIN
+    SELECT * FROM Asiento
+    WHERE IDAsiento = id_asiento_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Asientos_Por_Avion(
+    IN id_avion_i VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Asiento
+    WHERE avion_id = id_avion_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Disponibilidad_Asientos_Por_Avion(
+    IN id_avion_i VARCHAR(30)
+)
+BEGIN
+    SELECT disponible FROM Asiento WHERE avion_id = id_avion_i;
+END//
+
+DELIMITER ;
+
+
+-- =========================================
+-- ANOTACION: PROCEDIMIENTOS DE Departamento
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE Crear_Departamento(
+    IN nombre_departamento_i VARCHAR(100),
+    IN tipo_departamento_i ENUM("Aéreo", "Terrestre")
+)
+BEGIN
+    INSERT INTO Departamento(nombre, tipo) 
+    VALUES(nombre_departamento_i, tipo_departamento_i);
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Editar_Departamento(
+    IN iddepartamento_departamento_i INT,
+    IN nombre_departamento_i VARCHAR(100),
+    IN tipo_departamento_i ENUM("Aéreo", "Terrestre")
+)
+BEGIN
+    UPDATE Departamento
+    SET
+        nombre = COALESCE(nombre_departamento_i, nombre),
+        tipo = COALESCE(tipo_departamento_i, tipo)
+    WHERE IDDepartamento = iddepartamento_departamento_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Departamento()
+BEGIN
+    SELECT * FROM Departamento;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Departamento(
+    IN iddepartamento_departamento_i INT
+)
+BEGIN
+    SELECT * FROM Departamento
+    WHERE IDDepartamento = iddepartamento_departamento_i;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Eliminar_Departamento(
+	IN iddepartamento_departamento_i INT
+)
+BEGIN
+	DELETE FROM Departamento
+    WHERE IDDepartamento = iddepartamento_departamento_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Departamento_Por_Nombre(
+    IN nombre_departamento_i VARCHAR(100)
+)
+BEGIN
+    SELECT * FROM Departamento
+    WHERE nombre = nombre_departamento_i;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Departamento_Por_Tipo(
+    IN tipo_departamento_i ENUM("Aéreo", "Terrestre")
+)
+BEGIN
+    SELECT * FROM Departamento
+    WHERE tipo = tipo_departamento_i;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Extras_Departamentos()
+BEGIN
+    SELECT IDDepartamento, nombre FROM Departamento;
+END//
+
+DELIMITER ;
+
+
+-- =========================================
+-- ANOTACION: PROCEDIMIENTOS DE Servicio
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE Crear_Servicio(
+    IN nombre_servicio_i VARCHAR(20),
+    IN precio_servicio_i DECIMAL(10, 2),
+    IN descripcion_servicio_i VARCHAR(120)
+)
+BEGIN
+    INSERT INTO Servicio(nombre_servicio, precio, descripcion) 
+    VALUES(nombre_servicio_i, precio_servicio_i, descripcion_servicio_i);
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Editar_Servicio(
+	IN idservicio_servicio_i INT,
+    IN nombre_servicio_in_i VARCHAR(20),
+    IN precio_servicio_i DECIMAL(10, 2),
+    IN descripcion_servicio_i VARCHAR(120)
+)
+BEGIN
+    UPDATE Servicio
+    SET
+        nombre_servicio = COALESCE(nombre_servicio_in_i, nombre_servicio),
+        precio = COALESCE(precio_servicio_i, precio),
+        descripcion = COALESCE(descripcion_servicio_i, descripcion)
+    WHERE IDServicio = idservicio_servicio_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Servicio()
+BEGIN
+	SELECT * FROM Servicio;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Servicio(
+	IN idservicio_servicio_i INT
+)
+BEGIN
+	SELECT * FROM Servicio
+    WHERE IDServicio = idservicio_servicio_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Eliminar_Servicio(
+	IN idservicio_servicio_i INT
+)
+BEGIN
+	DELETE FROM Servicio
+    WHERE IDServicio = idservicio_servicio_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Servicio_Por_Nombre(
+	IN nombre_servicio_buscar_i VARCHAR(20)
+)
+BEGIN
+	SELECT * FROM Servicio
+    WHERE nombre_servicio = nombre_servicio_buscar_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Servicio_Por_Precio(
+	IN precio_servicio_i DECIMAL(10, 2)
+)
+BEGIN
+	SELECT * FROM Servicio
+    WHERE precio = precio_servicio_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Servicio_Por_Descripcion(
+    IN descripcion_servicio_i VARCHAR(120)
+)
+BEGIN
+	SELECT * FROM Servicio
+    WHERE descripcion = descripcion_servicio_i;
+END//
+
+DELIMITER ;
+
+-- =========================================
+-- ANOTACION: PROCEDIMIENTOS DE Usuario
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE Crear_Usuario(
+    IN nombre_usuario_i VARCHAR(30),
+    IN email_usuario_i VARCHAR(40),
+    IN contraseña_usuario_i VARCHAR(30),
+    IN privilegios_usuario_i BOOLEAN,
+    IN pregunta_usuario_i VARCHAR(100),
+    IN respuesta_usuario_i VARCHAR(100)
+)
+BEGIN
+    INSERT INTO Usuario(nombre_usuario, email, contraseña_usuario, privilegios_empleado, pregunta_seguridad, respuesta_seguridad) 
+    VALUES(nombre_usuario_i, email_usuario_i, contraseña_usuario_i, privilegios_usuario_i, pregunta_usuario_i, respuesta_usuario_i);
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Editar_Usuario(
+	IN idusuario_usuario_i INT,
+    IN nombre_usuario_in_i VARCHAR(30),
+    IN email_usuario_i VARCHAR(40),
+    IN contraseña_usuario_in_i VARCHAR(30),
+    IN privilegios_usuario_i BOOLEAN,
+    IN pregunta_usuario_i VARCHAR(100),
+    IN respuesta_usuario_i VARCHAR(100)
+)
+BEGIN
+    UPDATE Usuario
+    SET
+		nombre_usuario = COALESCE(nombre_usuario_in_i, nombre_usuario),
+		email = COALESCE(email_usuario_i, email),
+		contraseña_usuario = COALESCE(contraseña_usuario_in_i, contraseña_usuario),
+		privilegios_empleado = COALESCE(privilegios_usuario_i, privilegios_empleado),
+		pregunta_seguridad = COALESCE(pregunta_usuario_i, pregunta_seguridad),
+		respuesta_seguridad = COALESCE(respuesta_usuario_i, respuesta_seguridad)
+    WHERE IDUsuario = idusuario_usuario_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Usuario()
+BEGIN
+	SELECT * FROM Usuario;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Usuario(
+    IN idusuario_usuario_i INT
+)
+BEGIN
+	SELECT * FROM Usuario
+    WHERE IDUsuario = idusuario_usuario_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Eliminar_Usuario(
+	IN idusuario_usuario_i INT
+)
+BEGIN
+	DELETE FROM Usuario
+    WHERE IDUsuario = idusuario_usuario_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Usuario_Por_Nombre(
+    IN nombre_usuario_in_i VARCHAR(30)
+)
+BEGIN
+	SELECT * FROM Usuario
+    WHERE nombre_usuario = nombre_usuario_in_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Usuarios_Sin_Permisos()
+BEGIN
+    SELECT * FROM Usuario WHERE privilegios_empleado = FALSE;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Usuarios_Con_Permisos()
+BEGIN
+    SELECT * FROM Usuario WHERE privilegios_empleado = TRUE;
+END//
+
+DELIMITER ;
+
+
+-- =========================================
+-- ANOTACION: PROCEDIMIENTOS DE Pago
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Pago_Por_Boleto_Id(
+    IN id_boleto_busqueda_i INT
+)
+BEGIN
+    SELECT * FROM Pago
+    WHERE boleto_id = id_boleto_busqueda_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Pago_Por_Estado(
+    IN estado_i VARCHAR(20)
+)
+BEGIN
+    SELECT * FROM Pago
+    WHERE estado = estado_i;
+END//
+
+DELIMITER ;
+
+-- =========================================
+-- ANOTACION: PROCEDIMIENTOS DE Vuelo
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE Buscar_Vuelo_Por_Id(
+    IN id_vuelo_i INT
+)
+BEGIN
+    SELECT * FROM Vuelo
+    WHERE IDVuelo = id_vuelo_i;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Vuelos_Programados()
+BEGIN
+    SELECT IDVuelo, avion_id, origen_id, destino_id FROM Vuelo WHERE estado = 'Programado';
+END//
+
+DELIMITER ;
+
+-- =========================================
+-- ANOTACION: PROCEDIMIENTOS DE Pasajero
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Extras_Pasajeros()
+BEGIN
+    SELECT IDPasajero, nombre_pasajero, apellido_pasajero FROM Pasajero;
+END//
+
+DELIMITER ;
+
+-- =========================================
+-- ANOTACION: PROCEDIMIENTOS DE Boleto
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE Mostrar_Boletos_Para_Checkin()
+BEGIN
+    SELECT b.IDBoleto FROM Boleto b
+    INNER JOIN Pago pa ON b.IDBoleto = pa.boleto_id
+    LEFT JOIN CheckIn c ON b.IDBoleto = c.boleto_id
+    WHERE pa.estado = 'Pagado' AND c.IDCheckin IS NULL;
+END//
+
+DELIMITER ;
