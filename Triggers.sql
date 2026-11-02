@@ -695,43 +695,227 @@ end //
 delimiter ;
 
 53)
-  
+  delimiter //
+create trigger tg_validar_capacidad_maxima_avion
+before insert on Avion
+for each row
+begin
+    if NEW.capacidad > 500 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error de flota: La capacidad del avión no puede superar los 500 asientos en categoría LowCost.';
+    end if;
+end //
+delimiter ;
+
 54)
-  
+  delimiter //
+create trigger tg_validar_precio_maximo_servicio
+before insert on Servicio
+for each row
+begin
+    if NEW.precio > 500000.00 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error operativo: El precio de un servicio adicional no puede exceder los 500,000.00.';
+    end if;
+end //
+delimiter ;
+
 55)
-  
+  delimiter //
+create trigger tg_cancelar_pago_al_borrar_checkin
+after delete on CheckIn
+for each row
+begin
+    update Pago 
+    set estado = 'Cancelado' 
+    where IDPago = OLD.pago_id;
+end //
+delimiter ;
+
 56)
-  
+  delimiter //
+create trigger tg_limpiar_boleto_servicio_por_baja_catalogo
+after delete on Servicio
+for each row
+begin
+    delete from Boleto_Servicio 
+    where servicio_id = OLD.IDServicio;
+end //
+delimiter ;
+
 57)
-  
+  delimiter //
+create trigger tg_eliminar_asientos_por_baja_avion
+after delete on Avion
+for each row
+begin
+    delete from Asiento 
+    where avion_id = OLD.IDAvion;
+end //
+delimiter ;
+
 58)
-  
+  delimiter //
+create trigger tg_validar_fecha_boleto_vuelo_update
+before update on Boleto
+for each row
+begin
+    declare v_fecha_vuelo datetime;
+    select fecha_hora_salida into v_fecha_vuelo from Vuelo where IDVuelo = NEW.vuelo_id;
+    if NEW.fecha > v_fecha_vuelo then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error lógico: Al actualizar, la fecha del boleto no puede quedar posterior al vuelo.';
+    end if;
+end //
+delimiter ;
+
 59)
-  
+  delimiter //
+create trigger tg_validar_sueldo_minimo_terrestre_update
+before update on Empleado
+for each row
+begin
+    declare v_tipo_dep varchar(20);
+    select tipo into v_tipo_dep from Departamento where IDDepartamento = NEW.departamento_id;
+    if v_tipo_dep = 'Terrestre' and NEW.sueldo < 500.00 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error salarial: El sueldo modificado para personal terrestre no puede ser menor a 500.00.';
+    end if;
+end //
+delimiter ;
+
 60)
-  
+ delimiter //
+create trigger tg_validar_capacidad_maxima_avion_update
+before update on Avion
+for each row
+begin
+    if NEW.capacidad > 500 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error de flota: La nueva capacidad modificada no puede superar los 500 asientos.';
+    end if;
+end //
+delimiter ;
+ 
 61)
-  
+  delimiter //
+create trigger tg_validar_precio_maximo_servicio_update
+before update on Servicio
+for each row
+begin
+    if NEW.precio > 500000.00 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error operativo: El precio actualizado del servicio supera el límite permitido.';
+    end if;
+end //
+delimiter ;
+
 62)
-  
+ delimiter //
+create trigger tg_normalizar_pais_pasajero_insert
+before insert on Pasajero
+for each row
+begin
+    set NEW.pais_emision = upper(NEW.pais_emision);
+end //
+delimiter ;
+ 
 63)
-  
+  delimiter //
+create trigger tg_normalizar_pais_pasajero_update
+before update on Pasajero
+for each row
+begin
+    set NEW.pais_emision = upper(NEW.pais_emision);
+end //
+delimiter ;
+
 64)
-  
+  delimiter //
+create trigger tg_normalizar_puerta_checkin_insert
+before insert on CheckIn
+for each row
+begin
+    set NEW.puerta_embarque = upper(NEW.puerta_embarque);
+end //
+delimiter ;
+
 65)
-  
+  delimiter //
+create trigger tg_normalizar_puerta_checkin_update
+before update on CheckIn
+for each row
+begin
+    set NEW.puerta_embarque = upper(NEW.puerta_embarque);
+end //
+delimiter ;
+
 66)
-  
+  delimiter //
+create trigger tg_normalizar_id_avion_insert
+before insert on Avion
+for each row
+begin
+    set NEW.IDAvion = upper(NEW.IDAvion);
+end //
+delimiter ;
+
 67)
-  
+  delimiter //
+create trigger tg_normalizar_id_asiento_insert
+before insert on Asiento
+for each row
+begin
+    set NEW.IDAsiento = upper(NEW.IDAsiento);
+end //
+delimiter ;
+
 68)
-  
+  delimiter //
+create trigger tg_seguridad_pregunta_respuesta_distintas
+before insert on Usuario
+for each row
+begin
+    if lower(trim(NEW.pregunta_seguridad)) = lower(trim(NEW.respuesta_seguridad)) then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Seguridad: La respuesta de seguridad no puede ser igual a la pregunta.';
+    end if;
+end //
+delimiter ;
+
 69)
-  
+  delimiter //
+create trigger tg_seguridad_pregunta_respuesta_distintas_update
+before update on Usuario
+for each row
+begin
+    if lower(trim(NEW.pregunta_seguridad)) = lower(trim(NEW.respuesta_seguridad)) then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Seguridad: La respuesta de seguridad modificada no puede coincidir con la pregunta.';
+    end if;
+end //
+delimiter ;
+
 70)
-  
+  delimiter //
+create trigger tg_limpiar_email_usuario_insert
+before insert on Usuario
+for each row
+begin
+    set NEW.email = trim(NEW.email);
+end //
+delimiter ;
+
 71)
-  
+  delimiter //
+create trigger tg_limpiar_email_usuario_update
+before update on Usuario
+for each row
+begin
+    set NEW.email = trim(NEW.email);
+end //
+delimiter ;
+
 72)
   
 73)
@@ -745,47 +929,90 @@ delimiter ;
 77)
   
 78)
+  
 79)
+  
 80)
+  
 81)
+  
 82)
+  
 83)
+  
 84)
+  
 85)
+  
 86)
+  
 87)
+  
 88)
+  
 89)
+  
 90)
+  
 91)
+  
 92)
+  
 93)
+  
 94)
+  
 95)
+  
 96)
+  
 97)
+  
 98)
+  
 99)
+  
 100)
+  
 101)
+  
 102)
+  
 103)
+  
 104)
+  
 105)
+  
 106)
+  
 107)
+  
 108)
+  
 109)
+  
 110)
+  
 111)
+  
 112)
+  
 113)
+  
 114)
+  
 115)
+  
 116)
+  
 117)
+  
 118)
+  
 119)
+  
 120)
+
 
 
