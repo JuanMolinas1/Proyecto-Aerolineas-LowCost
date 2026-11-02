@@ -491,28 +491,301 @@ end //
 delimiter ;
 
 38)
-  
+  delimiter //
+create trigger tg_bloquear_checkin_sin_pago
+before insert on CheckIn
+for each row
+begin
+    declare v_estado_pago varchar(20);
+    select estado into v_estado_pago from Pago where IDPago = NEW.pago_id;
+    if v_estado_pago <> 'Pagado' then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: No se puede realizar Check-In si la factura no está en estado Pagado.';
+    end if;
+end //
+delimiter ;
 39)
-  
+  delimiter //
+create trigger tg_validar_nombre_pasajero_vacio
+before insert on Pasajero
+for each row
+begin
+    if trim(NEW.nombre_pasajero) = '' then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: El nombre del pasajero no puede estar compuesto únicamente por espacios vacíos.';
+    end if;
+end //
+delimiter ;
+
 40)
-  
+  delimiter //
+create trigger tg_validar_apellido_pasajero_vacio
+before insert on Pasajero
+for each row
+begin
+    if trim(NEW.apellido_pasajero) = '' then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: El apellido del pasajero es obligatorio y no puede quedar vacío.';
+    end if;
+end //
+delimiter ;
+
 41)
-  
+  delimiter //
+create trigger tg_validar_descripcion_servicio_longitud
+before insert on Servicio
+for each row
+begin
+    if char_length(trim(NEW.descripcion)) < 10 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: La descripción del servicio debe ser más detallada (mínimo 10 caracteres).';
+    end if;
+end //
+delimiter ;
+
 42)
-  
+  delimiter //
+create trigger tg_validar_pregunta_seguridad_vacia
+before insert on Usuario
+for each row
+begin
+    if trim(NEW.pregunta_security) = '' or trim(NEW.pregunta_seguridad) = '' then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: La pregunta de seguridad no puede ser un campo vacío.';
+    end if;
+end //
+delimiter ;
+
 43)
-  
+  delimiter //
+create trigger tg_validar_titular_checkin
+before insert on CheckIn
+for each row
+begin
+    declare v_pasajero_boleto int;
+    select pasajero_id into v_pasajero_boleto from Boleto where IDBoleto = NEW.boleto_id;
+    if NEW.pasajero_id <> v_pasajero_boleto then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error de seguridad: El pasajero del Check-In no coincide con el dueño original del boleto.';
+    end if;
+end //
+delimiter ;
+
 44)
-  
+  delimiter //
+create trigger tg_validar_nombre_pasajero_update
+before update on Pasajero
+for each row
+begin
+    if trim(NEW.nombre_pasajero) = '' then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: No se puede modificar el nombre del pasajero dejándolo en blanco.';
+    end if;
+end //
+delimiter ;
+
 45)
-  
+  delimiter //
+create trigger tg_validar_apellido_pasajero_update
+before update on Pasajero
+for each row
+begin
+    if trim(NEW.apellido_pasajero) = '' then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: No se puede modificar el apellido del pasajero dejándolo en blanco.';
+    end if;
+end //
+delimiter ;
+
 46)
-  
+  delimiter //
+create trigger tg_validar_descripcion_servicio_update
+before update on Servicio
+for each row
+begin
+    if char_length(trim(NEW.descripcion)) < 10 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: La nueva descripción modificada debe tener al menos 10 caracteres.';
+    end if;
+end //
+delimiter ;
+
 47)
-  
+ delimiter //
+create trigger tg_validar_pregunta_seguridad_update
+before update on Usuario
+for each row
+begin
+    if trim(NEW.pregunta_seguridad) = '' then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: La nueva pregunta de seguridad no puede ser un texto vacío.';
+    end if;
+end //
+delimiter ;
+ 
 48)
-  
+  delimiter //
+create trigger tg_proteger_monto_pago_liquidado
+before update on Pago
+for each row
+begin
+    if OLD.estado = 'Pagado' and NEW.costo_total <> OLD.costo_total then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error de auditoría: Está estrictamente prohibido alterar el costo total de un pago ya realizado.';
+    end if;
+end //
+delimiter ;
+
 49)
-  
+ delimiter //
+create trigger tg_deshabilitar_asientos_por_accidente
+after update on Vuelo
+for each row
+begin
+    if NEW.estado in ('Choco', 'Exploto', 'Perdido') then
+        update Asiento 
+        set disponible = 0 
+        where avion_id = NEW.avion_id;
+    end if;
+end //
+delimiter ;
+ 
 50)
+delimiter //
+create trigger tg_liberar_asiento_por_pago_nulo
+after update on Pago
+for each row
+begin
+    if NEW.estado in ('Cancelado', 'Robado') and OLD.estado <> NEW.estado then
+        update Asiento 
+        set disponible = 1 
+        where IDAsiento = (select asiento_id from Boleto where IDBoleto = NEW.boleto_id);
+    end if;
+end //
+delimiter ;
+
+51)
+  delimiter //
+create trigger tg_validar_fecha_boleto_vuelo
+before insert on Boleto
+for each row
+begin
+    declare v_fecha_vuelo datetime;
+    select fecha_hora_salida into v_fecha_vuelo from Vuelo where IDVuelo = NEW.vuelo_id;
+    if NEW.fecha > v_fecha_vuelo then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error lógico: La fecha de emisión del boleto no puede ser posterior al despegue del vuelo.';
+    end if;
+end //
+delimiter ;
+
+52)
+  delimiter //
+create trigger tg_validar_sueldo_minimo_terrestre
+before insert on Empleado
+for each row
+begin
+    declare v_tipo_dep varchar(20);
+    select tipo into v_tipo_dep from Departamento where IDDepartamento = NEW.departamento_id;
+    if v_tipo_dep = 'Terrestre' and NEW.sueldo < 500.00 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error salarial: El sueldo para personal terrestre no puede ser inferior a 500.00.';
+    end if;
+end //
+delimiter ;
+
+53)
+  
+54)
+  
+55)
+  
+56)
+  
+57)
+  
+58)
+  
+59)
+  
+60)
+  
+61)
+  
+62)
+  
+63)
+  
+64)
+  
+65)
+  
+66)
+  
+67)
+  
+68)
+  
+69)
+  
+70)
+  
+71)
+  
+72)
+  
+73)
+  
+74)
+  
+75)
+  
+76)
+  
+77)
+  
+78)
+79)
+80)
+81)
+82)
+83)
+84)
+85)
+86)
+87)
+88)
+89)
+90)
+91)
+92)
+93)
+94)
+95)
+96)
+97)
+98)
+99)
+100)
+101)
+102)
+103)
+104)
+105)
+106)
+107)
+108)
+109)
+110)
+111)
+112)
+113)
+114)
+115)
+116)
+117)
+118)
+119)
+120)
+
 
