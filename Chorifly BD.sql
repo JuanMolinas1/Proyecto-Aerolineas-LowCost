@@ -48,8 +48,8 @@ CREATE TABLE Pasajero (
     nro_pasaporte VARCHAR(20) NOT NULL UNIQUE,
     pais_emision CHAR(3) NOT NULL,
     vencimiento_pasaporte DATE NOT NULL,
-    usuario_id INT NOT NULL UNIQUE,
-    FOREIGN KEY (usuario_id) REFERENCES Usuario (IDUsuario)
+    usuario_id INT NULL UNIQUE, -- Cambio a NULL
+    FOREIGN KEY (usuario_id) REFERENCES Usuario (IDUsuario) ON DELETE SET NULL
 );
 
 CREATE TABLE Empleado (
@@ -59,12 +59,12 @@ CREATE TABLE Empleado (
     dni_empleado CHAR(8) NOT NULL UNIQUE,
     telefono VARCHAR(20) NOT NULL,
     sueldo DECIMAL(10, 2) NOT NULL,
-    departamento_id INT NOT NULL,
-    aeropuerto_id INT NOT NULL,
-    usuario_id INT NOT NULL UNIQUE,
-    FOREIGN KEY (departamento_id) REFERENCES Departamento (IDDepartamento),
-    FOREIGN KEY (aeropuerto_id) REFERENCES Aeropuerto (IDAeropuerto),
-    FOREIGN KEY (usuario_id) REFERENCES Usuario (IDUsuario)
+    departamento_id INT NULL, -- Cambio a NULL
+    aeropuerto_id INT NULL,     -- Cambio a NULL
+    usuario_id INT NULL UNIQUE, -- Cambio a NULL
+    FOREIGN KEY (departamento_id) REFERENCES Departamento (IDDepartamento) ON DELETE SET NULL,
+    FOREIGN KEY (aeropuerto_id) REFERENCES Aeropuerto (IDAeropuerto) ON DELETE SET NULL,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario (IDUsuario) ON DELETE SET NULL
 );
 
 CREATE TABLE Asiento (
@@ -91,12 +91,12 @@ CREATE TABLE Vuelo (
 
 CREATE TABLE Boleto (
     IDBoleto INT AUTO_INCREMENT PRIMARY KEY,
-    pasajero_id INT NOT NULL,
+    pasajero_id INT NULL, -- Cambio a NULL
     vuelo_id INT NOT NULL,
     asiento_id VARCHAR(50) NOT NULL,
     fecha DATETIME NOT NULL,
     precio_base DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero),
+    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero) ON DELETE SET NULL,
     FOREIGN KEY (vuelo_id) REFERENCES Vuelo (IDVuelo),
     FOREIGN KEY (asiento_id) REFERENCES Asiento (IDAsiento)
 );
@@ -105,29 +105,29 @@ CREATE TABLE Boleto_Servicio (
     boleto_id INT NOT NULL,
     servicio_id INT NOT NULL,
     PRIMARY KEY (boleto_id, servicio_id),
-    FOREIGN KEY (boleto_id) REFERENCES Boleto (IDBoleto),
-    FOREIGN KEY (servicio_id) REFERENCES Servicio (IDServicio)
+    FOREIGN KEY (boleto_id) REFERENCES Boleto (IDBoleto) ON DELETE CASCADE,
+    FOREIGN KEY (servicio_id) REFERENCES Servicio (IDServicio) ON DELETE CASCADE
 );
 
 CREATE TABLE Pago (
     IDPago INT AUTO_INCREMENT PRIMARY KEY,
-    pasajero_id INT NOT NULL,
+    pasajero_id INT NULL,
     boleto_id INT NOT NULL UNIQUE,
     costo_servicios DECIMAL(10, 2) NOT NULL,
     costo_total DECIMAL(10, 2) NOT NULL,
     estado ENUM("Pagado", "Pendiente", "Cancelado", "Robado", "Fiado", "Reducido", "Detenido", "Devuelto") NOT NULL,
-    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero),
+    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero) ON DELETE SET NULL,
     FOREIGN KEY (boleto_id) REFERENCES Boleto (IDBoleto)
 );
 
 CREATE TABLE CheckIn (
     IDCheckin INT AUTO_INCREMENT PRIMARY KEY,
-    pasajero_id INT NOT NULL,
+    pasajero_id INT NULL, -- Cambio a NULL
     boleto_id INT NOT NULL UNIQUE,
     vuelo_id INT NOT NULL,
     pago_id INT NOT NULL UNIQUE,
     puerta_embarque CHAR(3) NOT NULL,
-    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero),
+    FOREIGN KEY (pasajero_id) REFERENCES Pasajero (IDPasajero) ON DELETE SET NULL,
     FOREIGN KEY (boleto_id) REFERENCES Boleto (IDBoleto),
     FOREIGN KEY (vuelo_id) REFERENCES Vuelo (IDVuelo),
     FOREIGN KEY (pago_id) REFERENCES Pago (IDPago)
