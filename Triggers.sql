@@ -1663,12 +1663,33 @@ create trigger tg_generar_pago_pendiente_boleto
 after insert on boleto
 for each row
 begin
-    -- inserta automáticamente el registro de cobro relacionado al nuevo boleto
+   
     insert into pago (pasajero_id, boleto_id, costo_servicios, costo_total, estado)
     values (new.pasajero_id, new.IDBoleto, 0.00, new.precio_base, 'Pendiente');
 end //
 
 delimiter ;
+133)
+delimiter //
+
+create trigger tg_prevenir_duplicidad_avion_activo
+before insert on vuelo
+for each row
+begin
+   
+    if exists (
+        select 1 
+        from vuelo 
+        where avion_id = new.avion_id 
+          and estado in ('Programado', 'A Tiempo', 'Volando')
+    ) then
+        signal sqlstate '45000'
+        set message_text = 'trigger [tg_prevenir_duplicidad_avion_activo] -> error operativo: el avión seleccionado ya se encuentra asignado a un vuelo activo. debe finalizar ese viaje para quedar disponible.';
+    end if;
+end //
+
+delimiter ;
+
 
 
 
