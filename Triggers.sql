@@ -37,12 +37,12 @@ for each row
 begin
     declare v_precio_base decimal(10,2);
 
-    -- Obtener el precio base desde la tabla Boleto
+   
     select precio_base into v_precio_base 
     from Boleto 
     where IDBoleto = NEW.boleto_id;
 
-    -- Calcular el total sumando ambos costos
+   
     set NEW.costo_total = v_precio_base + NEW.costo_servicios;
 end //
 
