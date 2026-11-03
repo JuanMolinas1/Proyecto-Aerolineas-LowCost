@@ -1648,7 +1648,7 @@ create trigger tg_validar_duracion_minima_vuelo
 before insert on vuelo
 for each row
 begin
-    -- datediff resta la primera fecha menos la segunda y devuelve los días de diferencia
+
     if datediff(new.fecha_hora_llegada, new.fecha_hora_salida) < 1 then
         signal sqlstate '45000'
         set message_text = 'trigger [tg_validar_duracion_minima_vuelo] -> error comercial: la fecha de llegada debe ser como mínimo 1 día posterior a la fecha de salida.';
@@ -1656,6 +1656,20 @@ begin
 end //
 
 delimiter ;
+132)
+delimiter //
+
+create trigger tg_generar_pago_pendiente_boleto
+after insert on boleto
+for each row
+begin
+    -- inserta automáticamente el registro de cobro relacionado al nuevo boleto
+    insert into pago (pasajero_id, boleto_id, costo_servicios, costo_total, estado)
+    values (new.pasajero_id, new.IDBoleto, 0.00, new.precio_base, 'Pendiente');
+end //
+
+delimiter ;
+
 
 
 
