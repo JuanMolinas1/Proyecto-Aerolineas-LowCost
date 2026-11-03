@@ -917,31 +917,156 @@ end //
 delimiter ;
 
 72)
-  
+  delimiter //
+create trigger tg_cancelar_pago_por_boleto_borrado
+after delete on Boleto
+for each row
+begin
+    update Pago 
+    set estado = 'Cancelado' 
+    where boleto_id = OLD.IDBoleto;
+end //
+delimiter ;
+
 73)
-  
+  delimiter //
+create trigger tg_deshabilitar_asientos_por_capacidad_nula
+after update on Avion
+for each row
+begin
+    if NEW.capacidad <= 0 then
+        update Asiento 
+        set disponible = 0 
+        where avion_id = NEW.IDAvion;
+    end if;
+end //
+delimiter ;
+
 74)
-  
+  delimiter //
+create trigger tg_validar_telefono_pasajero_insert
+before insert on Pasajero
+for each row
+begin
+    if char_length(trim(NEW.telefono)) < 7 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: El teléfono del pasajero debe tener al menos 7 caracteres.';
+    end if;
+end //
+delimiter ;
+
 75)
-  
+  delimiter //
+create trigger tg_validar_telefono_empleado_insert
+before insert on Empleado
+for each row
+begin
+    if char_length(trim(NEW.telefono)) < 7 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: El teléfono del empleado debe tener al menos 7 caracteres.';
+    end if;
+end //
+delimiter ;
+
 76)
-  
+  delimiter //
+create trigger tg_validar_telefono_pasajero_update
+before update on Pasajero
+for each row
+begin
+    if char_length(trim(NEW.telefono)) < 7 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: El nuevo teléfono del pasajero no puede ser inferior a 7 caracteres.';
+    end if;
+end //
+delimiter ;
+
 77)
-  
+  delimiter //
+create trigger tg_validar_telefono_empleado_update
+before update on Empleado
+for each row
+begin
+    if char_length(trim(NEW.telefono)) < 7 then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: El nuevo teléfono del empleado no puede ser inferior a 7 caracteres.';
+    end if;
+end //
+delimiter ;
+
 78)
-  
+  delimiter //
+create trigger tg_normalizar_nombre_aeropuerto_insert
+before insert on Aeropuerto
+for each row
+begin
+    set NEW.nombre = upper(trim(NEW.nombre));
+end //
+delimiter ;
+
 79)
-  
+  delimiter //
+create trigger tg_normalizar_nombre_aeropuerto_update
+before update on Aeropuerto
+for each row
+begin
+    set NEW.nombre = upper(trim(NEW.nombre));
+end //
+delimiter ;
+
 80)
-  
+  delimiter //
+create trigger tg_normalizar_ciudad_aeropuerto_insert
+before insert on Aeropuerto
+for each row
+begin
+    set NEW.ciudad = upper(trim(NEW.ciudad));
+end //
+delimiter ;
+
 81)
-  
+  delimiter //
+create trigger tg_normalizar_ciudad_aeropuerto_update
+before update on Aeropuerto
+for each row
+begin
+    set NEW.ciudad = upper(trim(NEW.ciudad));
+end //
+delimiter ;
+
 82)
-  
+  delimiter //
+create trigger tg_normalizar_nombre_servicio_insert
+before insert on Servicio
+for each row
+begin
+    set NEW.nombre_servicio = upper(trim(NEW.nombre_servicio));
+end //
+delimiter ;
+
 83)
-  
+  delimiter //
+create trigger tg_normalizar_nombre_servicio_update
+before update on Servicio
+for each row
+begin
+    set NEW.nombre_servicio = upper(trim(NEW.nombre_servicio));
+end //
+delimiter ;
+
 84)
-  
+  delimiter //
+create trigger tg_validar_limite_futuro_vuelo
+before insert on Vuelo
+for each row
+begin
+    if NEW.fecha_hora_salida > now() + interval 1 year then
+        signal sqlstate '45000'
+        set MESSAGE_TEXT = 'Error: No se pueden programar vuelos con más de un año de anticipación.';
+    end if;
+end //
+delimiter ;
+
 85)
   
 86)
@@ -1013,6 +1138,27 @@ delimiter ;
 119)
   
 120)
+  
+121)
+  
+122)
+  
+123)
+  
+124)
+  
+125)
+  
+126)
+  
+127)
+  
+128)
+  
+129)
+  
+130)
+
 
 
 
