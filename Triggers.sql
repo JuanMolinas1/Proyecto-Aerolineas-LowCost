@@ -1641,6 +1641,21 @@ begin
     end if;
 end //
 delimiter ;
+131)
+delimiter //
+
+create trigger tg_validar_duracion_minima_vuelo
+before insert on vuelo
+for each row
+begin
+    -- datediff resta la primera fecha menos la segunda y devuelve los días de diferencia
+    if datediff(new.fecha_hora_llegada, new.fecha_hora_salida) < 1 then
+        signal sqlstate '45000'
+        set message_text = 'trigger [tg_validar_duracion_minima_vuelo] -> error comercial: la fecha de llegada debe ser como mínimo 1 día posterior a la fecha de salida.';
+    end if;
+end //
+
+delimiter ;
 
 
 
