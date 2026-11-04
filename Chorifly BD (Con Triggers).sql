@@ -1617,9 +1617,10 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Agregar_Boleto(IN p_pasajero_id INT, IN p_vuelo_id INT, IN p_asiento_id VARCHAR(50), IN p_fecha DATETIME, IN p_precio_base DECIMAL(10, 2))
+CREATE PROCEDURE Agregar_Boleto(IN p_pasajero_id INT, IN p_vuelo_id INT, IN p_asiento_id VARCHAR(50), IN p_fecha DATETIME, IN p_precio_base DECIMAL(10, 2), OUT p_id_generado INT)
 BEGIN
     INSERT INTO Boleto (pasajero_id, vuelo_id, asiento_id, fecha, precio_base) VALUES (p_pasajero_id, p_vuelo_id, p_asiento_id, p_fecha, p_precio_base);
+    SET p_id_generado = LAST_INSERT_ID();
 END //
 DELIMITER ;
 
