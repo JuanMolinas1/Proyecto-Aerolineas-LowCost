@@ -2006,7 +2006,7 @@ CREATE TRIGGER tg_usuario_insert_val_pass
 BEFORE INSERT ON Usuario FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(NEW.contraseña_usuario) < 8 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La contraseña debe tener al menos 8 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_usuario_insert_val_pass): La contraseña debe tener al menos 8 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2016,7 +2016,7 @@ CREATE TRIGGER tg_usuario_insert_val_email
 BEFORE INSERT ON Usuario FOR EACH ROW
 BEGIN
     IF NEW.email NOT LIKE '%@%' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El correo electrónico no tiene un formato válido.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_usuario_insert_val_email): El correo electrónico no tiene un format válido.';
     END IF;
 END //
 DELIMITER ;
@@ -2026,7 +2026,7 @@ CREATE TRIGGER tg_usuario_insert_val_resp_seg
 BEFORE INSERT ON Usuario FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(NEW.respuesta_seguridad) < 3 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La respuesta de seguridad debe tener al menos 3 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_usuario_insert_val_resp_seg): La respuesta de seguridad debe tener al menos 3 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2036,7 +2036,7 @@ CREATE TRIGGER tg_usuario_insert_preg_vacia
 BEFORE INSERT ON Usuario FOR EACH ROW
 BEGIN
     IF TRIM(NEW.pregunta_seguridad) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La pregunta de seguridad no puede estar vacía.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_usuario_insert_preg_vacia): La pregunta de seguridad no puede estar vacía.';
     END IF;
 END //
 DELIMITER ;
@@ -2046,7 +2046,7 @@ CREATE TRIGGER tg_usuario_insert_preg_resp_dist
 BEFORE INSERT ON Usuario FOR EACH ROW
 BEGIN
     IF LOWER(TRIM(NEW.pregunta_seguridad)) = LOWER(TRIM(NEW.respuesta_seguridad)) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La respuesta no puede ser idéntica a la pregunta.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_usuario_insert_preg_resp_dist): La respuesta no puede ser idéntica a la pregunta.';
     END IF;
 END //
 DELIMITER ;
@@ -2072,7 +2072,7 @@ CREATE TRIGGER tg_usuario_update_val_email
 BEFORE UPDATE ON Usuario FOR EACH ROW
 BEGIN
     IF NEW.email NOT LIKE '%@%' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El correo electrónico modificado no es válido.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_usuario_update_val_email): El correo electrónico modificado no es válido.';
     END IF;
 END //
 DELIMITER ;
@@ -2082,7 +2082,7 @@ CREATE TRIGGER tg_usuario_update_preg_resp_dist
 BEFORE UPDATE ON Usuario FOR EACH ROW
 BEGIN
     IF LOWER(TRIM(NEW.pregunta_seguridad)) = LOWER(TRIM(NEW.respuesta_seguridad)) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La nueva respuesta modificada no puede coincidir con la pregunta.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_usuario_update_preg_resp_dist): La nueva respuesta modificada no puede coincidir con la pregunta.';
     END IF;
 END //
 DELIMITER ;
@@ -2092,7 +2092,7 @@ CREATE TRIGGER tg_usuario_update_preg_vacia
 BEFORE UPDATE ON Usuario FOR EACH ROW
 BEGIN
     IF TRIM(NEW.pregunta_seguridad) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La nueva pregunta de seguridad no puede estar vacía.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_usuario_update_preg_vacia): La nueva pregunta de seguridad no puede estar vacía.';
     END IF;
 END //
 DELIMITER ;
@@ -2155,7 +2155,7 @@ CREATE TRIGGER tg_aeropuerto_insert_val_long_nombre
 BEFORE INSERT ON Aeropuerto FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.nombre)) < 5 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nombre del aeropuerto debe tener al menos 5 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_aeropuerto_insert_val_long_nombre): El nombre del aeropuerto debe tener al menos 5 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2165,7 +2165,7 @@ CREATE TRIGGER tg_aeropuerto_update_val_nombre
 BEFORE UPDATE ON Aeropuerto FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(NEW.nombre) < 5 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nombre corregido del aeropuerto debe tener al menos 5 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_aeropuerto_update_val_nombre): El nombre corregido del aeropuerto debe tener al menos 5 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2199,7 +2199,7 @@ CREATE TRIGGER tg_aeropuerto_insert_val_vacio
 BEFORE INSERT ON Aeropuerto FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre) = '' OR TRIM(NEW.ciudad) = '' OR TRIM(NEW.pais) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Ningún campo de ubicación de aeropuerto puede estar vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_aeropuerto_insert_val_vacio): Ningún campo de ubicación de aeropuerto puede estar vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2209,7 +2209,7 @@ CREATE TRIGGER tg_aeropuerto_update_val_vacio
 BEFORE UPDATE ON Aeropuerto FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre) = '' OR TRIM(NEW.ciudad) = '' OR TRIM(NEW.pais) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede actualizar aeropuerto dejando campos vacíos.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_aeropuerto_update_val_vacio): No se puede actualizar aeropuerto dejando campos vacíos.';
     END IF;
 END //
 DELIMITER ;
@@ -2224,7 +2224,7 @@ CREATE TRIGGER tg_avion_insert_val_capacidad
 BEFORE INSERT ON Avion FOR EACH ROW
 BEGIN
     IF NEW.capacidad <= 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La capacidad del avión debe ser un número positivo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_avion_insert_val_capacidad): La capacidad del avión debe ser un número positivo.';
     END IF;
 END //
 DELIMITER ;
@@ -2234,7 +2234,7 @@ CREATE TRIGGER tg_avion_insert_capacidad_max
 BEFORE INSERT ON Avion FOR EACH ROW
 BEGIN
     IF NEW.capacidad > 500 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La capacidad del avión no puede superar los 500 asientos en LowCost.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_avion_insert_capacidad_max): La capacidad del avión no puede superar los 500 asientos en LowCost.';
     END IF;
 END //
 DELIMITER ;
@@ -2252,7 +2252,7 @@ CREATE TRIGGER tg_avion_update_val_capacidad
 BEFORE UPDATE ON Avion FOR EACH ROW
 BEGIN
     IF NEW.capacidad <= 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La capacidad modificada del avión debe ser un número positivo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_avion_update_val_capacidad): La capacidad modificada del avión debe ser un número positivo.';
     END IF;
 END //
 DELIMITER ;
@@ -2262,7 +2262,7 @@ CREATE TRIGGER tg_avion_update_capacidad_max
 BEFORE UPDATE ON Avion FOR EACH ROW
 BEGIN
     IF NEW.capacidad > 500 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La nueva capacidad modificada no puede superar los 500 asientos.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_avion_update_capacidad_max): La nueva capacidad modificada no puede superar los 500 asientos.';
     END IF;
 END //
 DELIMITER ;
@@ -2290,7 +2290,7 @@ CREATE TRIGGER tg_avion_insert_modelo_vacio
 BEFORE INSERT ON Avion FOR EACH ROW
 BEGIN
     IF TRIM(NEW.modelo) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El modelo de avión no puede estar vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_avion_insert_modelo_vacio): El modelo de avión no puede estar vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2300,7 +2300,7 @@ CREATE TRIGGER tg_avion_update_modelo_vacio
 BEFORE UPDATE ON Avion FOR EACH ROW
 BEGIN
     IF TRIM(NEW.modelo) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede modificar un avión dejando el modelo vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_avion_update_modelo_vacio): No se puede modificar un avión dejando el modelo vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2323,7 +2323,7 @@ CREATE TRIGGER tg_departamento_insert_nombre_vacio
 BEFORE INSERT ON Departamento FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nombre del departamento es obligatorio.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_departamento_insert_nombre_vacio): El nombre del departamento es obligatorio.';
     END IF;
 END //
 DELIMITER ;
@@ -2333,7 +2333,7 @@ CREATE TRIGGER tg_departamento_update_nombre_vacio
 BEFORE UPDATE ON Departamento FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede actualizar el departamento con un nombre vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_departamento_update_nombre_vacio): No se puede actualizar el departamento con un nombre vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2359,7 +2359,7 @@ CREATE TRIGGER tg_departamento_insert_val_tipo
 BEFORE INSERT ON Departamento FOR EACH ROW
 BEGIN
     IF NEW.tipo NOT IN ('Aéreo', 'Terrestre') THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El tipo de departamento debe ser Aéreo o Terrestre.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_departamento_insert_val_tipo): El tipo de departamento debe ser Aéreo o Terrestre.';
     END IF;
 END //
 DELIMITER ;
@@ -2369,7 +2369,7 @@ CREATE TRIGGER tg_departamento_update_val_tipo
 BEFORE UPDATE ON Departamento FOR EACH ROW
 BEGIN
     IF NEW.tipo NOT IN ('Aéreo', 'Terrestre') THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El tipo de departamento modificado no es válido.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_departamento_update_val_tipo): El tipo de departamento modificado no es válido.';
     END IF;
 END //
 DELIMITER ;
@@ -2379,7 +2379,7 @@ CREATE TRIGGER tg_departamento_insert_val_longitud
 BEFORE INSERT ON Departamento FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.nombre)) < 3 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nombre del departamento debe tener al menos 3 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_departamento_insert_val_longitud): El nombre del departamento debe tener al menos 3 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2389,7 +2389,7 @@ CREATE TRIGGER tg_departamento_update_val_longitud
 BEFORE UPDATE ON Departamento FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.nombre)) < 3 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nombre modificado del departamento debe tener al menos 3 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_departamento_update_val_longitud): El nombre modificado del departamento debe tener al menos 3 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2401,7 +2401,7 @@ BEGIN
     DECLARE v_count INT;
     SELECT COUNT(*) INTO v_count FROM Empleado WHERE departamento_id = OLD.IDDepartamento;
     IF v_count > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede eliminar un departamento que tiene empleados asociados.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_departamento_delete_restrict_empleado): No se puede eliminar un departamento que tiene empleados asociados.';
     END IF;
 END //
 DELIMITER ;
@@ -2424,7 +2424,7 @@ CREATE TRIGGER tg_servicio_insert_val_precio
 BEFORE INSERT ON Servicio FOR EACH ROW
 BEGIN
     IF NEW.precio <= 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El precio del servicio debe ser un valor positivo mayor a cero.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_servicio_insert_val_precio): El precio del servicio debe ser un valor positivo mayor a cero.';
     END IF;
 END //
 DELIMITER ;
@@ -2434,7 +2434,7 @@ CREATE TRIGGER tg_servicio_update_val_precio
 BEFORE UPDATE ON Servicio FOR EACH ROW
 BEGIN
     IF NEW.precio <= 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El precio actualizado del servicio debe ser mayor a cero.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_servicio_update_val_precio): El precio actualizado del servicio debe ser mayor a cero.';
     END IF;
 END //
 DELIMITER ;
@@ -2444,7 +2444,7 @@ CREATE TRIGGER tg_servicio_insert_val_desc_long
 BEFORE INSERT ON Servicio FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.descripcion)) < 10 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La descripción del servicio debe tener al menos 10 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_servicio_insert_val_desc_long): La descripción del servicio debe tener al menos 10 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2454,7 +2454,7 @@ CREATE TRIGGER tg_servicio_update_val_desc_long
 BEFORE UPDATE ON Servicio FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.descripcion)) < 10 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La nueva descripción modificada debe tener al menos 10 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_servicio_update_val_desc_long): La nueva descripción modificada debe tener al menos 10 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2464,7 +2464,7 @@ CREATE TRIGGER tg_servicio_insert_precio_max
 BEFORE INSERT ON Servicio FOR EACH ROW
 BEGIN
     IF NEW.precio > 500000.00 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El precio de un servicio adicional no puede exceder los 500,000.00.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_servicio_insert_precio_max): El precio de un servicio adicional no puede exceder los 500,000.00.';
     END IF;
 END //
 DELIMITER ;
@@ -2474,7 +2474,7 @@ CREATE TRIGGER tg_servicio_update_precio_max
 BEFORE UPDATE ON Servicio FOR EACH ROW
 BEGIN
     IF NEW.precio > 500000.00 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El precio actualizado del servicio supera el límite permitido.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_servicio_update_precio_max): El precio actualizado del servicio supera el límite permitido.';
     END IF;
 END //
 DELIMITER ;
@@ -2500,7 +2500,7 @@ CREATE TRIGGER tg_servicio_insert_nombre_vacio
 BEFORE INSERT ON Servicio FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre_servicio) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nombre del servicio catálogo no puede estar vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_servicio_insert_nombre_vacio): El nombre del servicio catálogo no puede estar vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2510,7 +2510,7 @@ CREATE TRIGGER tg_servicio_update_nombre_vacio
 BEFORE UPDATE ON Servicio FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre_servicio) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede modificar el nombre del servicio dejándolo vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_servicio_update_nombre_vacio): No se puede modificar el nombre del servicio dejándolo vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2525,7 +2525,7 @@ CREATE TRIGGER tg_pasajero_insert_val_venc_pas
 BEFORE INSERT ON Pasajero FOR EACH ROW
 BEGIN
     IF NEW.vencimiento_pasaporte < CURRENT_DATE() THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede registrar un pasajero con el pasaporte vencido.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_insert_val_venc_pas): No se puede registrar un pasajero con el pasaporte vencido.';
     END IF;
 END //
 DELIMITER ;
@@ -2535,7 +2535,7 @@ CREATE TRIGGER tg_pasajero_insert_val_nacimiento
 BEFORE INSERT ON Pasajero FOR EACH ROW
 BEGIN
     IF NEW.fecha_nacimiento > CURRENT_DATE() THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La fecha de nacimiento no puede ser futura.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_insert_val_nacimiento): La fecha de nacimiento no puede ser futura.';
     END IF;
 END //
 DELIMITER ;
@@ -2545,7 +2545,7 @@ CREATE TRIGGER tg_pasajero_update_block_dni
 BEFORE UPDATE ON Pasajero FOR EACH ROW
 BEGIN
     IF OLD.dni_pasajero <> NEW.dni_pasajero THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No está permitido modificar el número de DNI de un pasajero.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_update_block_dni): No está permitido modificar el número de DNI de un pasajero.';
     END IF;
 END //
 DELIMITER ;
@@ -2555,7 +2555,7 @@ CREATE TRIGGER tg_pasajero_update_block_pasaporte
 BEFORE UPDATE ON Pasajero FOR EACH ROW
 BEGIN
     IF OLD.nro_pasaporte <> NEW.nro_pasaporte THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El número de pasaporte es inmutable y no se puede modificar.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_update_block_pasaporte): El número de pasaporte es inmutable y no se puede modificar.';
     END IF;
 END //
 DELIMITER ;
@@ -2565,7 +2565,7 @@ CREATE TRIGGER tg_pasajero_insert_nombre_vacio
 BEFORE INSERT ON Pasajero FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre_pasajero) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nombre del pasajero no puede estar vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_insert_nombre_vacio): El nombre del pasajero no puede estar vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2575,7 +2575,7 @@ CREATE TRIGGER tg_pasajero_insert_apellido_vacio
 BEFORE INSERT ON Pasajero FOR EACH ROW
 BEGIN
     IF TRIM(NEW.apellido_pasajero) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El apellido del pasajero es obligatorio.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_insert_apellido_vacio): El apellido del pasajero es obligatorio.';
     END IF;
 END //
 DELIMITER ;
@@ -2585,7 +2585,7 @@ CREATE TRIGGER tg_pasajero_update_nombre_vacio
 BEFORE UPDATE ON Pasajero FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre_pasajero) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede modificar el nombre del pasajero dejándolo en blanco.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_update_nombre_vacio): No se puede modificar el nombre del pasajero dejándolo en blanco.';
     END IF;
 END //
 DELIMITER ;
@@ -2595,7 +2595,7 @@ CREATE TRIGGER tg_pasajero_update_apellido_vacio
 BEFORE UPDATE ON Pasajero FOR EACH ROW
 BEGIN
     IF TRIM(NEW.apellido_pasajero) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede modificar el apellido del pasajero dejándolo en blanco.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_update_apellido_vacio): No se puede modificar el apellido del pasajero dejándolo en blanco.';
     END IF;
 END //
 DELIMITER ;
@@ -2605,7 +2605,7 @@ CREATE TRIGGER tg_pasajero_insert_val_tel_long
 BEFORE INSERT ON Pasajero FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.telefono)) < 7 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El teléfono del pasajero debe tener al menos 7 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_insert_val_tel_long): El teléfono del pasajero debe tener al menos 7 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2615,7 +2615,7 @@ CREATE TRIGGER tg_pasajero_update_val_tel_long
 BEFORE UPDATE ON Pasajero FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.telefono)) < 7 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nuevo teléfono del pasajero no puede ser inferior a 7 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pasajero_update_val_tel_long): El nuevo teléfono del pasajero no puede ser inferior a 7 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2638,7 +2638,7 @@ CREATE TRIGGER tg_empleado_update_val_sueldo
 BEFORE UPDATE ON Empleado FOR EACH ROW
 BEGIN
     IF NEW.sueldo <= 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nuevo sueldo modificado debe ser mayor a cero.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_empleado_update_val_sueldo): El nuevo sueldo modificado debe ser mayor a cero.';
     END IF;
 END //
 DELIMITER ;
@@ -2648,7 +2648,7 @@ CREATE TRIGGER tg_empleado_insert_val_dni_long
 BEFORE INSERT ON Empleado FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(NEW.dni_empleado) <> 8 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El DNI del empleado debe tener exactamente 8 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_empleado_insert_val_dni_long): El DNI del empleado debe tener exactamente 8 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2658,7 +2658,7 @@ CREATE TRIGGER tg_empleado_update_val_dni_long
 BEFORE UPDATE ON Empleado FOR EACH ROW
 BEGIN
     IF OLD.dni_empleado <> NEW.dni_empleado AND CHAR_LENGTH(NEW.dni_empleado) <> 8 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nuevo DNI corregido debe tener exactamente 8 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_empleado_update_val_dni_long): El nuevo DNI corregido debe tener exactamente 8 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2670,7 +2670,7 @@ BEGIN
     DECLARE v_tipo_dep VARCHAR(20);
     SELECT tipo INTO v_tipo_dep FROM Departamento WHERE IDDepartamento = NEW.departamento_id;
     IF v_tipo_dep = 'Terrestre' AND NEW.sueldo < 500.00 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error salarial: El sueldo para personal terrestre no puede ser inferior a 500.00.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error salarial (tg_empleado_insert_sueldo_min_terr): El sueldo para personal terrestre no puede ser inferior a 500.00.';
     END IF;
 END //
 DELIMITER ;
@@ -2682,7 +2682,7 @@ BEGIN
     DECLARE v_tipo_dep VARCHAR(20);
     SELECT tipo INTO v_tipo_dep FROM Departamento WHERE IDDepartamento = NEW.departamento_id;
     IF v_tipo_dep = 'Terrestre' AND NEW.sueldo < 500.00 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error salarial: El sueldo modificado para personal terrestre no puede ser menor a 500.00.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error salarial (tg_empleado_update_sueldo_min_terr): El sueldo modificado para personal terrestre no puede ser menor a 500.00.';
     END IF;
 END //
 DELIMITER ;
@@ -2692,7 +2692,7 @@ CREATE TRIGGER tg_empleado_insert_val_tel_long
 BEFORE INSERT ON Empleado FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.telefono)) < 7 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El teléfono del empleado debe tener al menos 7 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_empleado_insert_val_tel_long): El teléfono del empleado debe tener al menos 7 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2702,7 +2702,7 @@ CREATE TRIGGER tg_empleado_update_val_tel_long
 BEFORE UPDATE ON Empleado FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(TRIM(NEW.telefono)) < 7 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nuevo teléfono del empleado no puede ser inferior a 7 caracteres.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_empleado_update_val_tel_long): El nuevo teléfono del empleado no puede ser inferior a 7 caracteres.';
     END IF;
 END //
 DELIMITER ;
@@ -2728,7 +2728,7 @@ CREATE TRIGGER tg_empleado_insert_vacio
 BEFORE INSERT ON Empleado FOR EACH ROW
 BEGIN
     IF TRIM(NEW.nombre_empleado) = '' OR TRIM(NEW.apellido_empleado) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El nombre y apellido del empleado no pueden estar vacíos.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_empleado_insert_vacio): El nombre y apellido del empleado no pueden estar vacíos.';
     END IF;
 END //
 DELIMITER ;
@@ -2743,7 +2743,7 @@ CREATE TRIGGER tg_asiento_insert_val_codigo
 BEFORE INSERT ON Asiento FOR EACH ROW
 BEGIN
     IF TRIM(NEW.codigo) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El código de asiento no puede estar vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_asiento_insert_val_codigo): El código de asiento no puede estar vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2753,7 +2753,7 @@ CREATE TRIGGER tg_asiento_insert_dispon_inicial
 BEFORE INSERT ON Asiento FOR EACH ROW
 BEGIN
     IF NEW.disponible = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Los asientos nuevos deben registrarse como disponibles.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_asiento_insert_dispon_inicial): Los asientos nuevos deben registrarse como disponibles.';
     END IF;
 END //
 DELIMITER ;
@@ -2771,7 +2771,7 @@ CREATE TRIGGER tg_asiento_update_val_codigo
 BEFORE UPDATE ON Asiento FOR EACH ROW
 BEGIN
     IF TRIM(NEW.codigo) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El código de asiento no puede modificarse quedando vacío.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_asiento_update_val_codigo): El código de asiento no puede modificarse quedando vacío.';
     END IF;
 END //
 DELIMITER ;
@@ -2781,7 +2781,7 @@ CREATE TRIGGER tg_asiento_insert_val_tipo
 BEFORE INSERT ON Asiento FOR EACH ROW
 BEGIN
     IF NEW.tipo NOT IN ('Ventana', 'Medio', 'Pasillo') THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El tipo de asiento debe ser Ventana, Medio o Pasillo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_asiento_insert_val_tipo): El tipo de asiento debe ser Ventana, Medio o Pasillo.';
     END IF;
 END //
 DELIMITER ;
@@ -2791,7 +2791,7 @@ CREATE TRIGGER tg_asiento_update_val_tipo
 BEFORE UPDATE ON Asiento FOR EACH ROW
 BEGIN
     IF NEW.tipo NOT IN ('Ventana', 'Medio', 'Pasillo') THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El tipo de asiento modificado no es válido.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_asiento_update_val_tipo): El tipo de asiento modificado no es válido.';
     END IF;
 END //
 DELIMITER ;
@@ -2817,7 +2817,7 @@ CREATE TRIGGER tg_asiento_update_block_avion
 BEFORE UPDATE ON Asiento FOR EACH ROW
 BEGIN
     IF OLD.avion_id <> NEW.avion_id THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No está permitido cambiar un asiento de avión.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_asiento_update_block_avion): No está permitido cambiar un asiento de avión.';
     END IF;
 END //
 DELIMITER ;
@@ -2827,7 +2827,7 @@ CREATE TRIGGER tg_asiento_insert_val_long_id
 BEFORE INSERT ON Asiento FOR EACH ROW
 BEGIN
     IF CHAR_LENGTH(NEW.IDAsiento) < 5 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El ID del asiento debe tener una longitud válida.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_asiento_insert_val_long_id): El ID del asiento debe tener una longitud válida.';
     END IF;
 END //
 DELIMITER ;
@@ -2842,7 +2842,7 @@ CREATE TRIGGER tg_vuelo_insert_val_destino
 BEFORE INSERT ON Vuelo FOR EACH ROW
 BEGIN
     IF NEW.origen_id = NEW.destino_id THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El aeropuerto de destino no puede ser igual al de origen.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_vuelo_insert_val_destino): El aeropuerto de destino no puede ser igual al de origen.';
     END IF;
 END //
 DELIMITER ;
@@ -2852,7 +2852,7 @@ CREATE TRIGGER tg_vuelo_insert_val_salida_futura
 BEFORE INSERT ON Vuelo FOR EACH ROW
 BEGIN
     IF NEW.fecha_hora_salida < CURRENT_TIMESTAMP() THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La fecha de salida del vuelo no puede ser en el pasado.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_vuelo_insert_val_salida_futura): La fecha de salida del vuelo no puede ser en el pasado.';
     END IF;
 END //
 DELIMITER ;
@@ -2862,7 +2862,7 @@ CREATE TRIGGER tg_vuelo_insert_val_estado_ini
 BEFORE INSERT ON Vuelo FOR EACH ROW
 BEGIN
     IF NEW.estado IN ('Completado', 'Volando', 'Cancelado') THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Un nuevo vuelo no puede registrarse con ese estado inicial.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_vuelo_insert_val_estado_ini): Un nuevo vuelo no puede registrarse con ese estado inicial.';
     END IF;
 END //
 DELIMITER ;
@@ -2872,7 +2872,7 @@ CREATE TRIGGER tg_vuelo_update_val_fechas
 BEFORE UPDATE ON Vuelo FOR EACH ROW
 BEGIN
     IF NEW.fecha_hora_llegada <= NEW.fecha_hora_salida THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La nueva fecha de llegada debe ser posterior a la de salida.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_vuelo_update_val_fechas): La nueva fecha de llegada debe ser posterior a la de salida.';
     END IF;
 END //
 DELIMITER ;
@@ -2902,7 +2902,7 @@ CREATE TRIGGER tg_vuelo_insert_limite_un_anio
 BEFORE INSERT ON Vuelo FOR EACH ROW
 BEGIN
     IF NEW.fecha_hora_salida > NOW() + INTERVAL 1 YEAR THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se pueden programar vuelos con más de un año de anticipación.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_vuelo_insert_limite_un_anio): No se pueden programar vuelos con más de un año de anticipación.';
     END IF;
 END //
 DELIMITER ;
@@ -2912,7 +2912,7 @@ CREATE TRIGGER tg_vuelo_update_limite_un_anio
 BEFORE UPDATE ON Vuelo FOR EACH ROW
 BEGIN
     IF NEW.fecha_hora_salida > NOW() + INTERVAL 1 YEAR THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La reprogramación del vuelo no puede exceder el límite de un año futuro.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_vuelo_update_limite_un_anio): La reprogramación del vuelo no puede exceder el límite de un año futuro.';
     END IF;
 END //
 DELIMITER ;
@@ -2922,7 +2922,7 @@ CREATE TRIGGER tg_vuelo_update_val_salida_pasada
 BEFORE UPDATE ON Vuelo FOR EACH ROW
 BEGIN
     IF NEW.fecha_hora_salida < NOW() AND NEW.estado = 'Programado' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La nueva reprogramación de salida del vuelo no puede ser en el pasado.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_vuelo_update_val_salida_pasada): La nueva reprogramación de salida del vuelo no puede ser en el pasado.';
     END IF;
 END //
 DELIMITER ;
@@ -2932,7 +2932,7 @@ CREATE TRIGGER tg_vuelo_insert_duracion_minima
 BEFORE INSERT ON Vuelo FOR EACH ROW
 BEGIN
     IF NEW.fecha_hora_llegada <= NEW.fecha_hora_salida THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error operativo: La fecha de llegada debe ser posterior a la fecha de salida.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error operativo (tg_vuelo_insert_duracion_minima): La fecha de llegada debe ser posterior a la fecha de salida.';
     END IF;
 END //
 DELIMITER ;
@@ -2942,7 +2942,7 @@ CREATE TRIGGER tg_vuelo_insert_duplicidad_avion
 BEFORE INSERT ON Vuelo FOR EACH ROW
 BEGIN
     IF EXISTS (SELECT 1 FROM Vuelo WHERE avion_id = NEW.avion_id AND estado IN ('Programado', 'Volando')) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El avión seleccionado ya se encuentra asignado a un vuelo activo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_vuelo_insert_duplicidad_avion): El avión seleccionado ya se encuentra asignado a un vuelo activo.';
     END IF;
 END //
 DELIMITER ;
@@ -2973,7 +2973,7 @@ CREATE TRIGGER tg_boleto_insert_val_precio_base
 BEFORE INSERT ON Boleto FOR EACH ROW
 BEGIN
     IF NEW.precio_base <= 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El precio base del boleto debe ser mayor a cero.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_boleto_insert_val_precio_base): El precio base del boleto debe ser mayor a cero.';
     END IF;
 END //
 DELIMITER ;
@@ -2996,7 +2996,7 @@ BEGIN
     DECLARE v_fecha_vuelo DATETIME;
     SELECT fecha_hora_salida INTO v_fecha_vuelo FROM Vuelo WHERE IDVuelo = NEW.vuelo_id;
     IF NEW.fecha > v_fecha_vuelo THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error lógico: La fecha de emisión del boleto no puede ser posterior al despegue del vuelo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error lógico (tg_boleto_insert_val_fecha_vuelo): La fecha de emisión del boleto no puede ser posterior al despegue del vuelo.';
     END IF;
 END //
 DELIMITER ;
@@ -3008,7 +3008,7 @@ BEGIN
     DECLARE v_fecha_vuelo DATETIME;
     SELECT fecha_hora_salida INTO v_fecha_vuelo FROM Vuelo WHERE IDVuelo = NEW.vuelo_id;
     IF NEW.fecha > v_fecha_vuelo THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error lógico: Al actualizar, la fecha del boleto no puede quedar posterior al vuelo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error lógico (tg_boleto_update_val_fecha_vuelo): Al actualizar, la fecha del boleto no puede quedar posterior al vuelo.';
     END IF;
 END //
 DELIMITER ;
@@ -3018,7 +3018,7 @@ CREATE TRIGGER tg_boleto_update_val_aumento_abusivo
 BEFORE UPDATE ON Boleto FOR EACH ROW
 BEGIN
     IF NEW.precio_base > (OLD.precio_base * 3) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error comercial: El nuevo precio base no puede superar el triple del precio anterior.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error comercial (tg_boleto_update_val_aumento_abusivo): El nuevo precio base no puede superar el triple del precio anterior.';
     END IF;
 END //
 DELIMITER ;
@@ -3041,7 +3041,7 @@ BEGIN
     SELECT capacidad INTO v_capacidad_max FROM Avion WHERE IDAvion = (SELECT avion_id FROM Vuelo WHERE IDVuelo = NEW.vuelo_id);
     SELECT COUNT(*) INTO v_vendidos FROM Boleto WHERE vuelo_id = NEW.vuelo_id;
     IF v_vendidos >= v_capacidad_max THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El vuelo se encuentra totalmente completo. Capacidad máxima alcanzada.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_boleto_insert_val_sobreventa): El vuelo se encuentra totalmente completo. Capacidad máxima alcanzada.';
     END IF;
 END //
 DELIMITER ;
@@ -3074,7 +3074,7 @@ CREATE TRIGGER tg_pago_insert_val_costo_serv
 BEFORE INSERT ON Pago FOR EACH ROW
 BEGIN
     IF NEW.costo_servicios < 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El costo de los servicios adicionales no puede ser negativo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pago_insert_val_costo_serv): El costo de los servicios adicionales no puede ser negativo.';
     END IF;
 END //
 DELIMITER ;
@@ -3084,7 +3084,7 @@ CREATE TRIGGER tg_pago_insert_val_estado_ini
 BEFORE INSERT ON Pago FOR EACH ROW
 BEGIN
     IF NEW.estado IN ('Robado', 'Devuelto', 'Cancelado') THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El estado inicial del pago no es válido para un nuevo registro.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pago_insert_val_estado_ini): El estado inicial del pago no es válido para un nuevo registro.';
     END IF;
 END //
 DELIMITER ;
@@ -3094,7 +3094,7 @@ CREATE TRIGGER tg_pago_update_proteger_pagado
 BEFORE UPDATE ON Pago FOR EACH ROW
 BEGIN
     IF OLD.estado = 'Pagado' AND NEW.estado = 'Pendiente' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede revertir un pago que ya ha sido completado.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pago_update_proteger_pagado): No se puede revertir un pago que ya ha sido completado.';
     END IF;
 END //
 DELIMITER ;
@@ -3104,7 +3104,7 @@ CREATE TRIGGER tg_pago_update_proteger_monto_liquidado
 BEFORE UPDATE ON Pago FOR EACH ROW
 BEGIN
     IF OLD.estado = 'Pagado' AND NEW.costo_total <> OLD.costo_total THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error de auditoría: Está estrictamente prohibido alterar el costo total de un pago realizado.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error de auditoría (tg_pago_update_proteger_monto_liquidado): Está strictly prohibido alterar el costo total de un pago realizado.';
     END IF;
 END //
 DELIMITER ;
@@ -3124,7 +3124,7 @@ CREATE TRIGGER tg_pago_update_val_costo_serv
 BEFORE UPDATE ON Pago FOR EACH ROW
 BEGIN
     IF NEW.costo_servicios < 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El costo de los servicios adicionales modificado no puede ser negativo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pago_update_val_costo_serv): El costo de los servicios adicionales modificado no puede ser negativo.';
     END IF;
 END //
 DELIMITER ;
@@ -3134,7 +3134,7 @@ CREATE TRIGGER tg_pago_insert_val_costo_total
 BEFORE INSERT ON Pago FOR EACH ROW
 BEGIN
     IF NEW.costo_total < 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El costo total del pago no puede ser un valor numérico negativo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pago_insert_val_costo_total): El costo total del pago no puede ser un valor numérico negativo.';
     END IF;
 END //
 DELIMITER ;
@@ -3144,7 +3144,7 @@ CREATE TRIGGER tg_pago_update_val_costo_total
 BEFORE UPDATE ON Pago FOR EACH ROW
 BEGIN
     IF NEW.costo_total < 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El costo total del pago modificado no puede ser negativo.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_pago_update_val_costo_total): El costo total del pago modificado no puede ser negativo.';
     END IF;
 END //
 DELIMITER ;
@@ -3169,7 +3169,7 @@ BEGIN
     DECLARE v_estado_pago VARCHAR(20);
     SELECT estado INTO v_estado_pago FROM Pago WHERE IDPago = NEW.pago_id;
     IF v_estado_pago <> 'Pagado' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede realizar Check-In si la factura no está en estado Pagado.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_checkin_insert_bloqueo_sin_pago): No se puede realizar Check-In si la factura no está en estado Pagado.';
     END IF;
 END //
 DELIMITER ;
@@ -3181,7 +3181,7 @@ BEGIN
     DECLARE v_pasajero_boleto INT;
     SELECT pasajero_id INTO v_pasajero_boleto FROM Boleto WHERE IDBoleto = NEW.boleto_id;
     IF NEW.pasajero_id <> v_pasajero_boleto THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error de seguridad: El pasajero del Check-In no coincide con el dueño original del boleto.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error de seguridad (tg_checkin_insert_val_titular): El pasajero del Check-In no coincide con el dueño original del boleto.';
     END IF;
 END //
 DELIMITER ;
@@ -3193,7 +3193,7 @@ BEGIN
     DECLARE v_estado_vuelo VARCHAR(20);
     SELECT estado INTO v_estado_vuelo FROM Vuelo WHERE IDVuelo = NEW.vuelo_id;
     IF v_estado_vuelo = 'Cancelado' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede realizar Check-In para un vuelo que se encuentra cancelado.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_checkin_insert_val_vuelo_cancelado): No se puede realizar Check-In para un vuelo que se encuentra cancelado.';
     END IF;
 END //
 DELIMITER ;
@@ -3205,7 +3205,7 @@ BEGIN
     DECLARE v_estado_vuelo VARCHAR(20);
     SELECT estado INTO v_estado_vuelo FROM Vuelo WHERE IDVuelo = NEW.vuelo_id;
     IF v_estado_vuelo = 'Completado' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El vuelo ya finalizó. No se permiten nuevos registros de Check-In.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_checkin_insert_val_vuelo_comp): El vuelo ya finalizó. No se permiten nuevos registros de Check-In.';
     END IF;
 END //
 DELIMITER ;
@@ -3217,7 +3217,7 @@ BEGIN
     DECLARE v_fecha_boleto DATETIME;
     SELECT fecha INTO v_fecha_boleto FROM Boleto WHERE IDBoleto = NEW.boleto_id;
     IF NOW() < v_fecha_boleto THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La fecha de Check-In no puede ser anterior a la de emisión del boleto.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_checkin_insert_val_fecha_coherente): La fecha de Check-In no puede ser anterior a la de emisión del boleto.';
     END IF;
 END //
 DELIMITER ;
@@ -3243,7 +3243,7 @@ CREATE TRIGGER tg_checkin_insert_puerta_vacia
 BEFORE INSERT ON CheckIn FOR EACH ROW
 BEGIN
     IF TRIM(NEW.puerta_embarque) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La puerta de embarque no puede estar vacía.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_checkin_insert_puerta_vacia): La puerta de embarque no puede estar vacía.';
     END IF;
 END //
 DELIMITER ;
@@ -3253,7 +3253,7 @@ CREATE TRIGGER tg_checkin_update_puerta_vacia
 BEFORE UPDATE ON CheckIn FOR EACH ROW
 BEGIN
     IF TRIM(NEW.puerta_embarque) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede modificar Check-In dejando la puerta de embarque vacía.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_checkin_update_puerta_vacia): No se puede modificar Check-In dejando la puerta de embarque vacía.';
     END IF;
 END //
 DELIMITER ;
@@ -3263,7 +3263,7 @@ CREATE TRIGGER tg_checkin_update_block_boleto
 BEFORE UPDATE ON CheckIn FOR EACH ROW
 BEGIN
     IF OLD.boleto_id <> NEW.boleto_id THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El boleto asociado al Check-In es inmutable.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_checkin_update_block_boleto): El boleto asociado al Check-In es inmutable.';
     END IF;
 END //
 DELIMITER ;
