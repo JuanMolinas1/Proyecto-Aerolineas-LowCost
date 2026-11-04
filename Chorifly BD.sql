@@ -1,4 +1,4 @@
-DROP DATABASE IF exists Chorifly;
+DROP DATABASE IF EXISTS Chorifly;
 CREATE DATABASE Chorifly;
 USE Chorifly;
 
@@ -157,7 +157,7 @@ INSERT INTO Avion (IDAvion, modelo, capacidad) VALUES
 INSERT INTO Servicio (nombre_servicio, precio, descripcion) VALUES 
 ('Equipaje Extra', 16700.00, 'Permite llevar hasta 2 valijas extra, una en la bodega y otra en la guantera.'),
 ('Embarque Prioritario', 10000.00, 'Permite entrar primero al avión.'),
-('Menú Premium', 20000.00, 'Ofrece un menú con comidas y bebidas para consumir durante el viaje.'),
+('Menú Premium', 20000.00, 'Ofrece un menú con comidas y bebidas para consumir during el viaje.'),
 ('Selección de Asiento', 15000, 'Permite elegir tu asiento y que no te sea seleccionado de forma aleatoria');
 
 INSERT INTO Usuario (nombre_usuario, email, contraseña_usuario, privilegios_empleado, pregunta_seguridad, respuesta_seguridad) VALUES 
@@ -166,7 +166,13 @@ INSERT INTO Usuario (nombre_usuario, email, contraseña_usuario, privilegios_emp
 ('davo_xeneize', 'davoxeneize@gmail.com', 'Davo123!', True, 'Comida favorita', 'Milanesa'),
 ('goncho_batan', 'gonchobatan@gmail.com', 'Goncho123!', True, 'Nombre de mascota actual', 'Roco'),
 ('momo_gero', 'momogero@gmail.com', 'Momo123!', True, 'Ciudad de nacimiento', 'La Plata'),
-('brunenger_ok', 'brunengerok@gmail.com', 'Brunenger123!', True, 'Comida favorita', 'Asado');
+('brunenger_ok', 'brunengerok@gmail.com', 'Brunenger123!', True, 'Comida favorita', 'Asado'),
+('oppenjuamer', 'juanmer@gmail.com', '32157Juan!', FALSE, 'Color Favorito', 'Dortmund'),
+('mateo_arg', 'mateo.arg@gmail.com', 'Mateo123!', FALSE, 'Comida favorita', 'Milanesa'),
+('sofia_bra', 'sofia.bra@gmail.com', 'Sofia123!', FALSE, 'Ciudad de nacimiento', 'São Paulo'),
+('diego_mex', 'diego.mex@gmail.com', 'Diego123!', FALSE, 'Nombre de mascota', 'Luna'),
+('valentina_chl', 'valentina.chl@gmail.com', 'Vale123!', FALSE, 'Color favorito', 'Azul'),
+('camilo_col', 'camilo.col@gmail.com', 'Camilo123!', FALSE, 'Comida favorita', 'Arepas');
 
 INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, telefono, sueldo, departamento_id, aeropuerto_id, usuario_id) VALUES
 ('CEOJuanMer', 'Jefe', '49112572', '1165929456', 670000.67, 1, 1, 1),
@@ -175,6 +181,13 @@ INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, telefono
 ('Gonzalo', 'Banzas', '38444555', '1145678901', 1800.00, 2, 1, 4),
 ('Gerónimo', 'Benavides', '37555666', '1156789012', 1500.00, 1, 3, 5),
 ('Bruno', 'Kr Kr Kr', '41666777', '1167890123', 1500.00, 3, 3, 6);
+
+INSERT INTO Pasajero (nombre_pasajero, apellido_pasajero, dni_pasajero, telefono, fecha_nacimiento, nro_pasaporte, pais_emision, vencimiento_pasaporte, usuario_id) VALUES
+('Mateo', 'González', '45111222', '+5491123456789', '2002-04-12', 'ARG123456', 'ARG', '2030-04-12', 7),
+('Sofia', 'Oliveira', 'BRA123456', '+5511987654321', '1998-08-21', 'BR123456', 'BRA', '2031-08-21', 8),
+('Diego', 'Hernández', 'MEX123456', '+525512345678', '2000-02-15', 'MX123456', 'MEX', '2030-02-15', 9),
+('Valentina', 'Rojas', 'CHL123456', '+56912345678', '2001-11-03', 'CH123456', 'CHL', '2031-11-03', 10),
+('Camilo', 'Restrepo', 'COL123456', '+573001234567', '1997-06-27', 'CO123456', 'COL', '2030-06-27', 11);
 
 INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES 
 ('AV-A320-01-01A', '01A', 'AV-A320-01', 'Ventana', 1),
@@ -904,13 +917,14 @@ INSERT INTO Asiento (IDAsiento, codigo, avion_id, tipo, disponible) VALUES
 ('AV-B737-02-30E', '30E', 'AV-B737-02', 'Medio', 1),
 ('AV-B737-02-30F', '30F', 'AV-B737-02', 'Ventana', 1);
 
+
 -- =========================================
 -- PROCEDIMIENTOS DE Aeropuerto
 -- =========================================
 DELIMITER //
 CREATE PROCEDURE Crear_Aeropuerto(IN p_nombre VARCHAR(120), IN p_pais VARCHAR(30), IN p_ciudad VARCHAR(80))
 BEGIN
-    INSERT INTO Aeropuerto(nombre, pais, ciudad) VALUES(p_nombre, p_pais, p_ciudad);
+    INSERT INTO Aeropuerto(nombre, pais, city) VALUES(p_nombre, p_pais, p_ciudad);
 END//
 DELIMITER ;
 
@@ -981,28 +995,16 @@ DELIMITER ;
 -- PROCEDIMIENTOS DE Avion
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Crear_Avion(
-    IN p_idavion VARCHAR(30),
-    IN p_modelo VARCHAR(50),
-    IN p_capacidad INT
-)
+CREATE PROCEDURE Crear_Avion(IN p_idavion VARCHAR(30), IN p_modelo VARCHAR(50), IN p_capacidad INT)
 BEGIN
-    INSERT INTO Avion(IDAvion, modelo, capacidad) 
-    VALUES(p_idavion, p_modelo, p_capacidad);
+    INSERT INTO Avion(IDAvion, modelo, capacidad) VALUES(p_idavion, p_modelo, p_capacidad);
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Editar_Avion(
-    IN p_idavion VARCHAR(30),
-    IN p_modelo VARCHAR(50),
-    IN p_capacidad INT
-)
+CREATE PROCEDURE Editar_Avion(IN p_idavion VARCHAR(30), IN p_modelo VARCHAR(50), IN p_capacidad INT)
 BEGIN
-    UPDATE Avion 
-    SET modelo = COALESCE(p_modelo, modelo), 
-        capacidad = COALESCE(p_capacidad, capacidad) 
-    WHERE IDAvion = p_idavion;
+    UPDATE Avion SET modelo = COALESCE(p_modelo, modelo), capacidad = COALESCE(p_capacidad, capacidad) WHERE IDAvion = p_idavion;
 END//
 DELIMITER ;
 
@@ -1014,27 +1016,21 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Avion(
-    IN p_idavion VARCHAR(30)
-)
+CREATE PROCEDURE Buscar_Avion(IN p_idavion VARCHAR(30))
 BEGIN
     SELECT * FROM Avion WHERE IDAvion = p_idavion;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Eliminar_Avion(
-    IN p_idavion VARCHAR(30)
-)
+CREATE PROCEDURE Eliminar_Avion(IN p_idavion VARCHAR(30))
 BEGIN
     DELETE FROM Avion WHERE IDAvion = p_idavion;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Avion_Por_Modelo(
-    IN p_modelo VARCHAR(30)
-)
+CREATE PROCEDURE Buscar_Avion_Por_Modelo(IN p_modelo VARCHAR(30))
 BEGIN
     SELECT * FROM Avion WHERE modelo = p_modelo;
 END//
@@ -1048,9 +1044,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Avion_Por_Capacidad(
-    IN p_capacidad INT
-)
+CREATE PROCEDURE Buscar_Avion_Por_Capacidad(IN p_capacidad INT)
 BEGIN
     SELECT * FROM Avion WHERE capacidad = p_capacidad;
 END//
@@ -1064,10 +1058,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Avion_Por_Rango_De_Capacidad(
-    IN p_capacidad_min INT,
-    IN p_capacidad_max INT
-)
+CREATE PROCEDURE Buscar_Avion_Por_Rango_De_Capacidad(IN p_capacidad_min INT, IN p_capacidad_max INT)
 BEGIN
     SELECT * FROM Avion WHERE capacidad BETWEEN p_capacidad_min AND p_capacidad_max;
 END//
@@ -1077,27 +1068,21 @@ DELIMITER ;
 -- PROCEDIMIENTOS DE Asiento
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Buscar_Asiento_Por_Id(
-    IN p_idasiento VARCHAR(50)
-)
+CREATE PROCEDURE Buscar_Asiento_Por_Id(IN p_idasiento VARCHAR(50))
 BEGIN
     SELECT * FROM Asiento WHERE IDAsiento = p_idasiento;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Asientos_Por_Avion(
-    IN p_avion_id VARCHAR(30)
-)
+CREATE PROCEDURE Buscar_Asientos_Por_Avion(IN p_avion_id VARCHAR(30))
 BEGIN
     SELECT * FROM Asiento WHERE avion_id = p_avion_id;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Mostrar_Disponibilidad_Asientos_Por_Avion(
-    IN p_avion_id VARCHAR(30)
-)
+CREATE PROCEDURE Mostrar_Disponibilidad_Asientos_Por_Avion(IN p_avion_id VARCHAR(30))
 BEGIN
     SELECT disponible FROM Asiento WHERE avion_id = p_avion_id;
 END//
@@ -1111,57 +1096,44 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Asientos_Por_Disponibilidad(
-    IN p_disponible BOOLEAN
-)
+CREATE PROCEDURE Buscar_Asientos_Por_Disponibilidad(IN p_disponible BOOLEAN)
 BEGIN
     SELECT * FROM Asiento WHERE disponible = p_disponible;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Editar_Asiento(
-    IN p_disponible BOOLEAN,
-    IN p_idasiento VARCHAR(50)
-)
+CREATE PROCEDURE Editar_Asiento(IN p_disponible BOOLEAN, IN p_idasiento VARCHAR(50))
 BEGIN
     UPDATE Asiento SET disponible = p_disponible WHERE IDAsiento = p_idasiento;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Ocupar_Asiento(
-    IN p_idasiento VARCHAR(50)
-)
+CREATE PROCEDURE Ocupar_Asiento(IN p_idasiento VARCHAR(50))
 BEGIN
     UPDATE Asiento SET disponible = 0 WHERE IDAsiento = p_idasiento;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Liberar_Asiento(
-    IN p_idasiento VARCHAR(50)
-)
+CREATE PROCEDURE Liberar_Asiento(IN p_idasiento VARCHAR(50))
 BEGIN
     UPDATE Asiento SET disponible = 1 WHERE IDAsiento = p_idasiento;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Asientos_Por_Codigo(
-    IN p_codigo varchar(5)
-)
+CREATE PROCEDURE Buscar_Asientos_Por_Codigo(IN p_codigo varchar(5))
 BEGIN
     SELECT * FROM Asiento WHERE codigo = p_codigo;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Asientos_Por_Tipo(
-    IN p_tipo ENUM("Ventana", "Medio", "Pasillo")
-)
+CREATE PROCEDURE Buscar_Asientos_Por_Tipo(IN p_tipo ENUM("Ventana", "Medio", "Pasillo"))
 BEGIN
-    SELECT * FROM Asiento WHERE tipo  = p_tipo;
+    SELECT * FROM Asiento WHERE tipo = p_tipo;
 END//
 DELIMITER ;
 
@@ -1169,27 +1141,16 @@ DELIMITER ;
 -- PROCEDIMIENTOS DE Departamento
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Crear_Departamento(
-    IN p_nombre VARCHAR(100),
-    IN p_tipo ENUM("Aéreo", "Terrestre")
-)
+CREATE PROCEDURE Crear_Departamento(IN p_nombre VARCHAR(100), IN p_tipo ENUM("Aéreo", "Terrestre"))
 BEGIN
-    INSERT INTO Departamento(nombre, tipo) 
-    VALUES(p_nombre, p_tipo);
+    INSERT INTO Departamento(nombre, tipo) VALUES(p_nombre, p_tipo);
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Editar_Departamento(
-    IN p_iddepartamento INT,
-    IN p_nombre VARCHAR(100),
-    IN p_tipo ENUM("Aéreo", "Terrestre")
-)
+CREATE PROCEDURE Editar_Departamento(IN p_iddepartamento INT, IN p_nombre VARCHAR(100), IN p_tipo ENUM("Aéreo", "Terrestre"))
 BEGIN
-    UPDATE Departamento 
-    SET nombre = COALESCE(p_nombre, nombre), 
-        tipo = COALESCE(p_tipo, tipo) 
-    WHERE IDDepartamento = p_iddepartamento;
+    UPDATE Departamento SET nombre = COALESCE(p_nombre, nombre), tipo = COALESCE(p_tipo, tipo) WHERE IDDepartamento = p_iddepartamento;
 END//
 DELIMITER ;
 
@@ -1201,36 +1162,28 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Departamento(
-    IN p_iddepartamento INT
-)
+CREATE PROCEDURE Buscar_Departamento(IN p_iddepartamento INT)
 BEGIN
     SELECT * FROM Departamento WHERE IDDepartamento = p_iddepartamento;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Eliminar_Departamento(
-    IN p_iddepartamento INT
-)
+CREATE PROCEDURE Eliminar_Departamento(IN p_iddepartamento INT)
 BEGIN
     DELETE FROM Departamento WHERE IDDepartamento = p_iddepartamento;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Departamento_Por_Nombre(
-    IN p_nombre VARCHAR(100)
-)
+CREATE PROCEDURE Buscar_Departamento_Por_Nombre(IN p_nombre VARCHAR(100))
 BEGIN
     SELECT * FROM Departamento WHERE nombre = p_nombre;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Departamento_Por_Tipo(
-    IN p_tipo ENUM("Aéreo", "Terrestre")
-)
+CREATE PROCEDURE Buscar_Departamento_Por_Tipo(IN p_tipo ENUM("Aéreo", "Terrestre"))
 BEGIN
     SELECT * FROM Departamento WHERE tipo = p_tipo;
 END//
@@ -1261,30 +1214,16 @@ DELIMITER ;
 -- PROCEDIMIENTOS DE Servicio
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Crear_Servicio(
-    IN p_nombre_servicio VARCHAR(20),
-    IN p_precio DECIMAL(10, 2),
-    IN p_descripcion VARCHAR(120)
-)
+CREATE PROCEDURE Crear_Servicio(IN p_nombre_servicio VARCHAR(20), IN p_precio DECIMAL(10, 2), IN p_descripcion VARCHAR(120))
 BEGIN
-    INSERT INTO Servicio(nombre_servicio, precio, descripcion) 
-    VALUES(p_nombre_servicio, p_precio, p_descripcion);
+    INSERT INTO Servicio(nombre_servicio, precio, descripcion) VALUES(p_nombre_servicio, p_precio, p_descripcion);
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Editar_Servicio(
-    IN p_idservicio INT,
-    IN p_nombre_servicio VARCHAR(20),
-    IN p_precio DECIMAL(10, 2),
-    IN p_descripcion VARCHAR(120)
-)
+CREATE PROCEDURE Editar_Servicio(IN p_idservicio INT, IN p_nombre_servicio VARCHAR(20), IN p_precio DECIMAL(10, 2), IN p_descripcion VARCHAR(120))
 BEGIN
-    UPDATE Servicio 
-    SET nombre_servicio = COALESCE(p_nombre_servicio, nombre_servicio), 
-        precio = COALESCE(p_precio, precio), 
-        descripcion = COALESCE(p_descripcion, p_descripcion) 
-    WHERE IDServicio = p_idservicio;
+    UPDATE Servicio SET nombre_servicio = COALESCE(p_nombre_servicio, nombre_servicio), precio = COALESCE(p_precio, precio), descripcion = COALESCE(p_descripcion, p_descripcion) WHERE IDServicio = p_idservicio;
 END//
 DELIMITER ;
 
@@ -1296,836 +1235,614 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Servicio(
-    IN p_idservicio INT
-)
+CREATE PROCEDURE Buscar_Servicio(IN p_idservicio INT)
 BEGIN
     SELECT * FROM Servicio WHERE IDServicio = p_idservicio;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Eliminar_Servicio(
-    IN p_idservicio INT
-)
+CREATE PROCEDURE Eliminar_Servicio(IN p_idservicio INT)
 BEGIN
     DELETE FROM Servicio WHERE IDServicio = p_idservicio;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Servicio_Por_Nombre(
-    IN p_nombre_servicio VARCHAR(20)
-)
+CREATE PROCEDURE Buscar_Servicio_Por_Nombre(IN p_nombre_servicio VARCHAR(20))
 BEGIN
     SELECT * FROM Servicio WHERE nombre_servicio = p_nombre_servicio;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Servicio_Por_Precio(
-    IN p_precio DECIMAL(10, 2)
-)
+CREATE PROCEDURE Buscar_Servicio_Por_Precio(IN p_precio DECIMAL(10, 2))
 BEGIN
     SELECT * FROM Servicio WHERE precio = p_precio;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Servicio_Por_Descripcion(
-    IN p_descripcion VARCHAR(120)
-)
+CREATE PROCEDURE Buscar_Servicio_Por_Descripcion(IN p_descripcion VARCHAR(120))
 BEGIN
     SELECT * FROM Servicio WHERE descripcion = p_descripcion;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Servicio_Por_Precio_Mayor_A(
-    IN p_precio DECIMAL(10, 2)
-)
+CREATE PROCEDURE Buscar_Servicio_Por_Precio_Mayor_A(IN p_precio DECIMAL(10, 2))
 BEGIN
     SELECT * FROM Servicio WHERE precio > p_precio;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Servicio_Por_Precio_Menor_A(
-    IN p_precio DECIMAL(10, 2)
-)
+CREATE PROCEDURE Buscar_Servicio_Por_Precio_Menor_A(IN p_precio DECIMAL(10, 2))
 BEGIN
     SELECT * FROM Servicio WHERE precio < p_precio;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Buscar_Servicio_Por_Rango_De_Precio(
-    IN p_precio_min DECIMAL(10, 2),
-    IN p_precio_max DECIMAL(10, 2)
-)
+CREATE PROCEDURE Buscar_Servicio_Por_Rango_De_Precio(IN p_precio_min DECIMAL(10, 2), IN p_precio_max DECIMAL(10, 2))
 BEGIN
     SELECT * FROM Servicio WHERE precio BETWEEN p_precio_min AND p_precio_max;
 END//
 DELIMITER ;
 
-
 -- =========================================
 -- PROCEDIMIENTOS DE Usuario
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Crear_Usuario(
-    IN p_nombre_usuario VARCHAR(30),
-    IN p_email VARCHAR(40),
-    IN p_contraseña_usuario VARCHAR(30),
-    IN p_privilegios_empleado BOOLEAN,
-    IN p_pregunta_seguridad VARCHAR(100),
-    IN p_respuesta_seguridad VARCHAR(100)
-)
+CREATE PROCEDURE Crear_Usuario(IN p_nombre_usuario VARCHAR(30), IN p_email VARCHAR(40), IN p_contraseña_usuario VARCHAR(30), IN p_privilegios_empleado BOOLEAN, IN p_pregunta_seguridad VARCHAR(100), IN p_respuesta_seguridad VARCHAR(100))
 BEGIN
-    INSERT INTO Usuario(nombre_usuario, email, contraseña_usuario, privilegios_empleado, pregunta_seguridad, respuesta_seguridad) 
-    VALUES(p_nombre_usuario, p_email, p_contraseña_usuario, p_privilegios_empleado, p_pregunta_seguridad, p_respuesta_seguridad);
+    INSERT INTO Usuario(nombre_usuario, email, contraseña_usuario, privilegios_empleado, pregunta_seguridad, respuesta_seguridad) VALUES(p_nombre_usuario, p_email, p_contraseña_usuario, p_privilegios_empleado, p_pregunta_seguridad, p_respuesta_seguridad);
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Editar_Usuario(
-    IN p_idusuario INT,
-    IN p_nombre_usuario VARCHAR(30),
-    IN p_email VARCHAR(40),
-    IN p_contraseña_usuario VARCHAR(30),
-    IN p_privilegios_empleado BOOLEAN,
-    IN p_pregunta_seguridad VARCHAR(100),
-    IN p_respuesta_seguridad VARCHAR(100)
-)
+CREATE PROCEDURE Editar_Usuario(IN p_idusuario INT, IN p_nombre_usuario VARCHAR(30), IN p_email VARCHAR(40), IN p_contraseña_usuario VARCHAR(30), IN p_privilegios_empleado BOOLEAN, IN p_pregunta_seguridad VARCHAR(100), IN p_respuesta_seguridad VARCHAR(100))
 BEGIN
-    UPDATE Usuario 
-    SET nombre_usuario = COALESCE(p_nombre_usuario, nombre_usuario), 
-        email = COALESCE(p_email, email), 
-        contraseña_usuario = COALESCE(p_contraseña_usuario, contraseña_usuario), 
-        privilegios_empleado = COALESCE(p_privilegios_empleado, privilegios_empleado), 
-        pregunta_seguridad = COALESCE(p_pregunta_seguridad, pregunta_seguridad), 
-        respuesta_seguridad = COALESCE(p_respuesta_seguridad, respuesta_seguridad) 
-    WHERE IDUsuario = p_idusuario;
+    UPDATE Usuario SET nombre_usuario = COALESCE(p_nombre_usuario, nombre_usuario), email = COALESCE(p_email, email), contraseña_usuario = COALESCE(p_contraseña_usuario, contraseña_usuario), privilegios_empleado = COALESCE(p_privilegios_empleado, privilegios_empleado), pregunta_seguridad = COALESCE(p_pregunta_seguridad, pregunta_seguridad), respuesta_seguridad = COALESCE(p_respuesta_seguridad, respuesta_seguridad) WHERE IDUsuario = p_idusuario;
 END//
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Usuario()
 BEGIN
-SELECT * FROM Usuario;
+    SELECT * FROM Usuario;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Usuario(
-IN p_idusuario INT
-)
+CREATE PROCEDURE Buscar_Usuario(IN p_idusuario INT)
 BEGIN
-SELECT * FROM Usuario WHERE IDUsuario = p_idusuario;
+    SELECT * FROM Usuario WHERE IDUsuario = p_idusuario;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Eliminar_Usuario(
-IN p_idusuario INT
-)
+CREATE PROCEDURE Eliminar_Usuario(IN p_idusuario INT)
 BEGIN
-DELETE FROM Usuario WHERE IDUsuario = p_idusuario;
+    DELETE FROM Usuario WHERE IDUsuario = p_idusuario;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Usuario_Por_Nombre(
-IN p_nombre_usuario VARCHAR(30)
-)
+CREATE PROCEDURE Buscar_Usuario_Por_Nombre(IN p_nombre_usuario VARCHAR(30))
 BEGIN
-SELECT * FROM Usuario WHERE nombre_usuario = p_nombre_usuario;
+    SELECT * FROM Usuario WHERE nombre_usuario = p_nombre_usuario;
 END//
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Usuarios_Sin_Permisos()
 BEGIN
-SELECT * FROM Usuario WHERE privilegios_empleado = FALSE;
+    SELECT * FROM Usuario WHERE privilegios_empleado = FALSE;
 END//
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Usuarios_Con_Permisos()
 BEGIN
-SELECT * FROM Usuario WHERE privilegios_empleado = TRUE;
+    SELECT * FROM Usuario WHERE privilegios_empleado = TRUE;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Validar_Usuario_Unico(
-IN p_nombre_usuario VARCHAR(30)
-)
+CREATE PROCEDURE Validar_Usuario_Unico(IN p_nombre_usuario VARCHAR(30))
 BEGIN
-SELECT COUNT(*) FROM Usuario WHERE nombre_usuario = p_nombre_usuario;
+    SELECT COUNT(*) FROM Usuario WHERE nombre_usuario = p_nombre_usuario;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Validar_Email_Unico(
-IN p_email VARCHAR(40)
-)
+CREATE PROCEDURE Validar_Email_Unico(IN p_email VARCHAR(40))
 BEGIN
-SELECT COUNT(*) FROM Usuario WHERE email = p_email;
+    SELECT COUNT(*) FROM Usuario WHERE email = p_email;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Validar_Usuario_Editar(
-IN p_nombre_usuario VARCHAR(30),
-IN p_id INT
-)
+CREATE PROCEDURE Validar_Usuario_Editar(IN p_nombre_usuario VARCHAR(30), IN p_id INT)
 BEGIN
-SELECT COUNT(*) FROM Usuario WHERE nombre_usuario = p_nombre_usuario AND IDUsuario != p_id;
+    SELECT COUNT(*) FROM Usuario WHERE nombre_usuario = p_nombre_usuario AND IDUsuario != p_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Validar_Email_Editar(
-IN p_email VARCHAR(40),
-IN p_id INT
-)
+CREATE PROCEDURE Validar_Email_Editar(IN p_email VARCHAR(40), IN p_id INT)
 BEGIN
-SELECT COUNT(*) FROM Usuario WHERE email = p_email AND IDUsuario != p_id;
+    SELECT COUNT(*) FROM Usuario WHERE email = p_email AND IDUsuario != p_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Editar_Contraseña_Usuario(
-IN p_contraseña_usuario VARCHAR(30),
-IN p_id INT
-)
+CREATE PROCEDURE Editar_Contraseña_Usuario(IN p_contraseña_usuario VARCHAR(30), IN p_id INT)
 BEGIN
-UPDATE Usuario SET contraseña_usuario = p_contraseña_usuario WHERE IDUsuario = p_id;
+    UPDATE Usuario SET contraseña_usuario = p_contraseña_usuario WHERE IDUsuario = p_id;
 END//
 DELIMITER ;
+
 -- =========================================
 -- PROCEDIMIENTOS DE Pago
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Buscar_Pago_Por_Estado(
-IN p_estado VARCHAR(20)
-)
+CREATE PROCEDURE Buscar_Pago_Por_Estado(IN p_estado VARCHAR(20))
 BEGIN
-SELECT * FROM Pago WHERE estado = p_estado;
+    SELECT * FROM Pago WHERE estado = p_estado;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Agregar_Pago(
-IN p_pasajero_id INT,
-IN p_boleto_id INT,
-IN p_costo_servicios DECIMAL(10, 2),
-IN p_costo_total DECIMAL(10, 2),
-IN p_estado VARCHAR(20)
-)
+CREATE PROCEDURE Agregar_Pago(IN p_pasajero_id INT, IN p_boleto_id INT, IN p_costo_servicios DECIMAL(10, 2), IN p_costo_total DECIMAL(10, 2), IN p_estado VARCHAR(20))
 BEGIN
-INSERT INTO Pago (pasajero_id, boleto_id, costo_servicios, costo_total, estado)
-VALUES (p_pasajero_id, p_boleto_id, p_costo_servicios, p_costo_total, p_estado);
+    INSERT INTO Pago (pasajero_id, boleto_id, costo_servicios, costo_total, estado) VALUES (p_pasajero_id, p_boleto_id, p_costo_servicios, p_costo_total, p_estado);
 END //
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Pagos()
 BEGIN
-SELECT * FROM Pago;
+    SELECT * FROM Pago;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pago_Por_Id(
-IN p_id INT
-)
+CREATE PROCEDURE Buscar_Pago_Por_Id(IN p_id INT)
 BEGIN
-SELECT * FROM Pago WHERE IDPago = p_id;
+    SELECT * FROM Pago WHERE IDPago = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Editar_Pago(
-IN p_pasajero_id INT,
-IN p_boleto_id INT,
-IN p_costo_servicios DECIMAL(10, 2),
-IN p_costo_total DECIMAL(10, 2),
-IN p_estado VARCHAR(20),
-IN p_id INT
-)
+CREATE PROCEDURE Editar_Pago(IN p_pasajero_id INT, IN p_boleto_id INT, IN p_costo_servicios DECIMAL(10, 2), IN p_costo_total DECIMAL(10, 2), IN p_estado VARCHAR(20), IN p_id INT)
 BEGIN
-UPDATE Pago
-SET pasajero_id = p_pasajero_id,
-boleto_id = p_boleto_id,
-costo_servicios = p_costo_servicios,
-costo_total = p_costo_total,
-estado = p_estado
-WHERE IDPago = p_id;
+    UPDATE Pago SET pasajero_id = p_pasajero_id, boleto_id = p_boleto_id, costo_servicios = p_costo_servicios, costo_total = p_costo_total, estado = p_estado WHERE IDPago = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Eliminar_Pago(
-IN p_id INT
-)
+CREATE PROCEDURE Eliminar_Pago(IN p_id INT)
 BEGIN
-DELETE FROM Pago WHERE IDPago = p_id;
+    DELETE FROM Pago WHERE IDPago = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pago_Por_Boleto(
-IN p_boleto_id INT
-)
+CREATE PROCEDURE Buscar_Pago_Por_Boleto(IN p_boleto_id INT)
 BEGIN
-SELECT * FROM Pago WHERE boleto_id  = p_boleto_id;
+    SELECT * FROM Pago WHERE boleto_id = p_boleto_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pago_Por_Pasajero(
-IN p_pasajero_id INT
-)
+CREATE PROCEDURE Buscar_Pago_Por_Pasajero(IN p_pasajero_id INT)
 BEGIN
-SELECT * FROM Pago WHERE pasajero_id   = p_pasajero_id;
+    SELECT * FROM Pago WHERE pasajero_id = p_pasajero_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pago_Por_Costo_Mayor_A(
-IN p_costo_total DECIMAL(10, 2)
-)
+CREATE PROCEDURE Buscar_Pago_Por_Costo_Mayor_A(IN p_costo_total DECIMAL(10, 2))
 BEGIN
-SELECT * FROM Pago WHERE costo_total    > p_costo_total;
+    SELECT * FROM Pago WHERE costo_total > p_costo_total;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pago_Por_Costo_Menor_A(
-IN p_costo_total DECIMAL(10, 2)
-)
+CREATE PROCEDURE Buscar_Pago_Por_Costo_Menor_A(IN p_costo_total DECIMAL(10, 2))
 BEGIN
-SELECT * FROM Pago WHERE costo_total    < p_costo_total;
+    SELECT * FROM Pago WHERE costo_total < p_costo_total;
 END//
 DELIMITER ;
+
 -- =========================================
 -- PROCEDIMIENTOS DE Vuelo
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Buscar_Vuelo_Por_Id(
-IN p_idvuelo INT
-)
+CREATE PROCEDURE Buscar_Vuelo_Por_Id(IN p_idvuelo INT)
 BEGIN
-SELECT * FROM Vuelo WHERE IDVuelo = p_idvuelo;
+    SELECT * FROM Vuelo WHERE IDVuelo = p_idvuelo;
 END//
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Vuelos_Programados()
 BEGIN
-SELECT IDVuelo, avion_id, origen_id, destino_id FROM Vuelo WHERE estado = 'Programado';
+    SELECT IDVuelo, avion_id, origen_id, destino_id FROM Vuelo WHERE estado = 'Programado';
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Agregar_Vuelo(
-IN p_avion_id VARCHAR(30),
-IN p_origen_id INT,
-IN p_destino_id INT,
-IN p_fecha_hora_salida DATETIME,
-IN p_fecha_hora_llegada DATETIME,
-IN p_estado VARCHAR(20)
-)
+CREATE PROCEDURE Agregar_Vuelo(IN p_avion_id VARCHAR(30), IN p_origen_id INT, IN p_destino_id INT, IN p_fecha_hora_salida DATETIME, IN p_fecha_hora_llegada DATETIME, IN p_estado VARCHAR(20))
 BEGIN
-INSERT INTO Vuelo (avion_id, origen_id, destino_id, fecha_hora_salida, fecha_hora_llegada, estado)
-VALUES (p_avion_id, p_origen_id, p_destino_id, p_fecha_hora_salida, p_fecha_hora_llegada, p_estado);
+    INSERT INTO Vuelo (avion_id, origen_id, destino_id, fecha_hora_salida, fecha_hora_llegada, estado) VALUES (p_avion_id, p_origen_id, p_destino_id, p_fecha_hora_salida, p_fecha_hora_llegada, p_estado);
 END//
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Todos_Los_Vuelos()
 BEGIN
-SELECT * FROM Vuelo;
+    SELECT * FROM Vuelo;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Editar_Vuelo(
-IN p_avion_id VARCHAR(30),
-IN p_origen_id INT,
-IN p_destino_id INT,
-IN p_fecha_hora_salida DATETIME,
-IN p_fecha_hora_llegada DATETIME,
-IN p_estado VARCHAR(20),
-IN p_id INT
-)
+CREATE PROCEDURE Editar_Vuelo(IN p_avion_id VARCHAR(30), IN p_origen_id INT, IN p_destino_id INT, IN p_fecha_hora_salida DATETIME, IN p_fecha_hora_llegada DATETIME, IN p_estado VARCHAR(20), IN p_id INT)
 BEGIN
-UPDATE Vuelo
-SET avion_id = p_avion_id,
-origen_id = p_origen_id,
-destino_id = p_destino_id,
-fecha_hora_salida = p_fecha_hora_salida,
-fecha_hora_llegada = p_fecha_hora_llegada,
-estado = p_estado
-WHERE IDVuelo = p_id;
+    UPDATE Vuelo SET avion_id = p_avion_id, origen_id = p_origen_id, destino_id = p_destino_id, fecha_hora_salida = p_fecha_hora_salida, fecha_hora_llegada = p_fecha_hora_llegada, estado = p_estado WHERE IDVuelo = p_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Eliminar_Vuelo(
-IN p_id INT
-)
+CREATE PROCEDURE Eliminar_Vuelo(IN p_id INT)
 BEGIN
-DELETE FROM Vuelo WHERE IDVuelo = p_id;
+    DELETE FROM Vuelo WHERE IDVuelo = p_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Vuelo_Por_Avion(
-IN p_avion_id VARCHAR(30)
-)
+CREATE PROCEDURE Buscar_Vuelo_Por_Avion(IN p_avion_id VARCHAR(30))
 BEGIN
-SELECT * FROM Vuelo WHERE avion_id  = p_avion_id;
+    SELECT * FROM Vuelo WHERE avion_id = p_avion_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Vuelo_Por_Destino(
-IN p_destino_id INT
-)
+CREATE PROCEDURE Buscar_Vuelo_Por_Destino(IN p_destino_id INT)
 BEGIN
-SELECT * FROM Vuelo WHERE destino_id   = p_destino_id;
+    SELECT * FROM Vuelo WHERE destino_id = p_destino_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Vuelo_Por_Estado(
-IN p_estado VARCHAR(20)
-)
+CREATE PROCEDURE Buscar_Vuelo_Por_Estado(IN p_estado VARCHAR(20))
 BEGIN
-SELECT * FROM Vuelo WHERE estado    = p_estado;
+    SELECT * FROM Vuelo WHERE estado = p_estado;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Vuelo_Por_Origen(
-IN p_origen_id INT
-)
+CREATE PROCEDURE Buscar_Vuelo_Por_Origen(IN p_origen_id INT)
 BEGIN
-SELECT * FROM Vuelo WHERE origen_id     = p_origen_id;
+    SELECT * FROM Vuelo WHERE origen_id = p_origen_id;
 END//
 DELIMITER ;
+
 -- =========================================
 -- PROCEDIMIENTOS DE Pasajero
 -- =========================================
 DELIMITER //
 CREATE PROCEDURE Mostrar_Extras_Pasajeros()
 BEGIN
-SELECT IDPasajero, nombre_pasajero, apellido_pasajero FROM Pasajero;
+    SELECT IDPasajero, nombre_pasajero, apellido_pasajero FROM Pasajero;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Agregar_Pasajero(
-IN p_nombre VARCHAR(50),
-IN p_apellido VARCHAR(50),
-IN p_dni VARCHAR(15),
-IN p_telefono VARCHAR(20),
-IN p_fecha_nacimiento DATE,
-IN p_nro_pasaporte VARCHAR(20),
-IN p_pais_emision CHAR(3),
-IN p_vencimiento_pasaporte DATE,
-IN p_usuario_id INT
-)
+CREATE PROCEDURE Agregar_Pasajero(IN p_nombre VARCHAR(50), IN p_apellido VARCHAR(50), IN p_dni VARCHAR(15), IN p_telefono VARCHAR(20), IN p_fecha_nacimiento DATE, IN p_nro_pasaporte VARCHAR(20), IN p_pais_emision CHAR(3), IN p_vencimiento_pasaporte DATE, IN p_usuario_id INT)
 BEGIN
-INSERT INTO Pasajero (nombre_pasajero, apellido_pasajero, dni_pasajero, telefono, fecha_nacimiento, nro_pasaporte, pais_emision, vencimiento_pasaporte, usuario_id)
-VALUES (p_nombre, p_apellido, p_dni, p_telefono, p_fecha_nacimiento, p_nro_pasaporte, p_pais_emision, p_vencimiento_pasaporte, p_usuario_id);
+    INSERT INTO Pasajero (nombre_pasajero, apellido_pasajero, dni_pasajero, telefono, fecha_nacimiento, nro_pasaporte, pais_emision, vencimiento_pasaporte, usuario_id) VALUES (p_nombre, p_apellido, p_dni, p_telefono, p_fecha_nacimiento, p_nro_pasaporte, p_pais_emision, p_vencimiento_pasaporte, p_usuario_id);
 END//
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Pasajeros()
 BEGIN
-SELECT * FROM Pasajero;
+    SELECT * FROM Pasajero;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pasajero_Por_Id(
-IN p_id INT
-)
+CREATE PROCEDURE Buscar_Pasajero_Por_Id(IN p_id INT)
 BEGIN
-SELECT * FROM Pasajero WHERE IDPasajero = p_id;
+    SELECT * FROM Pasajero WHERE IDPasajero = p_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Editar_Pasajero(
-IN p_nombre VARCHAR(50),
-IN p_apellido VARCHAR(50),
-IN p_dni VARCHAR(15),
-IN p_telefono VARCHAR(20),
-IN p_fecha_nacimiento DATE,
-IN p_nro_pasaporte VARCHAR(20),
-IN p_pais_emision CHAR(3),
-IN p_vencimiento_pasaporte DATE,
-IN p_usuario_id INT,
-IN p_id INT
-)
+CREATE PROCEDURE Editar_Pasajero(IN p_nombre VARCHAR(50), IN p_apellido VARCHAR(50), IN p_dni VARCHAR(15), IN p_telefono VARCHAR(20), IN p_fecha_nacimiento DATE, IN p_nro_pasaporte VARCHAR(20), IN p_pais_emision CHAR(3), IN p_vencimiento_pasaporte DATE, IN p_usuario_id INT, IN p_id INT)
 BEGIN
-UPDATE Pasajero
-SET nombre_pasajero = p_nombre,
-apellido_pasajero = p_apellido,
-dni_pasajero = p_dni,
-telefono = p_telefono,
-fecha_nacimiento = p_fecha_nacimiento,
-nro_pasaporte = p_nro_pasaporte,
-pais_emision = p_pais_emision,
-vencimiento_pasaporte = p_vencimiento_pasaporte,
-usuario_id = p_usuario_id
-WHERE IDPasajero = p_id;
+    UPDATE Pasajero SET nombre_pasajero = p_nombre, apellido_pasajero = p_apellido, dni_pasajero = p_dni, telefono = p_telefono, fecha_nacimiento = p_fecha_nacimiento, nro_pasaporte = p_nro_pasaporte, pais_emision = p_pais_emision, vencimiento_pasaporte = p_vencimiento_pasaporte, usuario_id = p_usuario_id WHERE IDPasajero = p_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Eliminar_Pasajero(
-IN p_id INT
-)
+CREATE PROCEDURE Eliminar_Pasajero(IN p_id INT)
 BEGIN
-DELETE FROM Pasajero WHERE IDPasajero = p_id;
+    DELETE FROM Pasajero WHERE IDPasajero = p_id;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pasajero_Por_Nombre(
-IN p_nombre VARCHAR(50)
-)
+CREATE PROCEDURE Buscar_Pasajero_Por_Nombre(IN p_nombre VARCHAR(50))
 BEGIN
-SELECT * FROM Pasajero WHERE nombre_pasajero  = p_nombre;
+    SELECT * FROM Pasajero WHERE nombre_pasajero = p_nombre;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pasajero_Por_Apellido(
-IN p_apellido VARCHAR(50)
-)
+CREATE PROCEDURE Buscar_Pasajero_Por_Apellido(IN p_apellido VARCHAR(50))
 BEGIN
-SELECT * FROM Pasajero WHERE apellido_pasajero   = p_apellido;
+    SELECT * FROM Pasajero WHERE apellido_pasajero = p_apellido;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pasajero_Por_Dni(
-IN p_dni VARCHAR(15)
-)
+CREATE PROCEDURE Buscar_Pasajero_Por_Dni(IN p_dni VARCHAR(15))
 BEGIN
-SELECT * FROM Pasajero WHERE dni_pasajero = p_dni;
+    SELECT * FROM Pasajero WHERE dni_pasajero = p_dni;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Pasajero_Por_Telefono(
-IN p_telefono VARCHAR(20)
-)
+CREATE PROCEDURE Buscar_Pasajero_Por_Telefono(IN p_telefono VARCHAR(20))
 BEGIN
-SELECT * FROM Pasajero WHERE telefono  = p_telefono;
+    SELECT * FROM Pasajero WHERE telefono = p_telefono;
 END//
 DELIMITER ;
+
 -- =========================================
 -- PROCEDIMIENTOS DE Boleto
 -- =========================================
 DELIMITER //
 CREATE PROCEDURE Mostrar_Boletos_Para_Checkin()
 BEGIN
-SELECT b.IDBoleto FROM Boleto b
-INNER JOIN Pago pa ON b.IDBoleto = pa.boleto_id
-LEFT JOIN CheckIn c ON b.IDBoleto = c.boleto_id
-WHERE pa.estado = 'Pagado' AND c.IDCheckin IS NULL;
+    SELECT b.IDBoleto FROM Boleto b INNER JOIN Pago pa ON b.IDBoleto = pa.boleto_id LEFT JOIN CheckIn c ON b.IDBoleto = c.boleto_id WHERE pa.estado = 'Pagado' AND c.IDCheckin IS NULL;
 END//
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Agregar_Boleto(
-IN p_pasajero_id INT,
-IN p_vuelo_id INT,
-IN p_asiento_id VARCHAR(50),
-IN p_fecha DATETIME,
-IN p_precio_base DECIMAL(10, 2),
-OUT p_id_generado INT
-)
+CREATE PROCEDURE Agregar_Boleto(IN p_pasajero_id INT, IN p_vuelo_id INT, IN p_asiento_id VARCHAR(50), IN p_fecha DATETIME, IN p_precio_base DECIMAL(10, 2), OUT p_id_generado INT)
 BEGIN
-INSERT INTO Boleto (pasajero_id, vuelo_id, asiento_id, fecha, precio_base)
-VALUES (p_pasajero_id, p_vuelo_id, p_asiento_id, p_fecha, p_precio_base);
-SET p_id_generado = LAST_INSERT_ID();
+    INSERT INTO Boleto (pasajero_id, vuelo_id, asiento_id, fecha, precio_base) VALUES (p_pasajero_id, p_vuelo_id, p_asiento_id, p_fecha, p_precio_base);
+    SET p_id_generado = LAST_INSERT_ID();
 END //
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Boletos()
 BEGIN
-SELECT * FROM Boleto;
+    SELECT * FROM Boleto;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Boleto_Por_Id(
-IN p_id INT
-)
+CREATE PROCEDURE Buscar_Boleto_Por_Id(IN p_id INT)
 BEGIN
-SELECT * FROM Boleto WHERE IDBoleto = p_id;
+    SELECT * FROM Boleto WHERE IDBoleto = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Editar_Boleto(
-IN p_id INT,
-IN p_pasajero_id INT,
-IN p_vuelo_id INT,
-IN p_asiento_id VARCHAR(50),
-IN p_fecha DATETIME,
-IN p_precio_base DECIMAL(10, 2)
-)
+CREATE PROCEDURE Editar_Boleto(IN p_id INT, IN p_pasajero_id INT, IN p_vuelo_id INT, IN p_asiento_id VARCHAR(50), IN p_fecha DATETIME, IN p_precio_base DECIMAL(10, 2))
 BEGIN
-UPDATE Boleto
-SET pasajero_id = p_pasajero_id,
-vuelo_id = p_vuelo_id,
-asiento_id = p_asiento_id,
-fecha = p_fecha,
-precio_base = p_precio_base
-WHERE IDBoleto = p_id;
+    UPDATE Boleto SET pasajero_id = p_pasajero_id, vuelo_id = p_vuelo_id, asiento_id = p_asiento_id, fecha = p_fecha, precio_base = p_precio_base WHERE IDBoleto = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Eliminar_Boleto(
-IN p_id INT
-)
+CREATE PROCEDURE Eliminar_Boleto(IN p_id INT)
 BEGIN
-DELETE FROM Boleto WHERE IDBoleto = p_id;
+    DELETE FROM Boleto WHERE IDBoleto = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Boleto_Por_Pasajero(
-IN p_pasajero_id INT
-)
+CREATE PROCEDURE Buscar_Boleto_Por_Pasajero(IN p_pasajero_id INT)
 BEGIN
-SELECT * FROM Boleto WHERE pasajero_id  = p_pasajero_id;
+    SELECT * FROM Boleto WHERE pasajero_id = p_pasajero_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Boleto_Por_Vuelo(
-IN p_vuelo_id INT
-)
+CREATE PROCEDURE Buscar_Boleto_Por_Vuelo(IN p_vuelo_id INT)
 BEGIN
-SELECT * FROM Boleto WHERE vuelo_id   = p_vuelo_id;
+    SELECT * FROM Boleto WHERE vuelo_id = p_vuelo_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Boleto_Por_Fecha(
-IN p_fecha DATETIME
-)
+CREATE PROCEDURE Buscar_Boleto_Por_Fecha(IN p_fecha DATETIME)
 BEGIN
-SELECT * FROM Boleto WHERE fecha  = p_fecha;
+    SELECT * FROM Boleto WHERE fecha = p_fecha;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Boleto_Por_Asiento(
-IN p_asiento_id VARCHAR(50)
-)
+CREATE PROCEDURE Buscar_Boleto_Por_Asiento(IN p_asiento_id VARCHAR(50))
 BEGIN
-SELECT * FROM Boleto WHERE asiento_id  = p_asiento_id;
+    SELECT * FROM Boleto WHERE asiento_id = p_asiento_id;
 END //
 DELIMITER ;
+
 -- =========================================
 -- PROCEDIMIENTOS DE Boleto_Servicio
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Buscar_Servicios_Por_Boleto(
-IN p_boleto_id INT
-)
+CREATE PROCEDURE Buscar_Servicios_Por_Boleto(IN p_boleto_id INT)
 BEGIN
-SELECT s.IDServicio, s.nombre_servicio, s.precio, s.descripcion
-FROM Servicio s
-INNER JOIN Boleto_Servicio bs ON s.IDServicio = bs.servicio_id
-WHERE bs.boleto_id = p_boleto_id;
+    SELECT s.IDServicio, s.nombre_servicio, s.precio, s.descripcion FROM Servicio s INNER JOIN Boleto_Servicio bs ON s.IDServicio = bs.servicio_id WHERE bs.boleto_id = p_boleto_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Insertar_Boleto_Servicio(
-IN p_boleto_id INT,
-IN p_servicio_id INT
-)
+CREATE PROCEDURE Insertar_Boleto_Servicio(IN p_boleto_id INT, IN p_servicio_id INT)
 BEGIN
-INSERT INTO Boleto_Servicio (boleto_id, servicio_id) VALUES (p_boleto_id, p_servicio_id);
+    INSERT INTO Boleto_Servicio (boleto_id, servicio_id) VALUES (p_boleto_id, p_servicio_id);
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Eliminar_Servicios_De_Boleto(
-IN p_boleto_id INT
-)
+CREATE PROCEDURE Eliminar_Servicios_De_Boleto(IN p_boleto_id INT)
 BEGIN
-DELETE FROM Boleto_Servicio WHERE boleto_id = p_boleto_id;
+    DELETE FROM Boleto_Servicio WHERE boleto_id = p_boleto_id;
 END //
 DELIMITER ;
+
 -- =========================================
 -- PROCEDIMIENTOS DE CheckIn
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Agregar_CheckIn(
-IN p_pasajero_id INT,
-IN p_boleto_id INT,
-IN p_vuelo_id INT,
-IN p_pago_id INT,
-IN p_puerta_embarque CHAR(3)
-)
+CREATE PROCEDURE Agregar_CheckIn(IN p_pasajero_id INT, IN p_boleto_id INT, IN p_vuelo_id INT, IN p_pago_id INT, IN p_puerta_embarque CHAR(3))
 BEGIN
-INSERT INTO CheckIn (pasajero_id, boleto_id, vuelo_id, pago_id, puerta_embarque)
-VALUES (p_pasajero_id, p_boleto_id, p_vuelo_id, p_pago_id, p_puerta_embarque);
+    INSERT INTO CheckIn (pasajero_id, boleto_id, vuelo_id, pago_id, puerta_embarque) VALUES (p_pasajero_id, p_boleto_id, p_vuelo_id, p_pago_id, p_puerta_embarque);
 END //
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_CheckIns()
 BEGIN
-SELECT * FROM CheckIn;
+    SELECT * FROM CheckIn;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_CheckIn_Por_Id(
-IN p_id INT
-)
+CREATE PROCEDURE Buscar_CheckIn_Por_Id(IN p_id INT)
 BEGIN
-SELECT * FROM CheckIn WHERE IDCheckin = p_id;
+    SELECT * FROM CheckIn WHERE IDCheckin = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Editar_CheckIn(
-IN p_id INT,
-IN p_pasajero_id INT,
-IN p_boleto_id INT,
-IN p_vuelo_id INT,
-IN p_pago_id INT,
-IN p_puerta_embarque CHAR(3)
-)
+CREATE PROCEDURE Editar_CheckIn(IN p_id INT, IN p_pasajero_id INT, IN p_boleto_id INT, IN p_vuelo_id INT, IN p_pago_id INT, IN p_puerta_embarque CHAR(3))
 BEGIN
-UPDATE CheckIn
-SET pasajero_id = p_pasajero_id,
-boleto_id = p_boleto_id,
-vuelo_id = p_vuelo_id,
-pago_id = p_pago_id,
-puerta_embarque = p_puerta_embarque
-WHERE IDCheckin = p_id;
+    UPDATE CheckIn SET pasajero_id = p_pasajero_id, boleto_id = p_boleto_id, vuelo_id = p_vuelo_id, pago_id = p_pago_id, puerta_embarque = p_puerta_embarque WHERE IDCheckin = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Eliminar_CheckIn(
-IN p_id INT
-)
+CREATE PROCEDURE Eliminar_CheckIn(IN p_id INT)
 BEGIN
-DELETE FROM CheckIn WHERE IDCheckin = p_id;
+    DELETE FROM CheckIn WHERE IDCheckin = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_CheckIn_Por_pasajero(
-IN p_pasajero_id INT
-)
+CREATE PROCEDURE Buscar_CheckIn_Por_pasajero(IN p_pasajero_id INT)
 BEGIN
-SELECT * FROM CheckIn WHERE pasajero_id = p_pasajero_id;
+    SELECT * FROM CheckIn WHERE pasajero_id = p_pasajero_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_CheckIn_Por_Boleto(
-IN p_boleto_id INT
-)
+CREATE PROCEDURE Buscar_CheckIn_Por_Boleto(IN p_boleto_id INT)
 BEGIN
-SELECT * FROM CheckIn WHERE boleto_id = p_boleto_id;
+    SELECT * FROM CheckIn WHERE boleto_id = p_boleto_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_CheckIn_Por_Puerta(
-IN p_puerta_embarque CHAR(3)
-)
+CREATE PROCEDURE Buscar_CheckIn_Por_Puerta(IN p_puerta_embarque CHAR(3))
 BEGIN
-SELECT * FROM CheckIn WHERE puerta_embarque  = p_puerta_embarque;
+    SELECT * FROM CheckIn WHERE puerta_embarque = p_puerta_embarque;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_CheckIn_Por_Vuelo(
-IN p_vuelo_id INT
-)
+CREATE PROCEDURE Buscar_CheckIn_Por_Vuelo(IN p_vuelo_id INT)
 BEGIN
-SELECT * FROM CheckIn WHERE vuelo_id   = p_vuelo_id;
+    SELECT * FROM CheckIn WHERE vuelo_id = p_vuelo_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_CheckIn_Por_Pago(
-IN p_pago_id INT
-)
+CREATE PROCEDURE Buscar_CheckIn_Por_Pago(IN p_pago_id INT)
 BEGIN
-SELECT * FROM CheckIn WHERE pago_id    = p_pago_id;
+    SELECT * FROM CheckIn WHERE pago_id = p_pago_id;
 END //
 DELIMITER ;
+
 -- =========================================
 -- PROCEDIMIENTOS DE Empleado
 -- =========================================
 DELIMITER //
-CREATE PROCEDURE Agregar_Empleado(
-IN p_nombre VARCHAR(30),
-IN p_apellido VARCHAR(30),
-IN p_dni CHAR(8),
-IN p_telefono VARCHAR(20),
-IN p_sueldo DECIMAL(10, 2),
-IN p_departamento_id INT,
-IN p_aeropuerto_id INT,
-IN p_usuario_id INT
-)
+CREATE PROCEDURE Agregar_Empleado(IN p_nombre VARCHAR(30), IN p_apellido VARCHAR(30), IN p_dni CHAR(8), IN p_telefono VARCHAR(20), IN p_sueldo DECIMAL(10, 2), IN p_departamento_id INT, IN p_aeropuerto_id INT, IN p_usuario_id INT)
 BEGIN
-INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, telefono, sueldo, departamento_id, aeropuerto_id, usuario_id)
-VALUES (p_nombre, p_apellido, p_dni, p_telefono, p_sueldo, p_departamento_id, p_aeropuerto_id, p_usuario_id);
+    INSERT INTO Empleado (nombre_empleado, apellido_empleado, dni_empleado, telefono, sueldo, departamento_id, aeropuerto_id, usuario_id) VALUES (p_nombre, p_apellido, p_dni, p_telefono, p_sueldo, p_departamento_id, p_aeropuerto_id, p_usuario_id);
 END //
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE Mostrar_Empleados()
 BEGIN
-SELECT * FROM Empleado;
+    SELECT * FROM Empleado;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Empleado_Por_Id(
-IN p_id INT
-)
+CREATE PROCEDURE Buscar_Empleado_Por_Id(IN p_id INT)
 BEGIN
-SELECT * FROM Empleado WHERE IDEmpleado = p_id;
+    SELECT * FROM Empleado WHERE IDEmpleado = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Editar_Empleado(
-IN p_id INT,
-IN p_nombre VARCHAR(30),
-IN p_apellido VARCHAR(30),
-IN p_dni CHAR(8),
-IN p_telefono VARCHAR(20),
-IN p_sueldo DECIMAL(10, 2),
-IN p_departamento_id INT,
-IN p_aeropuerto_id INT,
-IN p_usuario_id INT
-)
+CREATE PROCEDURE Editar_Empleado(IN p_id INT, IN p_nombre VARCHAR(30), IN p_apellido VARCHAR(30), IN p_dni CHAR(8), IN p_telefono VARCHAR(20), IN p_sueldo DECIMAL(10, 2), IN p_departamento_id INT, IN p_aeropuerto_id INT, IN p_usuario_id INT)
 BEGIN
-UPDATE Empleado
-SET nombre_empleado = p_nombre,
-apellido_empleado = p_apellido,
-dni_empleado = p_dni,
-telefono = p_telefono,
-sueldo = p_sueldo,
-departamento_id = p_departamento_id,
-aeropuerto_id = p_aeropuerto_id,
-usuario_id = p_usuario_id
-WHERE IDEmpleado = p_id;
+    UPDATE Empleado SET nombre_empleado = p_nombre, apellido_empleado = p_apellido, dni_empleado = p_dni, telefono = p_telefono, sueldo = p_sueldo, departamento_id = p_departamento_id, aeropuerto_id = p_aeropuerto_id, usuario_id = p_usuario_id WHERE IDEmpleado = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Eliminar_Empleado(
-IN p_id INT
-)
+CREATE PROCEDURE Eliminar_Empleado(IN p_id INT)
 BEGIN
-DELETE FROM Empleado WHERE IDEmpleado = p_id;
+    DELETE FROM Empleado WHERE IDEmpleado = p_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Empleado_Por_Nombre(
-IN p_nombre VARCHAR(30)
-)
+CREATE PROCEDURE Buscar_Empleado_Por_Nombre(IN p_nombre VARCHAR(30))
 BEGIN
-SELECT * FROM Empleado WHERE nombre_empleado  = p_nombre;
+    SELECT * FROM Empleado WHERE nombre_empleado = p_nombre;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Empleado_Por_Apellido(
-IN p_apellido VARCHAR(30)
-)
+CREATE PROCEDURE Buscar_Empleado_Por_Apellido(IN p_apellido VARCHAR(30))
 BEGIN
-SELECT * FROM Empleado WHERE apellido_empleado   = p_apellido;
+    SELECT * FROM Empleado WHERE apellido_empleado = p_apellido;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Empleado_Por_Dni(
-IN p_dni CHAR(8)
-)
+CREATE PROCEDURE Buscar_Empleado_Por_Dni(IN p_dni CHAR(8))
 BEGIN
-SELECT * FROM Empleado WHERE dni_empleado   = p_dni;
+    SELECT * FROM Empleado WHERE dni_empleado = p_dni;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Empleado_Por_Departamanento(
-IN p_departamento_id INT
-)
+CREATE PROCEDURE Buscar_Empleado_Por_Departamanento(IN p_departamento_id INT)
 BEGIN
-SELECT * FROM Empleado WHERE departamento_id   =   p_departamento_id ;
+    SELECT * FROM Empleado WHERE departamento_id = p_departamento_id;
 END //
 DELIMITER ;
+
 DELIMITER //
-CREATE PROCEDURE Buscar_Empleado_Por_Aeropuerto(
-IN p_aeropuerto_id INT
-)
+CREATE PROCEDURE Buscar_Empleado_Por_Aeropuerto(IN p_aeropuerto_id INT)
 BEGIN
-SELECT * FROM Empleado WHERE aeropuerto_id    =   p_aeropuerto_id ;
+    SELECT * FROM Empleado WHERE aeropuerto_id = p_aeropuerto_id;
 END //
 DELIMITER ;
