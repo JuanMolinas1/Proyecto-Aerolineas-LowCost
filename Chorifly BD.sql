@@ -1846,3 +1846,146 @@ BEGIN
     SELECT * FROM Empleado WHERE aeropuerto_id = p_aeropuerto_id;
 END //
 DELIMITER ;
+
+-- =========================================
+-- PROCEDIMIENTOS DE Servidor HTML (CORREGIDOS)
+-- =========================================
+
+DELIMITER //
+CREATE PROCEDURE Autenticar_Usuario (
+    IN p_nombre_usuario VARCHAR(30),
+    IN p_contrasenia_usuario VARCHAR(30)
+)
+BEGIN
+    SELECT IDUsuario, privilegios_empleado
+    FROM Usuario
+    WHERE nombre_usuario = p_nombre_usuario
+      AND contraseña_usuario = p_contrasenia_usuario;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Obtener_Email_Usuario (
+    IN p_idusuario INT
+)
+BEGIN
+    SELECT email
+    FROM Usuario
+    WHERE IDUsuario = p_idusuario;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Buscar_IDUsuario_Por_Nombre_O_Email (
+    IN p_nombre_usuario VARCHAR(30),
+    IN p_email VARCHAR(40)
+)
+BEGIN
+    SELECT IDUsuario
+    FROM Usuario
+    WHERE nombre_usuario = p_nombre_usuario
+       OR email = p_email
+    LIMIT 1;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Contar_Vuelos_Activos_Avion (
+    IN p_idvuelo INT,
+    IN p_avion_id VARCHAR(30),
+    IN p_fecha_llegada_nueva DATETIME,
+    IN p_fecha_salida_nueva DATETIME
+)
+BEGIN
+    SELECT COUNT(*)
+    FROM Vuelo
+    WHERE Vuelo.IDVuelo <> p_idvuelo
+      AND Vuelo.avion_id = p_avion_id
+      AND Vuelo.estado IN ('Volando', 'Programado', 'A Tiempo', 'Atrasado')
+      AND Vuelo.fecha_hora_salida < p_fecha_llegada_nueva
+      AND Vuelo.fecha_hora_llegada > p_fecha_salida_nueva;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Obtener_Horarios_Vuelos_Activos (
+    IN p_idvuelo INT,
+    IN p_fecha_llegada_nueva DATETIME,
+    IN p_fecha_salida_nueva DATETIME
+)
+BEGIN
+    SELECT Vuelo.fecha_hora_salida, Vuelo.fecha_hora_llegada
+    FROM Vuelo
+    WHERE Vuelo.IDVuelo <> p_idvuelo
+      AND Vuelo.estado IN ('Volando', 'Programado', 'A Tiempo', 'Atrasado')
+      AND Vuelo.fecha_hora_salida < p_fecha_llegada_nueva
+      AND Vuelo.fecha_hora_llegada > p_fecha_salida_nueva;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Obtener_Detalle_Vuelos()
+BEGIN
+    SELECT V.IDVuelo, V.avion_id, A.modelo,
+           V.origen_id, O.nombre AS origen, O.pais AS paisOrigen,
+           V.destino_id, D.nombre AS destino, D.pais AS paisDestino,
+           V.fecha_hora_salida, V.fecha_hora_llegada, V.estado
+    FROM Vuelo V
+    INNER JOIN Avion A ON V.avion_id = A.IDAvion
+    INNER JOIN Aeropuerto O ON V.origen_id = O.IDAeropuerto
+    INNER JOIN Aeropuerto D ON V.destino_id = D.IDAeropuerto;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Obtener_Datos_Vuelo_Para_Actualizar (
+    IN p_idvuelo INT
+)
+BEGIN
+    SELECT Vuelo.avion_id, Vuelo.fecha_hora_salida, Vuelo.estado
+    FROM Vuelo
+    WHERE Vuelo.IDVuelo = p_idvuelo
+    FOR UPDATE;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Obtener_IDAsiento_Para_Actualizar (
+    IN p_codigo VARCHAR(5),
+    IN p_avion_id VARCHAR(30)
+)
+BEGIN
+    SELECT Asiento.IDAsiento
+    FROM Asiento
+    WHERE Asiento.codigo = p_codigo
+      AND Asiento.avion_id = p_avion_id
+      AND Asiento.disponible = TRUE
+    FOR UPDATE;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Obtener_Datos_Pasajero_Por_Usuario (
+    IN p_idusuario INT
+)
+BEGIN
+    SELECT P.IDPasajero, P.nombre_pasajero,
+           P.apellido_pasajero, P.dni_pasajero, U.email
+    FROM Pasajero P
+    INNER JOIN Usuario U ON P.usuario_id = U.IDUsuario
+    WHERE U.IDUsuario = p_idusuario;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Obtener_Asientos_Por_Vuelo (
+    IN p_idvuelo INT
+)
+BEGIN
+    SELECT A.codigo, A.disponible
+    FROM A Asiento A
+    INNER JOIN Vuelo V ON A.avion_id = V.avion_id
+    WHERE V.IDVuelo = p_idvuelo
+    ORDER BY A.codigo;
+END //
+DELIMITER ;
