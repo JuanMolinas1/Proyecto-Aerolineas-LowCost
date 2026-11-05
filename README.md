@@ -39,15 +39,28 @@ En esta sección se detalla el trabajo realizado para cada asignatura y el docen
 
 ## Descripcion General del Proyecto
 
-El objetivo de este proyecto es el desarrollo del Producto Mínimo Viable (MVP) para la aerolínea low-cost Chorifly. Se trata de una plataforma integral que centraliza la gestión operativa y comercial de la aerolínea mediante un sistema unificado de cuentas con accesos segmentados para pasajeros, empleados y administradores. El sistema permite automatizar la compra de pasajes con cálculo dinámico de equipaje, gestionar la asignación de asientos de forma manual o automática, y administrar la programación de vuelos en tiempo real mediante una arquitectura de software conectada y sincronizada de extremo a extremo.
+El objetivo de este proyecto es el desarrollo del Producto Mínimo Viable (MVP) para la aerolínea low-cost Chorifly. Se trata de una plataforma integral que centraliza la gestión operativa y comercial de la aerolínea mediante un sistema unificado de cuentas con accesos segmentados para pasajeros, empleados y administradores. El sistema permite automatizar la compra de pasajes, gestionar la asignación de asientos de forma manual o automática, y administrar la programación de vuelos en tiempo real mediante una arquitectura de software conectada y sincronizada de extremo a extremo.
 
 ### Objetivos Principales
 * Desarrollar un sistema de autenticación centralizado que adapte la interfaz y los permisos según el rol de usuario (Pasajero, Empleado y Administrador).
-* Implementar un módulo comercial para pasajeros que incluya un buscador de vuelos con calendario, cotización automatizada de equipaje por peso y selección de servicios adicionales.
+* Implementar un módulo comercial para pasajeros que incluya un buscador de vuelos con calendario y selección de servicios adicionales.
 * Optimizar la gestión operativa del personal mediante paneles para el registro manual de pasajeros y un algoritmo de asignación de asientos.
 * Automatizar la creación y programación cronológica de vuelos desde el entorno de administración del sistema.
 * Construir una arquitectura full-stack conectando una base de datos relacional con lógica en Java y una interfaz web en HTML y JavaScript, garantizando la persistencia y sincronización inmediata de los datos en ambos entornos.
 * Aplicar los conocimientos teóricos de las distintas materias en un entorno práctico y unificado.
+
+---
+
+## Instalación del Programa
+
+### Para instalar y ejecutar el programa dividido por sectores se tienen que seguir los siguientes pasos:
+
+1. Abrir XAMPP y ejecutar Apache y MySQL.
+2. Abrir MySQL WorkBench, pegar y ejecutar ´Chorifly BD (Con Triggers).sql´.
+3. Instalar ´Chorifly v22.0.0.zip´ y descomprimirlo.
+4. Abrir la aplicación y Ejecutarla con NetBeans 8.2+, con esto ya tenemos la app de Java para usar con todas sus funcionalidades.
+5. Una vez ejecutada la app tenés que abrir un navegador y escribir en el buscador: http://localhost:8080/Chorifly.html, con esto podemos usar la página web con todas sus funcionalidades.
+6. Finalmente se debe descargar el archivo ´6767va topologiqa.pkt´ para poder usar la simulación de redes (No es necesario ninguno de los pasos anteriores para hacer este).
 
 ---
 
