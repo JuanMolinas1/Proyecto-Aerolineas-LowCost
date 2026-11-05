@@ -57,7 +57,7 @@ El objetivo de este proyecto es el desarrollo del Producto Mínimo Viable (MVP) 
 
 1. Abrir XAMPP y ejecutar Apache y MySQL.
 2. Abrir MySQL WorkBench, pegar y ejecutar ´Chorifly BD (Con Triggers).sql´.
-3. Instalar ´Chorifly v22.0.0.zip´ y descomprimirlo.
+3. Instalar ´Chorifly v22.0.0.zip´, ´flatlaf-3.2.jar´, ´jcalendar-1.4.jar´ y descomprimirlo.
 4. Abrir la aplicación y Ejecutarla con NetBeans 8.2+, con esto ya tenemos la app de Java para usar con todas sus funcionalidades.
 5. Una vez ejecutada la app tenés que abrir un navegador y escribir en el buscador: http://localhost:8080/Chorifly.html, con esto podemos usar la página web con todas sus funcionalidades.
 6. Finalmente se debe descargar el archivo ´6767va topologiqa.pkt´ para poder usar la simulación de redes (No es necesario ninguno de los pasos anteriores para hacer este).
