@@ -1986,7 +1986,7 @@ CREATE PROCEDURE Obtener_Asientos_Por_Vuelo (
 )
 BEGIN
     SELECT A.codigo, A.disponible
-    FROM A Asiento A
+    FROM Asiento A
     INNER JOIN Vuelo V ON A.avion_id = V.avion_id
     WHERE V.IDVuelo = p_idvuelo
     ORDER BY A.codigo;
