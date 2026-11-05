@@ -3275,3 +3275,155 @@ BEGIN
     UPDATE Pago SET estado = 'Cancelado' WHERE IDPago = OLD.pago_id;
 END //
 DELIMITER ;
+
+
+
+-- ================================
+-- VISTAS
+-- ================================
+
+CREATE VIEW v_info_pasajeros AS
+SELECT 
+    p.IDPasajero,
+    p.nombre_pasajero,
+    p.apellido_pasajero,
+    p.dni_pasajero,
+    p.telefono,
+    p.nro_pasaporte,
+    u.nombre_usuario,
+    u.email
+FROM Pasajero p
+INNER JOIN Usuario u ON p.usuario_id = u.IDUsuario;
+
+
+CREATE VIEW v_detalle_empleados AS
+SELECT 
+    e.IDEmpleado,
+    e.nombre_empleado,
+    e.apellido_empleado,
+    e.sueldo,
+    d.nombre AS departamento,
+    d.tipo AS tipo_departamento,
+    a.nombre AS aeropuerto_asignado,
+    a.ciudad,
+    a.pais
+FROM Empleado e
+INNER JOIN Departamento d ON e.departamento_id = d.IDDepartamento
+INNER JOIN Aeropuerto a ON e.aeropuerto_id = a.IDAeropuerto;
+
+CREATE VIEW v_detalle_vuelos AS
+SELECT 
+    v.IDVuelo,
+    v.avion_id,
+    v.fecha_hora_salida,
+    v.fecha_hora_llegada,
+    v.estado,
+    a_origen.nombre AS aeropuerto_origen,
+    a_origen.ciudad AS ciudad_origen,
+    a_destino.nombre AS aeropuerto_destino,
+    a_destino.ciudad AS ciudad_destino
+FROM Vuelo v
+INNER JOIN Aeropuerto a_origen ON v.origen_id = a_origen.IDAeropuerto
+INNER JOIN Aeropuerto a_destino ON v.destino_id = a_destino.IDAeropuerto;
+
+
+CREATE VIEW v_boletos_pasajeros AS
+SELECT 
+    b.IDBoleto,
+    b.fecha AS fecha_compra,
+    b.precio_base,
+    p.nombre_pasajero,
+    p.apellido_pasajero,
+    p.dni_pasajero,
+    b.vuelo_id,
+    asnt.codigo AS codigo_asiento,
+    asnt.tipo AS ubicacion_asiento
+FROM Boleto b
+INNER JOIN Pasajero p ON b.pasajero_id = p.IDPasajero
+INNER JOIN Asiento asnt ON b.asiento_id = asnt.IDAsiento;
+
+
+CREATE VIEW v_detalle_pagos AS
+SELECT 
+    pg.IDPago,
+    pg.costo_servicios,
+    pg.costo_total,
+    pg.estado AS estado_pago,
+    p.nombre_pasajero,
+    p.apellido_pasajero,
+    b.IDBoleto,
+    b.precio_base
+FROM Pago pg
+INNER JOIN Pasajero p ON pg.pasajero_id = p.IDPasajero
+INNER JOIN Boleto b ON pg.boleto_id = b.IDBoleto;
+
+
+CREATE VIEW v_tarjetas_embarque AS
+SELECT 
+    c.IDCheckin,
+    c.puerta_embarque,
+    p.nombre_pasajero,
+    p.apellido_pasajero,
+    p.nro_pasaporte,
+    b.IDBoleto,
+    b.asiento_id,
+    c.vuelo_id
+FROM CheckIn c
+INNER JOIN Pasajero p ON c.pasajero_id = p.IDPasajero
+INNER JOIN Boleto b ON c.boleto_id = b.IDBoleto;
+
+
+CREATE VIEW v_servicios_por_boleto AS
+SELECT 
+    bs.boleto_id,
+    b.pasajero_id,
+    s.IDServicio,
+    s.nombre_servicio,
+    s.precio AS precio_servicio
+FROM Boleto_Servicio bs
+INNER JOIN Boleto b ON bs.boleto_id = b.IDBoleto
+INNER JOIN Servicio s ON bs.servicio_id = s.IDServicio;
+
+
+CREATE VIEW v_manifiesto_vuelo AS
+SELECT 
+    v.IDVuelo,
+    av.modelo AS modelo_avion,
+    b.IDBoleto,
+    p.nombre_pasajero,
+    p.apellido_pasajero,
+    p.dni_pasajero,
+    a.codigo AS asiento_codigo
+FROM Vuelo v
+INNER JOIN Avion av ON v.avion_id = av.IDAvion
+INNER JOIN Boleto b ON v.IDVuelo = b.vuelo_id
+INNER JOIN Pasajero p ON b.pasajero_id = p.IDPasajero
+INNER JOIN Asiento a ON b.asiento_id = a.IDAsiento;
+
+CREATE VIEW v_estado_checkin_vuelos AS
+SELECT 
+    ch.IDCheckin,
+    ch.puerta_embarque,
+    v.IDVuelo,
+    v.fecha_hora_salida,
+    v.estado AS estado_vuelo,
+    p.nombre_pasajero,
+    p.apellido_pasajero,
+    pg.estado AS estado_pago
+FROM CheckIn ch
+INNER JOIN Vuelo v ON ch.vuelo_id = v.IDVuelo
+INNER JOIN Pasajero p ON ch.pasajero_id = p.IDPasajero
+INNER JOIN Pago pg ON ch.pago_id = pg.IDPago;
+
+
+CREATE VIEW v_ingresos_por_ruta AS
+SELECT 
+    pg.IDPago,
+    pg.costo_total AS monto_pagado,
+    a_origen.ciudad AS ciudad_origen,
+    a_destino.ciudad AS ciudad_destino
+FROM Pago pg
+INNER JOIN Boleto b ON pg.boleto_id = b.IDBoleto
+INNER JOIN Vuelo v ON b.vuelo_id = v.IDVuelo
+INNER JOIN Aeropuerto a_origen ON v.origen_id = a_origen.IDAeropuerto
+INNER JOIN Aeropuerto a_destino ON v.destino_id = a_destino.IDAeropuerto;
