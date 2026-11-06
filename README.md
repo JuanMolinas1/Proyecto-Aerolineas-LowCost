@@ -9,7 +9,7 @@ Este espacio contiene el desarrollo específico correspondiente a la asignatatur
   - `Diagrama Pert`: Este archivo contiene un link direccionado hacia un Google Docs que contiene el Diagrama Pert del proyecto.
   - `MVP`: Este archivo contiene un link direccionado hacia un Google Docs que contiene el Mínimo Producto Viable del proyecto.
   - `Requisitos`: Este archivo contiene un link direccionado hacia un Google Docs que contiene los 50 requisitos del proyecto.
-  - `Scrum`: Este archivo contiene un link direccionado hacia el jira del proyecto.
+  - `Scrum`: Este archivo contiene un link direccionado hacia el excel con las actividades realizadas en su tiempo del proyecto.
   - `Descripcion Problema solucion`: Este archivo contiene un link direccionado hacia un Google Docs que contiene la Descripción del Problema y Solución de este proyecto.
   - `Análisis Tecnologico`: Este archivo contiene un link direccionado hacia un Google Docs que contiene el Análisis Técnológico del proyecto.
   - `Competencia y Estado del Arte`: Este archivo contiene un link direccionado hacia un Google Docs que contiene la Competencia y Estado del Arte del proyecto.
