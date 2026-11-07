@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="YPAoSKoPX6B_8BJQasdL" name="Página-1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;align=center" value="&lt;br&gt;GESTIÓN DE&lt;br&gt;USUARIOS" vertex="1">
+          <mxGeometry height="90" width="120" x="255" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;align=center" value="&lt;br&gt;RESERVA DE&lt;br&gt;BOLETOS Y ASIENTOS" vertex="1">
+          <mxGeometry height="90" width="120" x="255" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;align=center" value="&lt;br&gt;GESTIÓN DE&lt;br&gt;VUELOS Y FLOTA" vertex="1">
+          <mxGeometry height="90" width="120" x="1125" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;align=center" value="&lt;br&gt;PROCESAMIENTO&lt;br&gt;DE PAGOS" vertex="1">
+          <mxGeometry height="90" width="130" x="575" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;align=center" value="CONTROL DE&lt;br&gt;CHECK-IN" vertex="1">
+          <mxGeometry height="90" width="120" x="690" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;align=center" value="&lt;br&gt;ASIGNACIÓN DE&lt;br&gt;PERSONAL" vertex="1">
+          <mxGeometry height="90" width="120" x="1125" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-10" parent="1" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;top=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;align=left;spacingLeft=10" value="&amp;nbsp;USUARIO&lt;br&gt;&amp;nbsp;PASAJERO" vertex="1">
+          <mxGeometry height="50" width="150" x="565" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-11" parent="1" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;top=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;align=left;spacingLeft=10" value="&amp;nbsp;ASIENTO/VUELO&lt;br&gt;&amp;nbsp;BOLETO" vertex="1">
+          <mxGeometry height="50" width="150" x="240" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-12" parent="1" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;top=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;align=left;spacingLeft=10" value="AVION&lt;br&gt;VUELO / AEROP" vertex="1">
+          <mxGeometry height="50" width="160" x="835" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-13" parent="1" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;top=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;align=left;spacingLeft=10" value="&amp;nbsp;SERVICIO&lt;br&gt;&amp;nbsp;BOLETO_SERV" vertex="1">
+          <mxGeometry height="50" width="150" x="565" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-14" parent="1" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;top=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;align=left;spacingLeft=10" value="D11 PAGO" vertex="1">
+          <mxGeometry height="40" width="130" x="855" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-15" parent="1" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;top=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;align=left;spacingLeft=10" value="&amp;nbsp;EMPLEADO&lt;br&gt;&amp;nbsp;DEPARTAMENTO" vertex="1">
+          <mxGeometry height="50" width="150" x="845" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-17" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10" target="MbP1JVABDVTbBXXt-cQ3-5" value="Solicitud Reserva">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-18" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10;exitX=1;exitY=0.333;exitDx=0;exitDy=0;exitPerimeter=0" target="MbP1JVABDVTbBXXt-cQ3-10" value="Registrar">
+          <mxGeometry relative="1" x="-0.536" y="20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="375" y="220" />
+              <mxPoint x="470" y="220" />
+              <mxPoint x="470" y="250" />
+              <mxPoint x="640" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-19" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-10" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10;entryX=1;entryY=0.667;entryDx=0;entryDy=0;entryPerimeter=0" target="MbP1JVABDVTbBXXt-cQ3-4" value="Validar">
+          <mxGeometry relative="1" x="0.4925" y="20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="640" y="350" />
+              <mxPoint x="470" y="350" />
+              <mxPoint x="470" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-20" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10" target="MbP1JVABDVTbBXXt-cQ3-11" value="Actualizar Asiento y Crear Boleto">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-21" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10" target="MbP1JVABDVTbBXXt-cQ3-7" value="Datos Compra / IDBoleto">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-22" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-13" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10" target="MbP1JVABDVTbBXXt-cQ3-7" value="Leer Montos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-23" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-7" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10;exitX=1;exitY=0.5" target="MbP1JVABDVTbBXXt-cQ3-14" value="Guardar Pago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-24" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-14" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10;exitX=1;exitY=1;exitDx=0;exitDy=0;" value="Requiere IDPago Existente">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1030" y="520" as="sourcePoint" />
+            <mxPoint x="750" y="650.0000000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-27" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10" target="MbP1JVABDVTbBXXt-cQ3-9" value="Asignar Turnos y Deptos">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1185" y="350" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-28" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10" target="MbP1JVABDVTbBXXt-cQ3-12" value="Guardar/Modificar Vuelos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-29" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-9" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10" target="MbP1JVABDVTbBXXt-cQ3-15" value="Asignar Personal">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbP1JVABDVTbBXXt-cQ3-30" edge="1" parent="1" source="MbP1JVABDVTbBXXt-cQ3-12" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=10;exitX=0;exitY=0.5;entryX=0.5;entryY=0" target="MbP1JVABDVTbBXXt-cQ3-5" value="Consultar Disponibilidad de Vuelo">
+          <mxGeometry relative="1" x="0.084" y="-5" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="835" y="400" />
+              <mxPoint x="360" y="400" />
+              <mxPoint x="360" y="430" />
+            </Array>
+            <mxPoint x="825" y="280" as="sourcePoint" />
+            <mxPoint x="315" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
