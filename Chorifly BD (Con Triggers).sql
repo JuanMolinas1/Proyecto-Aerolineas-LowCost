@@ -3211,18 +3211,6 @@ END //
 DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER tg_checkin_insert_val_fecha_coherente
-BEFORE INSERT ON CheckIn FOR EACH ROW
-BEGIN
-    DECLARE v_fecha_boleto DATETIME;
-    SELECT fecha INTO v_fecha_boleto FROM Boleto WHERE IDBoleto = NEW.boleto_id;
-    IF NOW() < v_fecha_boleto THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error (tg_checkin_insert_val_fecha_coherente): La fecha de Check-In no puede ser anterior a la de emisión del boleto.';
-    END IF;
-END //
-DELIMITER ;
-
-DELIMITER //
 CREATE TRIGGER tg_checkin_insert_norm_puerta
 BEFORE INSERT ON CheckIn FOR EACH ROW
 BEGIN
