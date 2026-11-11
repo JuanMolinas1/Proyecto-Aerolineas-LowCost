@@ -4,7 +4,7 @@ Este espacio contiene el desarrollo específico correspondiente a la asignatatur
 
 ## Archivos de Entrega
   - `Computadoras`: Este archivo contiene un link direccionado hacia un Google Docs que contiene los presupuestos de los distintos tipos de maquinas según su importancia, mientras mas importante, mas costosa.
-  - `Topología (Incompleta).pkt`: Contiene la 5° versión de la topología con un aproximado de 350 computadoras.
+  - `6767va topologiqa.pkt`: Contiene la 5° versión de la topología con un aproximado de 350 computadoras.
 
 ---
 
