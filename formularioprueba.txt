@@ -1,0 +1,90 @@
+    public void agregarUsuarioWeb(Usuario u) throws SQLException {
+        String consulta_sql = "{CALL Crear_Usuario(?, ?, ?, ?, ?, ?)}";
+
+        try (Connection conexion = ConexionSQL.conectar();
+            PreparedStatement sentencia_sql = conexion.prepareStatement(consulta_sql);){
+
+            insertUsuario(sentencia_sql, u);
+            sentencia_sql.executeUpdate();
+        }
+    }
+
+
+        servidor.createContext("/crearUsuarioOtraVez", intercambio -> {
+            
+            if (!intercambio.getRequestMethod().equalsIgnoreCase("POST")) {
+                enviarRespuesta(intercambio, 405, "Este endpoint requiere POST.");
+                return;
+            }
+            
+            try {
+                Map<String, String> datos = leerParametros(intercambio);
+
+                String usuario = datos.get("usuario");
+                String email = datos.get("email");
+                String contrasena = datos.get("contrasena");
+                String pregunta = datos.get("pregunta");
+                String respuesta = datos.get("respuesta");
+
+                
+                Usuario u = new Usuario();
+                u.setUsuario(usuario);
+                u.setEmail(email);
+                u.setContraseña(contrasena);
+                u.setPrivilegiosEmpleado(false);
+                u.setPreguntaSeguridad(pregunta);
+                u.setRespuestaSeguridad(respuesta);
+                
+                UsuarioDAO urdao = new UsuarioDAO();
+                urdao.agregarUsuarioWeb(u);
+
+                enviarRespuesta(intercambio, 200, "Usuario creado correctamente.");
+                
+            } catch (SQLException error) {
+                error.printStackTrace();
+                enviarRespuesta(intercambio, 500, "Error en MySQL: " + error.getMessage());
+            } catch (Exception error) {
+                error.printStackTrace();
+                enviarRespuesta(intercambio, 500, "Error: " + error.getMessage());
+            }
+        });
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Usuario Nuevo</title>
+</head>
+<body>
+
+    <h2>Crear Nuevo Usuario</h2>
+
+    <form action="/crearUsuarioOtraVez" method="POST">
+
+        <label for="usuario">Nombre de usuario:</label><br>
+        <input type="text" id="usuario" name="usuario" required><br><br>
+
+        <label for="email">Correo electrónico:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="contrasena">Contraseña:</label><br>
+        <input type="password" id="contrasena" name="contrasena" required><br><br>
+
+        <label for="pregunta">Pregunta de seguridad:</label><br>
+        <input type="text" id="pregunta" name="pregunta" required><br><br>
+
+        <label for="respuesta">Respuesta de seguridad:</label><br>
+        <input type="text" id="respuesta" name="respuesta" required><br><br>
+
+        <button type="submit">Guardar Usuario</button>
+
+    </form>
+
+</body>
+</html>
+
